@@ -1,0 +1,798 @@
+<style lang="less">
+  .nightMode{
+    color: #fff !important;
+    background-color: #000 !important;
+  }
+  .cover, .con{
+    width: 750rpx;
+    height: 100vh;
+    color: #333;
+    background-color: #ccc;
+  }
+  .img{
+    width: 750rpx;
+    height: 600rpx;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+  }
+  .img image{
+    width: 200rpx;
+    height: 300rpx;
+    margin: auto;
+    margin-top: 250rpx;
+    border: 10rpx solid #fff;
+  }
+  .info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .bookName{
+    font-size: 50rpx;
+    color: #333;
+    font-weight: 700;
+  }
+  .author{
+    color: #999;
+    font-size: 30rpx;
+  }
+  .info view{
+    width: 250rpx;
+  }
+  .attrName{
+    font-size: 40rpx;
+    color: #333;
+    font-weight: 600;
+  }
+  .attrs{
+    margin-top: 100rpx;
+  }
+  .nav{
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ccc;
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav .sel{
+    width: 150rpx;
+    font-size: 30rpx;
+    text-align: center;
+  }
+  .nav image{
+    width: 40rpx;
+    height: 40rpx;
+  }
+  .setBookshelf{
+    position: absolute;
+    right: 0;
+    top: 20rpx;
+    width: 200rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    font-size: 35rpx;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ccc;
+    border-radius: 40rpx 0 0 40rpx;
+  }
+  .tableOfContents{
+    width: 650rpx;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    transition: transform .15s;
+    background-color: #fff;
+    transform: translate(0,0);
+    color: #33373d;
+    fill: currentColor;
+    font-family: sans-serif;
+    line-height: 1.5;
+  }
+  .tableOfCon{
+    width: 100rpx;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  .chapterNav{
+    width: 650rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    position: relative;
+    background-color: #fff;
+    visibility: visible;
+    font-size: 100%;
+    font-weight: 400;
+    margin-right: auto;
+    margin-left: auto;
+    table-layout: fixed;
+    display: table-cell;
+    color: #ed424b;
+    border-bottom: 1rpx solid #ed424b;
+  }
+  .catelogX{
+    position: absolute;
+    top: 2.8125rem;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+  }
+  .module-header{
+    line-height: 28px;
+    position: static;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 28px;
+    border-top: 0;
+    padding: 9px 1rem;
+  }
+  .module-header-l{
+    float: left;
+  }
+  .module-header-r{
+    float: right;
+  }
+  .module-header-l span,
+  .module-header-r span{
+    line-height: 28px;
+    font-size: .875rem;
+    font-weight: 500;
+  }
+  .module-header-l span{
+    font-weight: 600;
+  }
+  .volumes{
+    border-bottom: 1px solid #f0f1f2;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+  }
+  .volumes li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+    list-style: none;
+    padding-right: 2rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font: 15px/22px a;
+    display: block;
+    overflow: hidden;
+    padding: 12px 1rem;
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+    border-top: 1px solid #f0f1f2;
+  }
+  .volumes .action{
+    color: #ed424b;
+  }
+  .readBtnProg{
+    position: absolute;
+    right: 0;
+    bottom: 100rpx;
+    left: 0;
+    color: #ccc;
+    border-bottom:1rpx solid #333;
+    background-color: rgba(0,0,0,.6);
+    height:250rpx;
+  }
+  .read-prog-info{
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .read-prog-next, .read-prog-prev{
+    font-size: .875rem;
+    position: absolute;
+    top: .5rem;
+    height: 1.25rem;
+    padding: .5rem 0;
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    cursor: pointer;
+  }
+  .read-prog-prev{
+    left: .375rem;
+  }
+  .read-prog-next {
+    right: .375rem;
+  }
+  .read-prog-val{
+    font-size: .875rem;
+    margin: 0 5rem;
+    padding: .75rem 0 .25rem;
+    text-align: center;
+  }
+  .ell{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 100%;
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .readProgVal{
+    font-size: .75rem;
+    opacity: .8;
+    speak: digits;
+    unicode-bidi: -webkit-isolate;
+    text-align: center;
+    color: #ccc;
+  }
+  .read-prog-bar{
+    padding: 1rem 2rem;
+    display: block;
+    visibility: visible;
+    color:#ccc;
+  }
+  .range{
+    position: absolute;
+    display: inline;
+    height: 30rpx;
+    width: 600rpx;
+  }
+  .range-shadow{
+    display: block;
+    position: absolute;
+    // display: none;
+    width: 12px;
+    height: 12px;
+    margin-top: 1px;
+    margin-left: -6px;
+    opacity: .6;
+    border-radius: 20px;
+    background-color: #ed424b;
+        text-decoration: none;
+    color: inherit;
+    outline: 0;
+  }
+  .range-track{
+    height: 2px;
+    margin-top: 6px;
+    text-align: left;
+    border-left: 0 solid #ed424b;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,.2);
+    border-left-width: 105.084px;
+  }
+  .range-thumb{
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    margin: -11px 0 0 -12px;
+    transition: border-color .15s,background-color .15s;
+    border: 6px solid transparent;
+    border-radius: 20px;
+    background-color: #ed424b;
+    background-clip: content-box;
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    text-align: left;
+  }
+  .readOptSet{
+    visibility: visible;
+    transition: none;
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    bottom: 100rpx;
+    left: 0;
+    transform: translateY(.5px);
+    background-clip: padding-box;
+    color: #fff;
+    border-bottom: 0;
+    background-color: rgba(0,0,0,.6);
+    height: 320rpx;
+  }
+  .read-set-font{
+    padding-top: .5rem;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    height: 100rpx;
+  }
+  .readFontDown, .readFontUp{
+    font-size: 1rem;
+    position: absolute;
+    top: .75rem;
+    width: 3rem;
+    height: 1.5rem;
+    padding: .5rem 0;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    cursor: pointer;
+  }
+  .readFontDown{
+    left: 0;
+  }
+  .readFontUp{
+    right: 0;
+  }
+  .read-font-bar{
+    margin: 0 3rem;
+    padding: 1.125rem 0;
+    display: block;
+    color: #fff;
+  }
+  .readSetSkin, .readSetLayout{
+    // padding: .9375rem 1.25rem;
+    // padding-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .readSetSkin view{
+    width: 200rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    text-align: center;
+    margin: 0 25rpx;
+    border-radius: 10rpx;
+  }
+  .readSetSkin .action{
+    color: #ed424b !important;
+    border: 1rpx solid #ed424b !important;
+  }
+  .default{
+    background-color: #dfcfab;
+    color: #dfcfab;
+    // border: 1rpx solid #dfcfab;
+  }
+  .blue{
+    background-color: #cad9e8;
+    color: #cad9e8;
+    // border: 1rpx solid #cad9e8;
+  }
+  .green{
+    background-color: #d1edd1;
+    color: #d1edd1;
+    // border: 1rpx solid #d1edd1;
+  }
+  .light{
+    background-color: #e6e6e6;
+    color: #e6e6e6;
+    // border: 1rpx solid #e6e6e6;
+  }
+  .defaultGg{
+    background-color: #dfcfab;
+  }
+  .blueGg{
+    background-color: #cad9e8;
+  }
+  .greenGg{
+    background-color: #d1edd1;
+  }
+  .lightGg{
+    background-color: #e6e6e6;
+  }
+  .readSetLayout view{
+    width: 400rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    text-align: center;
+    margin: 0 25rpx;
+    border-radius: 10rpx;
+    border: 1rpx solid #ccc;
+    border-radius: 10rpx;
+    color: #ccc;
+    font-size: 30rpx;
+  }
+  .readSetLayout .action{
+    border: 1rpx solid #fff;
+    color: #fff;
+  }
+  .switch{
+    position: absolute;
+    top: 25vh;
+    left: 25vw;
+    width: 50vw;
+    height: 40vh;
+  }
+</style>
+<template>
+  <view>
+    <view wx:if="{{coverShow}}" class="cover {{showModel}}">
+      <view class="img">
+        <image src="/img/1.png" />
+      </view>
+      <view class="info bookName">猪娟妮子传</view>
+      <view class="info author">豆豆 著</view>
+      <view class="info attrs">
+        <view>
+          <view class="attrName">玄幻</view>
+          <view class="author">类型</view>
+        </view>
+        <view>
+          <view class="attrName">2018.04.11</view>
+          <view class="author">上架</view>
+        </view>
+        <view>
+          <view class="attrName">100.21万</view>
+          <view class="author">连载(字)</view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{!coverShow}}" class="con {{showModel}}">
+      <view class="switch" @tap="showSettingDom"></view>
+      文章文章文章文章文章文章文章文章文章文章文章文章文章
+    </view>
+    <view class="setBookshelf" wx:if="{{showSetting}}">加入书架</view>
+    <view class="nav" wx:if="{{showSetting}}">
+      <view class="sel" @tap="tableOfContentsShow">
+        <image src="/img/user1.png" />
+        <view>目录</view>
+      </view>
+      <view class="sel" @tap="readBtnProgShow">
+        <image src="/img/user1.png" />
+        <view>进度</view>
+      </view>
+      <view class="sel" @tap="readOptSet">
+        <image src="/img/user1.png" />
+        <view>设置</view>
+      </view>
+      <view class="sel" @tap="atNightSet">
+        <image src="/img/user1.png" />
+        <view>夜间</view>
+      </view>
+      <view class="sel">
+        <image src="/img/user1.png" />
+        <view>评论</view>
+      </view>
+    </view>
+    <!-- 目录对应 -->
+    <view wx:if="{{tableOfContentsDomShow}}">
+      <view class="tableOfCon" @tap="tableOfContentsShow"></view>
+      <view class="tableOfContents">
+        <view class="chapterNav">目录</view>
+        <view class="catelogX">
+          <view class="module-header">
+            <view class="module-header-l">
+              <span>
+                共
+                <span>359</span>
+                章
+              </span>
+            </view>
+            <view class="module-header-r">
+              <span>倒序</span>
+            </view>
+          </view>
+          <ul class="volumes">
+            <li class="action">第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+            <li>第1章 豆豆做了我女儿</li>
+          </ul>
+        </view>
+      </view>
+    </view>
+    <!-- 进度对应 -->
+    <view class="readBtnProg" wx:if="{{readBtnProgDomShow}}">
+      <view class="read-prog-info">
+        <view class="read-prog-prev">《上一章</view>
+        <view class="read-prog-next">下一章》</view>
+        <view class="read-prog-val">
+          <view class="ell">第109章 豆豆做了我女儿</view>
+          <view class="readProgVal">30.6%</view>
+        </view>
+      </view>
+      <view class="read-prog-bar">
+        <view class="range">
+          <view class="range-shadow"></view>
+          <view class="range-track"  style="border-left-width: 30rpx;">
+            <view class="range-thumb"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 设置对应 -->
+    <view class="readOptSet" wx:if="{{readOptSetDomShow}}">
+      <view class="read-set-font">
+        <view class="readFontDown">A-</view>
+        <view class="readFontUp">A+</view>
+        <view class="read-font-bar">
+          <view class="range">
+            <view class="range-track" style="border-left-width: 20rpx;">
+              <view class="range-thumb"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="readSetSkin">
+        <view class="default action" data-color="defaultGg" @tap="setBgColor">
+          <span>√</span>
+        </view>
+        <view class="blue" data-color="blueGg" @tap="setBgColor">
+          <span>√</span>
+        </view>
+        <view class="green" data-color="greenGg" @tap="setBgColor">
+          <span>√</span>
+        </view>
+        <view class="light" data-color="lightGg" @tap="setBgColor">
+          <span>√</span>
+        </view>
+      </view>
+      <view class="readSetLayout">
+        <view class="action">
+          <span>上下滑动</span>
+        </view>
+        <view>
+          <span>左右滑动</span>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+// 页面跳转，传参写法
+// this.$redirect('./page2', {a: 1, b: 2})
+// this.$redirect({
+//   url: './pages?a=1&b=2'
+// });
+// this.$navigate(url)
+
+
+// 水平垂直居中
+// display: flex;
+// align-items: center;
+// justify-content: center;
+
+// 居右
+// flex-direction:row;
+// justify-content:flex-end
+
+// vertical-align:middle;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+
+// 自动换行
+// word-break:break-all;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+<script>
+  import wepy from 'wepy'
+  export default class Lookfiction extends wepy.page {
+    config = {
+      navigationBarTitleText: '章节名称'
+    }
+    components = {
+
+    }
+
+    mixins = []
+
+    data = {
+      showSetting: false, // 控制设置框体的显示
+      coverShow: false,
+      tableOfContentsDomShow: false, // 目录是否显示
+      readBtnProgDomShow: false, // 进度控制是否显示
+      readOptSetDomShow: false, // 设置显示
+      showModel: '' // 显示模型，及背景控制
+    }
+
+    computed = {}
+
+    methods = {}
+
+    events = {}
+
+    onLoad() {
+      // console.log('onLoad')
+      // 初始化页面时，控制日夜间模式
+      this.getAtNightStatus()
+
+    }
+    // onShow() {
+    //   console.log('onshow')
+    // }
+    // 控制设置框体的显示
+    showSettingDom() {
+      if (this.showSetting) {
+        this.hideAllFrameDom()
+        this.showSetting = false
+      } else {
+        this.hideAllFrameDom()
+        this.showSetting = true
+      }
+    }
+    // 控制目录显示
+    tableOfContentsShow() {
+      if (this.tableOfContentsDomShow) {
+        this.hideAllFrameDom()
+      } else {
+        this.hideAllFrameDom()
+        this.tableOfContentsDomShow = true
+      }
+    }
+    // 进度控制显示
+    readBtnProgShow() {
+      if (this.readBtnProgDomShow) {
+        this.hideAllFrameDom()
+      } else {
+        this.hideAllFrameDom()
+        this.readBtnProgDomShow = true
+      }
+    }
+    // 设置框显示
+    readOptSet() {
+      if (this.readOptSetDomShow) {
+        this.hideAllFrameDom()
+      } else {
+        this.hideAllFrameDom()
+        this.readOptSetDomShow = true
+      }
+    }
+    // 隐藏所有设置显示（二级框体）
+    hideAllFrameDom() {
+      // 目录显示
+      this.tableOfContentsDomShow = false
+      // 进度显示
+      this.readBtnProgDomShow = false
+      // 设置显示
+      this.readOptSetDomShow = false
+    }
+    // 日夜模式切换
+    atNightSet() {
+      // 此处定义：1为日间模式，0为夜间模式
+      wx.getStorage({
+        key: 'atNightStatus',
+        success: res => {
+          if (res.data) {
+            // 当前为日间模式，设置为夜间模式
+            wx.setStorageSync('atNightStatus', 0)
+            this.showModel = 'nightMode'
+            // 修改title背景颜色，字体颜色
+            this.change(this.showModel)
+            this.$apply()
+            // 如果未日间模式，则控制显示背景
+          } else {
+            // 当前为夜间模式，设置为日间模式
+            wx.setStorageSync('atNightStatus', 1)
+            // 设置日间模式背景
+            this.dayMode()
+          }
+        },
+        fail: res => {
+          // 当前为日间模式，设置为夜间模式
+          wx.setStorageSync('atNightStatus', 0)
+          // 夜间模式
+          this.showModel = 'nightMode'
+          // 修改title背景颜色，字体颜色
+          this.change(this.showModel)
+          this.$apply()
+        }
+      })
+    }
+    // 初始化页面时，控制日夜间模式
+    getAtNightStatus() {
+      // 1为日间模式，0为夜间模式
+      wx.getStorage({
+        key: 'atNightStatus',
+        success: res => {
+          if (res.data) {
+            // 日间模式,控制显示背景
+            this.dayMode()
+          } else {
+            // 夜间模式
+            this.showModel = 'nightMode'
+            // 修改title背景颜色，字体颜色
+            this.change(this.showModel)
+            this.$apply()
+          }
+        }
+      })
+    }
+    // 背景设置
+    setBgColor(e) {
+      let selColor = e.currentTarget.dataset.color
+      wx.setStorageSync('bg', selColor)
+      wx.setStorageSync('atNightStatus', 1)
+      this.showModel = selColor
+      // 修改title背景颜色，字体颜色
+      this.change(this.showModel)
+    }
+    // 日间模式
+    dayMode() {
+      wx.getStorage({
+        key: 'bg',
+        success: res => {
+          if (res.data) {
+            // 日间模式
+            this.showModel = res.data
+            // 修改title背景颜色，字体颜色
+            this.change(this.showModel)
+            this.$apply()
+            // 如果未日间模式，则控制显示背景
+          } else {
+            this.showModel = 'defaultGg'
+            // 修改title背景颜色，字体颜色
+            this.change(this.showModel)
+            this.$apply()
+          }
+        }
+      })
+    }
+    // 获取顶部需要显示的颜色
+    change(showModel) {
+      let fontColor = '#000000'
+      let bgColor = '#dfcfab'
+      switch (showModel) {
+        case 'nightMode': // 夜间模式
+          this.setcolor(fontColor = '#ffffff', bgColor = '#000000')
+          break
+        case 'defaultGg':
+          this.setcolor(fontColor, bgColor = '#dfcfab')
+          break
+        case 'blueGg':
+          this.setcolor(fontColor, bgColor = '#cad9e8')
+          break
+        case 'greenGg':
+          this.setcolor(fontColor, bgColor = '#d1edd1')
+          break
+        case 'lightGg':
+          this.setcolor(fontColor, bgColor = '#e6e6e6')
+          break
+        default:
+          this.setcolor(fontColor, bgColor = '#dfcfab')
+      }
+    }
+    // 修改顶部标题颜色
+    setcolor(fontColor, bgColor) {
+      wx.setNavigationBarColor({
+        frontColor: fontColor, // 必写项
+        backgroundColor: bgColor, // 传递的颜色值
+        animation: { // 可选项
+          duration: 400,
+          timingFunc: 'easeIn'
+        }
+      })
+    }
+  }
+</script>

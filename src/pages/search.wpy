@@ -1,0 +1,269 @@
+<style lang="less">
+  .search{
+    width: 750rpx;
+    height: 115rpx;
+    background-color: #fdfdfd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search view{
+    height: 75rpx;
+    background-color: #fff;
+  }
+  .search view{
+    height: 75rpx;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search image{
+    width: 40rpx;
+    height: 40rpx;
+  }
+  .search input{
+    width: 100%;
+    height: 100%;
+    color: #333;
+    font-size: 30rpx;
+  }
+  .search view:nth-child(1){
+    width: 80rpx;
+    border: 1rpx solid #f0f0f0;
+    border-right: 0;
+    border-radius: 20rpx 0 0 20rpx;
+  }
+  .search view:nth-child(2){
+    width: 520rpx;
+    border-top: 1rpx solid #f0f0f0;
+    border-bottom: 1rpx solid #f0f0f0;
+  }
+  .search view:nth-child(3){
+    width: 80rpx;
+    border: 1rpx solid #f0f0f0;
+    border-left: 0;
+    border-radius: 0 20rpx 20rpx 0;
+  }
+  .searchHistoryTitle{
+    width: 750rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+  }
+  .searchHistoryTitle view{
+    width: auto;
+    height: 60rpx;
+    line-height: 60rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 33rpx;
+    color: #999;
+    font-size: 40rpx;
+  }
+  .searchHistoryTitle image{
+    width: 40rpx;
+    height: 40rpx;
+  }
+  .searchHistoryTitle view:nth-child(1){
+    float: left;
+  }
+  .searchHistoryTitle view:nth-child(2){
+    float: right;
+  }
+  .searchHistory{
+    width: 680rpx;
+    margin: 0 33rpx;
+  }
+  .searchHistory view{
+    width: auto;
+    height: 45rpx;
+    line-height: 45rpx;
+    padding: 0 20rpx;
+    display:inline-block;
+    margin: 20rpx;
+    background-color: #e5ecf2;
+    color: #333;
+    border-radius: 10rpx;
+    font-size: 30rpx;
+  }
+  .bookList{
+    width: 750rpx;
+    height: auto;
+    margin-bottom: 120rpx;
+  }
+  .list{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 750rpx;
+    height: 175rpx;
+    border-bottom: 1rpx solid #f0f0f0;
+    background-color: #fafafa;
+    padding: 20rpx 20rpx;
+  }
+  .list .cover{
+    width: 107rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .list .cover image{
+    width: 107rpx;
+    height: 146rpx;
+  }
+  .list .info{
+    margin-left: 20rpx;
+    width: 490rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .list .info view{
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    color: #999;
+    font-size: 25rpx;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .list .info .title{
+    color: #333;
+    height: 60rpx;
+    line-height: 70rpx;
+    font-size: 38rpx;
+    font-size: 600;
+  }
+  .list .operating{
+    width: 107rpx;
+    height: 146rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // border: 1rpx solid red;
+  }
+  .list .operating image{
+    width: 47rpx;
+    height: 47rpx;
+  }
+</style>
+<template>
+  <view>
+    <view class="search">
+      <view>
+        <image src="/img/user1.png"  />
+      </view>
+      <view>
+        <input type="text" />
+      </view>
+      <view>
+        <image src="/img/user1.png"  />
+      </view>
+    </view>
+    <view class="searchHistoryTitle">
+      <view>搜索热词</view>
+      <view>
+        <image src="/img/user1.png"  />
+      </view>
+    </view>
+    <view class="searchHistory">
+      <view>33asdfasdf2</view>
+      <view>sssewe</view>
+      <view>332</view>
+      <view>332</view>
+      <view>332</view>
+      <view>332</view>
+      <view>332</view>
+    </view>
+    <view class="searchHistoryTitle">
+      <view>为您推荐</view>
+      <view>
+        <image src="/img/user1.png"  />
+      </view>
+    </view>
+    <view class="bookList">
+      <view class="list">
+        <view class="cover">
+          <image src="/img/1.png" />
+        </view>
+        <view class="info">
+          <view class="title">书名书名书名书名书名书名</view>
+          <view>描述描述描述描述描述描述描述描述描述</view>
+          <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+        </view>
+        <view class="operating">
+          <image src="/img/plus.png" />
+        </view>
+      </view>
+      <view class="list">
+        <view class="cover">
+          <image src="/img/1.png" />
+        </view>
+        <view class="info">
+          <view class="title">书名书名书名书名书名书名</view>
+          <view>描述描述描述描述描述描述描述描述描述</view>
+          <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+        </view>
+        <view class="operating">
+          <image src="/img/plus.png" />
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+// 页面跳转，传参写法
+// this.$redirect('./page2', {a: 1, b: 2})
+// this.$redirect({
+//   url: './pages?a=1&b=2'
+// });
+// this.$navigate(url)
+
+
+// 水平垂直居中
+// display: flex;
+// align-items: center;
+// justify-content: center;
+
+// 居右
+// flex-direction:row;
+// justify-content:flex-end
+
+// vertical-align:middle;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+
+// 自动换行
+// word-break:break-all;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+<script>
+  import wepy from 'wepy'
+  export default class Search extends wepy.page {
+    config = {
+      navigationBarTitleText: '搜索'
+    }
+    components = {
+
+    }
+
+    mixins = []
+
+    data = {
+
+    }
+
+    computed = {}
+
+    methods = {}
+
+    events = {}
+
+    onLoad() {
+
+    }
+  }
+</script>

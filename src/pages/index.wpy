@@ -1,0 +1,538 @@
+<style lang="less">
+  page{
+    background-color: #f7f7f7;
+  }
+  .topNav{
+    background-color: #fff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+  }
+  .topNav scroll-view{
+    width: 650rpx;
+    height: 90rpx;
+    white-space: nowrap;
+  }
+  .topNav scroll-view view{
+    display: inline-block;
+    width: 150rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    font-size: 30rpx;
+    text-align: center;
+    color: #333;
+  }
+  .search{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100rpx;
+    height: 90rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-left: 1rpx solid #ccc;
+  }
+  .search image{
+    width: 40rpx;
+    height: 40rpx;
+  }
+  .action{
+    height: 88rpx !important;
+    text-align: center !important;
+    color: #00c0a4 !important;
+    border-bottom: 1rpx solid #00c0a4;
+  }
+  .swiper{
+    background-color: #fff;
+    width: 750rpx;
+    height: 260rpx;
+    border: 1rpx solid red;
+  }
+  .conNav{
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 750rpx;
+    height: 130rpx;
+    font-size: 30rpx;
+    color: #333;
+  }
+  .conNav image {
+    width: 50rpx;
+    height: 50rpx;
+  }
+  .sel{
+    width: 150rpx;
+    text-align: center;
+  }
+  .list{
+    padding: 20rpx;
+    width: 710rpx;
+    height: auto;
+    background-color: #fff;
+    margin-top: 20rpx;
+  }
+  .listTitle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80rpx;
+    line-height: 80rpx;
+  }
+  .listTitle view:nth-child(1){
+    font-size: 40rpx;
+    color: #333;
+  }
+  .listTitle view:nth-child(2){
+    font-size: 30rpx;
+    color: #999;
+  }
+  .listTitle image{
+    width: 30rpx;
+    height: 30rpx;
+  }
+  .con{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 750rpx;
+    height: 175rpx;
+    border-bottom: 1rpx solid #f0f0f0;
+    background-color: #fff;
+  }
+  .con .cover{
+    width: 107rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .con .cover image{
+    width: 107rpx;
+    height: 146rpx;
+  }
+  .con .info{
+    margin-left: 20rpx;
+    width: 615rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .con .info view{
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    color: #999;
+    font-size: 25rpx;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .con .info .title{
+    color: #333;
+    height: 60rpx;
+    line-height: 70rpx;
+    font-size: 38rpx;
+    font-size: 600;
+  }
+</style>
+<template>
+  <view>
+    <view class="topNav">
+      <scroll-view scroll-x>
+        <view class="action">
+          <span>123</span>
+          <!-- <view></view> -->
+        </view>
+        <view>分类</view>
+        <view>分类</view>
+        <view>分类</view>
+        <view>分类</view>
+      </scroll-view>
+      <view class="search">
+        <image src="/img/user1.png"  />
+      </view>
+    </view>
+    <!-- <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{imgUrls}}">
+        <swiper-item>
+          <image src="{{goimg}}" class="slide-image" width="355" height="150" />
+        </swiper-item>
+      </block>
+    </swiper> -->
+    <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <!-- <block wx:for="{{imgUrls}}"> -->
+        <swiper-item>
+          <image src="/img/1.png" class="slide-image" width="355" height="150" />
+        </swiper-item>
+        <swiper-item>
+          <image src="/img/1.png" class="slide-image" width="355" height="150" />
+        </swiper-item>
+        <swiper-item>
+          <image src="/img/1.png" class="slide-image" width="355" height="150" />
+        </swiper-item>
+      <!-- </block> -->
+    </swiper>
+    <view class="conNav">
+      <view class="sel">
+        <image src="/img/user1.png"  />
+        <view>分类</view>
+      </view>
+      <view class="sel">
+        <image src="/img/user1.png"  />
+        <view>分类</view>
+      </view>
+      <view class="sel">
+        <image src="/img/user1.png"  />
+        <view>分类</view>
+      </view>
+      <view class="sel">
+        <image src="/img/user1.png"  />
+        <view>分类</view>
+      </view>
+      <view class="sel">
+        <image src="/img/user1.png"  />
+        <view>分类</view>
+      </view>
+    </view>
+    <!-- 畅销精选 -->
+    <view class="list">
+      <view class="listTitle">
+        <view>畅销精选</view>
+        <view>
+          更多
+          <image src="{{goimg}}"  />
+        </view>
+      </view>
+      <view class="listCon">
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 主编力荐 -->
+    <view class="list">
+      <view class="listTitle">
+        <view>主编力荐</view>
+        <view>
+          更多
+          <image src="{{goimg}}"  />
+        </view>
+      </view>
+      <view class="listCon">
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 限时免费 -->
+    <view class="list">
+      <view class="listTitle">
+        <view>限时免费</view>
+        <view>
+          更多
+          <image src="{{goimg}}"  />
+        </view>
+      </view>
+      <view class="listCon">
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 免费新书 -->
+    <view class="list">
+      <view class="listTitle">
+        <view>免费新书</view>
+        <view>
+          更多
+          <image src="{{goimg}}"  />
+        </view>
+      </view>
+      <view class="listCon">
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 经典完本 -->
+    <view class="list">
+      <view class="listTitle">
+        <view>经典完本</view>
+        <view>
+          更多
+          <image src="{{goimg}}"  />
+        </view>
+      </view>
+      <view class="listCon">
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 猜你喜欢 -->
+    <view class="list">
+      <view class="listTitle">
+        <view>猜你喜欢</view>
+        <view>
+          更多
+          <image src="{{goimg}}"  />
+        </view>
+      </view>
+      <view class="listCon">
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 书友在读 -->
+    <view class="list">
+      <view class="listTitle">
+        <view>书友在读</view>
+        <view>
+          更多
+          <image src="{{goimg}}"  />
+        </view>
+      </view>
+      <view class="listCon">
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 畅销精选 -->
+    <view class="list">
+      <view class="listTitle">
+        <view>畅销精选</view>
+        <view>
+          更多
+          <image src="{{goimg}}"  />
+        </view>
+      </view>
+      <view class="listCon">
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+// 页面跳转，传参写法
+// this.$redirect('./page2', {a: 1, b: 2})
+// this.$redirect({
+//   url: './pages?a=1&b=2'
+// });
+// this.$navigate(url)
+
+
+// 水平垂直居中
+// display: flex;
+// align-items: center;
+// justify-content: center;
+
+// 居右
+// flex-direction:row;
+// justify-content:flex-end
+
+// vertical-align:middle;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+
+// 自动换行
+// word-break:break-all;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+<script>
+  import wepy from 'wepy'
+  import nav from '../components/nav' // 底部导航
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '首页名称'
+    }
+    // 生命组件ID
+    components = {
+    // 底部导航
+      nav: nav
+    }
+
+    mixins = []
+
+    data = {
+      imgUrls: [
+        'https://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+        'https://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+        'https://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+      ],
+      indicatorDots: true,
+      autoplay: true,
+      interval: 1000,
+      duration: 1000,
+      goimg: '/img/1.png'
+    }
+
+    computed = {}
+
+    methods = {
+      // 底部导航跳转
+      goPage (url, evt) {
+        // 销毁当前页{跳转}
+        this.$redirect(url)
+      }
+    }
+
+    events = {}
+
+    onLoad() {
+
+    }
+  }
+</script>

@@ -1,0 +1,544 @@
+<style lang="less">
+  page{
+    background-color: #f5f5f5;
+  }
+  .bookList{
+    width: 750rpx;
+    height: 295rpx;
+    padding-top: 45rpx;
+    background-color: #2d313c;
+  }
+  .booktitleInfo{
+    margin-top: 45rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 750rpx;
+    height: 200rpx;
+    background-color: #2d313c;
+    padding: 40rpx 40rpx;
+  }
+  .booktitleInfo .cover{
+    width: 140rpx;
+    height: 190rpx;
+  }
+  .booktitleInfo .cover image{
+    width: 140rpx;
+    height: 190rpx;
+  }
+  .booktitleInfo .info{
+    margin-left: 20rpx;
+    width: 590rpx;
+    height: 190rpx;
+  }
+  .booktitleInfo .info view{
+    width: 90%;
+    height: 40rpx;
+    line-height: 40rpx;
+    color: #999;
+    font-size: 25rpx;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .booktitleInfo .info .title{
+    color: #fff;
+    height: 60rpx;
+    line-height: 60rpx;
+    font-size: 38rpx;
+    font-size: 600;
+    margin-bottom: 20rpx;
+  }
+  .booktitleInfo .operating{
+    width: 107rpx;
+    height: 146rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .booktitleInfo .operating image{
+    width: 47rpx;
+    height: 47rpx;
+  }
+  .label view{
+    width: auto !important;
+    height: 36rpx !important;
+    line-height: 36rpx !important;
+    font-size: 20rpx !important;
+    border: 1rpx solid #b7b7b7;
+    display:inline-block;
+    padding: 0 10rpx;
+    margin-right: 10rpx;
+    border-radius: 10rpx;
+  }
+  .bookInfo,
+  .commentList,
+  .attentionAuthor,
+  .recommend,
+  .bookMoreInfo,
+  .tableOfContents{
+    margin-top: 10rpx;
+    background-color: #fff;
+    padding: 33rpx;
+    width: 684rpx;
+    height: auto;
+  }
+  .basicInfo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .basicInfo view:nth-child(1){
+    width: 234rpx;
+    height: 108rpx;
+  }
+  .basicInfo view:nth-child(2),
+  .basicInfo view:nth-child(3),
+  .basicInfo view:nth-child(4){
+    width: 150rpx;
+    height: 108rpx;
+  }
+  .basicInfo view view{
+    width: 100%;
+    text-align: center;
+  }
+  .basicInfo view view:nth-child(1){
+    height: 40rpx;
+    line-height: 40rpx;
+    font-size: 40rpx;
+    color: #333;
+  }
+  .basicInfo view view:nth-child(2){
+    height: 37rpx;
+    line-height: 37rpx;
+    font-size: 30rpx;
+    color: #999;
+  }
+  .description{
+    height: auto;
+    border-top: 1rpx solid #ccc;
+    color: #999;
+    font-size: 28rpx;
+    line-height: 45rpx;
+    padding: 20rpx 0;
+  }
+  .bookInfo .label view {
+    color: #999;
+    font-size: 28rpx;
+    height: 40rpx;
+    background-color: #e6e6e6;
+    border-radius: 20rpx;
+    border-width: 0;
+  }
+  .tableOfContents{
+    height: 65rpx;
+  }
+  .tableOfContents view{
+    font-size: 30rpx;
+    height: 65rpx;
+    line-height: 65rpx;
+  }
+  .tableOfContents image{
+    width: 40rpx;
+    height: 40rpx;
+  }
+  .tableOfContents view:nth-child(1){
+    float: left;
+    color: #333;
+  }
+  .tableOfContents view:nth-child(2){
+    float: right;
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .commentList{
+    min-height: 130rpx;
+  }
+  .commentList .title,
+  .commentList .title view{
+    font-size: 30rpx;
+    height: 65rpx;
+    line-height: 65rpx;
+  }
+  .commentList .title image{
+    width: 40rpx;
+    height: 40rpx;
+  }
+  .commentList .title view:nth-child(1){
+    float: left;
+    color: #333;
+  }
+  .commentList .title view:nth-child(1) text{
+    font-size: 20rpx;
+  }
+  .commentList .title view:nth-child(2){
+    float: right;
+    color: #00a8ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .user{
+    display: flex;
+    align-items: center;
+  }
+  .user image{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 25rpx;
+    margin-right: 10rpx;
+  }
+  .commentList .description{
+    border: 0;
+  }
+  .commentInfo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+    font-size: 30rpx;
+  }
+  .commentInfo image{
+    width: 30rpx;
+    height: 30rpx;
+  }
+  .commentInfo .time{
+    width: 324rpx;
+  }
+  .commentInfo .operating{
+    width: 360rpx;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .commentInfo .operating view:nth-child(1){
+    margin-right: 10rpx;
+  }
+  .listCon{
+    border-bottom: 1rpx solid #f0f0f0;
+    padding-bottom: 10rpx;
+  }
+  .seeMore{
+    color: #00a8ff !important;
+  }
+  .attentionAuthor, .authorInfo{
+    height: 103rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+  }
+  .attentionAuthor image{
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 30rpx;
+    margin-right: 10rpx;
+  }
+  .authorInfo .info view:nth-child(1){
+    font-size: 40rpx;
+    color: #333;
+  }
+  .authorInfo .info view:nth-child(2){
+    font-size: 25rpx;
+    color: #999;
+  }
+  .attention{
+    width: 120rpx;
+    height: 45rpx;
+    line-height: 45rpx;
+    background-color: #00c0a4;
+    border-radius: 23rpx;
+    text-align: center;
+    color: #fff;
+  }
+  .recommendList{
+    width: 100%;
+    height: auto;
+  }
+  .recommendCon{
+    width: 140rpx;
+    display: inline-block;
+    margin: 20rpx 40rpx 0 0;
+    font-size: 30rpx;
+    color: #999;
+  }
+  .recommendCon:nth-child(4n){
+    margin: 20rpx 0 0 0;
+  }
+  .recommendCon image{
+    width: 140rpx;
+    height: 190rpx;
+  }
+  .recommendCon view{
+    width: 100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .bookMoreInfo{
+    height: auto;
+    margin-bottom: 200rpx;
+  }
+  .bookMoreInfo view{
+    font-size: 30rpx;
+    color: #666;
+    height: auto;
+    line-height: 50rpx;
+  }
+  .bookMoreInfo view:nth-child(1){
+    font-size: 40rpx;
+    color: #333;
+    margin-bottom: 30rpx;
+  }
+  .navSta{
+    position: fixed;
+    bottom: 0;
+    width: 750rpx;
+    height: 110rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+  }
+  .navSta .sel{
+    width: 249rpx;
+    height: 110rpx;
+    text-align: center;
+    border-radius: 1rpx solid #f0f0f0;
+    font-size: 30rpx;
+    color: #666;
+  }
+  .navSta .sel:nth-child(3){
+    background-color: #00c0a4;
+    color: #fff;
+  }
+  .navSta image{
+    width: 40rpx;
+    height: 40rpx;
+    margin-top: 15rpx;
+  }
+</style>
+<template>
+  <view>
+    <view class="bookList">
+      <view class="booktitleInfo">
+        <view class="cover">
+          <image src="/img/1.png" />
+        </view>
+        <view class="info">
+          <view class="title">书名书名书名书名书名书名</view>
+          <view>描述描述描述描述描述描述描述描述描述</view>
+          <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          <view class="label">
+            <view>1111</view>
+            <view>1111</view>
+            <view>1111</view>
+            <view>1111</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="bookInfo">
+      <view class="basicInfo">
+        <view>
+          <view>11</view>
+          <view>22</view>
+        </view>
+        <view>
+          <view>11</view>
+          <view>22</view>
+        </view>
+        <view>
+          <view>11</view>
+          <view>22</view>
+        </view>
+        <view>
+          <view>11</view>
+          <view>22</view>
+        </view>
+      </view>
+      <view class="description">
+        描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述
+        描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述
+        描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述
+        描述描述描述描述描述描述描述
+        描述描述描述描述描述描述描述
+        描述描述描述描述描述描述描述描述描述描述描述
+        描述描述描述描述描述描述描述描述
+      </view>
+      <view class="label">
+        <view>1111</view>
+        <view>1111</view>
+        <view>1111</view>
+        <view>1111</view>
+      </view>
+    </view>
+    <view class="tableOfContents">
+      <view>目录</view>
+      <view>
+        连载至200章·13小时前更新
+        <image src="/img/1.png" />
+      </view>
+    </view>
+    <view class="commentList">
+      <view class="title">
+        <view>
+          书圈<text>68.9万粉丝，18.3万条发言</text>
+        </view>
+        <view>写书评</view>
+      </view>
+      <view class="list">
+        <view class="listCon">
+          <view class="user">
+            <image src="/img/1.png" />
+            猪豆豆
+          </view>
+          <view class="description">
+            描述描述描述描述描述描述描述描述描述描述描述描述
+            描述描述描述描述描述描述描述描述描述描述描述描述
+            描述描述描述描述描述描述描述描述描述描述描述描述
+          </view>
+          <view class="commentInfo">
+            <view class="time">2018年4月26日 18:30</view>
+            <view class="operating">
+              <view>
+                <image src="/img/1.png" />
+                0000000
+              </view>
+              <view>
+                <image src="/img/1.png" />
+                0000000
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="dataNullShow">暂无评论</view>
+      <view class="dataNullShow seeMore">加载更多</view>
+    </view>
+    <view class="attentionAuthor">
+      <view class="authorInfo">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view>name</view>
+          <view>作品数量</view>
+        </view>
+      </view>
+      <view class="attention">+ 关注</view>
+    </view>
+    <view class="recommend">
+      喜欢这本书的人也喜欢
+      <view class="recommendList">
+        <view class="recommendCon">
+          <image src="/img/1.png" />
+          <view>书名书名书名</view>
+        </view>
+        <view class="recommendCon">
+          <image src="/img/1.png" />
+          <view>书名书名书名</view>
+        </view>
+        <view class="recommendCon">
+          <image src="/img/1.png" />
+          <view>书名书名书名</view>
+        </view>
+        <view class="recommendCon">
+          <image src="/img/1.png" />
+          <view>书名书名书名</view>
+        </view>
+        <view class="recommendCon">
+          <image src="/img/1.png" />
+          <view>书名书名书名</view>
+        </view>
+        <view class="recommendCon">
+          <image src="/img/1.png" />
+          <view>书名书名书名</view>
+        </view>
+        <view class="recommendCon">
+          <image src="/img/1.png" />
+          <view>书名书名书名</view>
+        </view>
+        <view class="recommendCon">
+          <image src="/img/1.png" />
+          <view>书名书名书名</view>
+        </view>
+      </view>
+    </view>
+    <view class="bookMoreInfo">
+      <view>图书更多信息</view>
+      <view>字数:1000万</view>
+      <view>上架时间: 2019-04-26</view>
+      <view>免责声明: 本书数字版权有"贝肯伟"提供，并由其设计费技术创新须具有成功找不出缠着你书友并承诺在想不出名字吃饱没你这错别字</view>
+    </view>
+    <view class="navSta">
+      <view class="sel">
+        <image src="/img/1.png" />
+        <view>加入书架</view>
+      </view>
+      <view class="sel">
+        <image src="/img/1.png" />
+        <view>批量订阅</view>
+      </view>
+      <view class="sel">
+        <image src="/img/1.png" />
+        <view>立即阅读</view>
+      </view>
+    </view>
+  </view>
+</template>
+// 页面跳转，传参写法
+// this.$redirect('./page2', {a: 1, b: 2})
+// this.$redirect({
+//   url: './pages?a=1&b=2'
+// });
+// this.$navigate(url)
+
+
+// 水平垂直居中
+// display: flex;
+// align-items: center;
+// justify-content: center;
+
+// 居右
+// flex-direction:row;
+// justify-content:flex-end
+
+// vertical-align:middle;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+
+// 自动换行
+// word-break:break-all;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+<script>
+  import wepy from 'wepy'
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '详情'
+    }
+    components = {
+
+    }
+
+    mixins = []
+
+    data = {
+
+    }
+
+    computed = {}
+
+    methods = {}
+
+    events = {}
+
+    onLoad() {
+
+    }
+  }
+</script>

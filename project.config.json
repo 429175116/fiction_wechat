@@ -1,0 +1,15 @@
+{
+	"description": "小说",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "wx53dd0ec4b99b5680",
+	"projectname": "fiction",
+	"miniprogramRoot": "dist/",
+	"condition": {}
+}
