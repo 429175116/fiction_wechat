@@ -132,9 +132,9 @@
 <script>
 import wepy from 'wepy'
 // 校验封装
-import check from '../mixins/check'
+// import check from '../mixins/check'
 export default class Nav extends wepy.component {
-  mixins = [check]
+  // mixins = [check]
   data = {
     userInfo: {},
     guangGaoNode: null,
