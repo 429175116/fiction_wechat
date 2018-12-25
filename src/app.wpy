@@ -1,11 +1,11 @@
 <style lang="less">
 @font-face {
   font-family: 'iconfont';  /* project id 983084 */
-  src: url('//at.alicdn.com/t/font_983084_0z2k92q41nwm.eot');
-  src: url('//at.alicdn.com/t/font_983084_0z2k92q41nwm.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_983084_0z2k92q41nwm.woff') format('woff'),
-  url('//at.alicdn.com/t/font_983084_0z2k92q41nwm.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_983084_0z2k92q41nwm.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_983084_ofgbxtcf1z.eot');
+  src: url('//at.alicdn.com/t/font_983084_ofgbxtcf1z.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_983084_ofgbxtcf1z.woff') format('woff'),
+  url('//at.alicdn.com/t/font_983084_ofgbxtcf1z.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_983084_ofgbxtcf1z.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family:"iconfont" !important;
@@ -19,6 +19,10 @@
 .icon-yanjing:before { content: "\e668"; }
 .icon-book:before { content: "\e616"; }
 .icon-yueliang:before { content: "\e6b8"; }
+.icon-shusheng:before { content: "\e60b"; }
+.icon-shujia:before { content: "\e622"; }
+.icon-chazhao:before { content: "\e606"; }
+
 
 
 .container {
@@ -63,20 +67,15 @@ import wepy from 'wepy'
 export default class extends wepy.app {
   config = {
     pages: [
+      'pages/index', // 首页
       'pages/user', // 个人中心
       'pages/authorInfo', // 作者中心
-      
       'pages/browseRecord', // 浏览历史
       'pages/indexSonList', // 首页分类列表
-      'pages/index', // 首页
       'pages/details', // 详情
       'pages/search', // 搜索
       'pages/bookshelf', // 书架
       'pages/lookFiction' // 看书页
-      
-
-      // 'pages/index',
-      // 'pages/index',
     ],
     window: {
       backgroundTextStyle: 'light',

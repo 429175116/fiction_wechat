@@ -169,18 +169,18 @@
   import nav from '../components/nav' // 底部导航
   export default class Bookshelf extends wepy.page {
     config = {
-      navigationBarTitleText: '书架'
+      navigationBarTitleText: '首页名称'
     }
+    // 生命组件ID
     components = {
-      // 底部导航
+    // 底部导航
       nav: nav
-      
     }
 
     mixins = []
 
     data = {
-
+      
     }
 
     computed = {}

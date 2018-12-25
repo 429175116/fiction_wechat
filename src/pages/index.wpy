@@ -39,7 +39,7 @@
     width: 40rpx;
     height: 40rpx;
   }
-  .action{
+  .topNav .action{
     height: 88rpx !important;
     text-align: center !important;
     color: #00c0a4 !important;
