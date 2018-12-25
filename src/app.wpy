@@ -40,6 +40,8 @@ import wepy from 'wepy'
 export default class extends wepy.app {
   config = {
     pages: [
+      'pages/browseRecord', // 浏览历史
+      'pages/indexSonList', // 首页分类列表
       'pages/index', // 首页
       'pages/details', // 详情
       'pages/search', // 搜索

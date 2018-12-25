@@ -49,7 +49,6 @@
     background-color: #fff;
     width: 750rpx;
     height: 260rpx;
-    border: 1rpx solid red;
   }
   .conNav{
     background-color: #fff;

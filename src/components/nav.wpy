@@ -41,11 +41,6 @@
   z-index: 3;
 }
 
-// .title {
-//   margin-top: -80rpx;
-//   font-weight: bold;
-// }
-
 .appointment_form {
   color: #fff;
   font-size: 24rpx;
