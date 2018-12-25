@@ -128,7 +128,7 @@
         等级
       </view>
       <view>
-        LV6.高级VIP
+        <icon class="iconfont icon-vip4" />
         <icon class="iconfont icon-jiantouyou" />
       </view>
     </view>

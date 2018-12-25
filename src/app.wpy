@@ -22,6 +22,13 @@
 .icon-shusheng:before { content: "\e60b"; }
 .icon-shujia:before { content: "\e622"; }
 .icon-chazhao:before { content: "\e606"; }
+// 会员等级
+.icon-vip1:before { content: "\e600"; }
+.icon-vip2:before { content: "\e601"; }
+.icon-vip3:before { content: "\e602"; }
+.icon-vip4:before { content: "\e603"; }
+.icon-vip5:before { content: "\e604"; }
+.icon-vip6:before { content: "\e605"; }
 
 
 
