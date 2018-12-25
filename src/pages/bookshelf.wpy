@@ -132,6 +132,7 @@
         </view>
       </view>
     </view>
+    <nav @childFn.user="goPage" />
   </view>
 </template>
 // 页面跳转，传参写法
@@ -165,12 +166,15 @@
 // white-space:nowrap;
 <script>
   import wepy from 'wepy'
+  import nav from '../components/nav' // 底部导航
   export default class Bookshelf extends wepy.page {
     config = {
       navigationBarTitleText: '书架'
     }
     components = {
-
+      // 底部导航
+      nav: nav
+      
     }
 
     mixins = []
@@ -181,7 +185,13 @@
 
     computed = {}
 
-    methods = {}
+    methods = {
+      // 底部导航跳转
+      goPage (url, evt) {
+        // 销毁当前页{跳转}
+        this.$redirect(url)
+      }
+    }
 
     events = {}
 

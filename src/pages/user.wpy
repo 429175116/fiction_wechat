@@ -159,6 +159,7 @@
         <icon class="iconfont icon-jiantouyou"></ivon>
       </view>
     </view>
+    <nav @childFn.user="goPage" />
   </view>
 </template>
 // 页面跳转，传参写法
@@ -192,13 +193,15 @@
 // white-space:nowrap;
 <script>
   import wepy from 'wepy'
+  import nav from '../components/nav' // 底部导航
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '我的'
     }
     // 生命组件ID
     components = {
-
+      // 底部导航
+      nav: nav
     }
 
     mixins = []
