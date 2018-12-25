@@ -133,7 +133,8 @@
 
     events = {}
 
-    onLoad() {
+    onLoad(options) {
+      console.log(options.typeid)
       // 根据获取到的参数修改页面标题
       // 列表加载
       // 获取更多

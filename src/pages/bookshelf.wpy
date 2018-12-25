@@ -169,7 +169,7 @@
   import nav from '../components/nav' // 底部导航
   export default class Bookshelf extends wepy.page {
     config = {
-      navigationBarTitleText: '首页名称'
+      navigationBarTitleText: '书架'
     }
     // 生命组件ID
     components = {

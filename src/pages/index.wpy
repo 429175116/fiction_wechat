@@ -34,11 +34,9 @@
     justify-content: center;
     background-color: #fff;
     border-left: 1rpx solid #ccc;
+    color: #00c0a4;
   }
-  .search image{
-    width: 40rpx;
-    height: 40rpx;
-  }
+  
   .topNav .action{
     height: 88rpx !important;
     text-align: center !important;
@@ -83,11 +81,12 @@
     line-height: 80rpx;
   }
   .listTitle view:nth-child(1){
-    font-size: 40rpx;
+    font-size: 35rpx;
     color: #333;
   }
-  .listTitle view:nth-child(2){
-    font-size: 30rpx;
+  .listTitle view:nth-child(2),
+  .icon-jiantouyou{
+    font-size: 25rpx;
     color: #999;
   }
   .listTitle image{
@@ -142,7 +141,6 @@
       <scroll-view scroll-x>
         <view class="action">
           <span>123</span>
-          <!-- <view></view> -->
         </view>
         <view>分类</view>
         <view>分类</view>
@@ -150,16 +148,9 @@
         <view>分类</view>
       </scroll-view>
       <view class="search">
-        <image src="/img/user1.png"  />
+        <icon class="iconfont icon-sousuo" />
       </view>
     </view>
-    <!-- <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{imgUrls}}">
-        <swiper-item>
-          <image src="{{goimg}}" class="slide-image" width="355" height="150" />
-        </swiper-item>
-      </block>
-    </swiper> -->
     <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <!-- <block wx:for="{{imgUrls}}"> -->
         <swiper-item>
@@ -175,33 +166,34 @@
     </swiper>
     <view class="conNav">
       <view class="sel">
-        <image src="/img/user1.png"  />
+        <!-- <image src="/img/user1.png"  /> -->
+        <icon class="iconfont icon-fenlei" />
         <view>分类</view>
       </view>
       <view class="sel">
-        <image src="/img/user1.png"  />
-        <view>分类</view>
+        <icon class="iconfont icon-paihangbang" />
+        <view>排行</view>
       </view>
       <view class="sel">
-        <image src="/img/user1.png"  />
-        <view>分类</view>
+        <icon class="iconfont icon-mianfei" />
+        <view>免费</view>
       </view>
       <view class="sel">
-        <image src="/img/user1.png"  />
-        <view>分类</view>
+        <icon class="iconfont icon-VIP" />
+        <view>VIP</view>
       </view>
       <view class="sel">
-        <image src="/img/user1.png"  />
-        <view>分类</view>
+        <icon class="iconfont icon-shu" />
+        <view>完本</view>
       </view>
     </view>
     <!-- 畅销精选 -->
     <view class="list">
       <view class="listTitle">
         <view>畅销精选</view>
-        <view>
+        <view data-id="1" @tap="clickMore">
           更多
-          <image src="{{goimg}}"  />
+          <icon class="iconfont icon-jiantouyou" />
         </view>
       </view>
       <view class="listCon">
@@ -232,9 +224,9 @@
     <view class="list">
       <view class="listTitle">
         <view>主编力荐</view>
-        <view>
+        <view data-id="1" @tap="clickMore">
           更多
-          <image src="{{goimg}}"  />
+          <icon class="iconfont icon-jiantouyou" />
         </view>
       </view>
       <view class="listCon">
@@ -265,9 +257,9 @@
     <view class="list">
       <view class="listTitle">
         <view>限时免费</view>
-        <view>
+        <view data-id="1" @tap="clickMore">
           更多
-          <image src="{{goimg}}"  />
+          <icon class="iconfont icon-jiantouyou" />
         </view>
       </view>
       <view class="listCon">
@@ -298,9 +290,9 @@
     <view class="list">
       <view class="listTitle">
         <view>免费新书</view>
-        <view>
+        <view data-id="1" @tap="clickMore">
           更多
-          <image src="{{goimg}}"  />
+          <icon class="iconfont icon-jiantouyou" />
         </view>
       </view>
       <view class="listCon">
@@ -331,9 +323,9 @@
     <view class="list">
       <view class="listTitle">
         <view>经典完本</view>
-        <view>
+        <view data-id="1" @tap="clickMore">
           更多
-          <image src="{{goimg}}"  />
+          <icon class="iconfont icon-jiantouyou" />
         </view>
       </view>
       <view class="listCon">
@@ -364,9 +356,9 @@
     <view class="list">
       <view class="listTitle">
         <view>猜你喜欢</view>
-        <view>
+        <view data-id="1" @tap="clickMore">
           更多
-          <image src="{{goimg}}"  />
+          <icon class="iconfont icon-jiantouyou" />
         </view>
       </view>
       <view class="listCon">
@@ -397,9 +389,9 @@
     <view class="list">
       <view class="listTitle">
         <view>书友在读</view>
-        <view>
+        <view data-id="1" @tap="clickMore">
           更多
-          <image src="{{goimg}}"  />
+          <icon class="iconfont icon-jiantouyou" />
         </view>
       </view>
       <view class="listCon">
@@ -430,9 +422,9 @@
     <view class="list">
       <view class="listTitle">
         <view>畅销精选</view>
-        <view>
+        <view data-id="1" @tap="clickMore">
           更多
-          <image src="{{goimg}}"  />
+          <icon class="iconfont icon-jiantouyou" />
         </view>
       </view>
       <view class="listCon">
@@ -520,6 +512,14 @@
 
     computed = {}
 
+    onLoad() {
+      // 加载分类--顶部
+      // 加载轮播图
+      this.getSwiperData()
+      // 加载分类
+      // 加载分类内容
+    }
+
     methods = {
       // 底部导航跳转
       goPage (url, evt) {
@@ -530,8 +530,15 @@
 
     events = {}
 
-    onLoad() {
+    // 加载轮播图
+    getSwiperData() {
 
+    }
+    // 加载轮播图
+    clickMore(e) {
+      let id = e.currentTarget.dataset.id
+      console.log(id)
+      this.$navigate(`/pages/indexSonList?typeid=${id}`)
     }
   }
 </script>
