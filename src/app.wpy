@@ -1,4 +1,26 @@
 <style lang="less">
+@font-face {
+  font-family: 'iconfont';  /* project id 983084 */
+  src: url('//at.alicdn.com/t/font_983084_ppdk9rt5z.eot');
+  src: url('//at.alicdn.com/t/font_983084_ppdk9rt5z.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_983084_ppdk9rt5z.woff') format('woff'),
+  url('//at.alicdn.com/t/font_983084_ppdk9rt5z.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_983084_ppdk9rt5z.svg#iconfont') format('svg');
+}
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size: 50rpx;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-xingxing:before { content: "\e60a"; }
+.icon-jiantouyou:before { content: "\e62d"; }
+.icon-yanjing:before { content: "\e668"; }
+.icon-book:before { content: "\e616"; }
+.icon-yueliang:before { content: "\e6b8"; }
+
+
 .container {
   height: 100%;
   display: flex;
@@ -32,6 +54,7 @@
     font-size: 40rpx;
     color: #ccc;
   }
+
 </style>
 
 <script>
@@ -40,6 +63,9 @@ import wepy from 'wepy'
 export default class extends wepy.app {
   config = {
     pages: [
+      
+      'pages/authorInfo', // 个人中心
+      'pages/user', // 个人中心
       'pages/browseRecord', // 浏览历史
       'pages/indexSonList', // 首页分类列表
       'pages/index', // 首页

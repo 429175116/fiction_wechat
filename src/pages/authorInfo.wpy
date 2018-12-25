@@ -1,0 +1,246 @@
+<style lang="less">
+  page{
+    background-color: #f7f7f7;
+  }
+  .author{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 750rpx;
+    height: 140rpx;
+    background-color: #fff;
+  }
+  .author image{
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50rpx;
+  }
+  .description{
+    padding: 40rpx 90rpx;
+    background-color: #FFF;
+    color: #999;
+  }
+  .Info{
+    background-color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 40rpx;
+    height: 105rpx;
+    width: 670rpx;
+    text-align: center;
+    margin-top: 20rpx;
+    border-bottom: 1rpx solid #f0f0f0;
+    color: #999;
+  }
+  .Info .sel{
+    width: 233rpx;
+    // height: 105rpx;
+    // font-size: 15rpx;
+  }
+  .Info text{
+    font-size: 40rpx;
+    color: #333;
+    font-weight: 600;
+  }
+  .list{
+    padding: 20rpx;
+    width: 710rpx;
+    height: auto;
+    background-color: #fff;
+    margin-top: 20rpx;
+  }
+  .listTitle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80rpx;
+    line-height: 80rpx;
+  }
+  .listTitle view:nth-child(1){
+    font-size: 40rpx;
+    color: #333;
+  }
+  .listTitle view:nth-child(2){
+    font-size: 30rpx;
+    color: #999;
+  }
+  .listTitle image{
+    width: 30rpx;
+    height: 30rpx;
+  }
+  .con{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 750rpx;
+    height: 175rpx;
+    border-bottom: 1rpx solid #f0f0f0;
+    background-color: #fff;
+  }
+  .con .cover{
+    width: 107rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .con .cover image{
+    width: 107rpx;
+    height: 146rpx;
+  }
+  .con .info{
+    margin-left: 20rpx;
+    width: 615rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .con .info view{
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    color: #999;
+    font-size: 25rpx;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .con .info .title{
+    color: #333;
+    height: 60rpx;
+    line-height: 70rpx;
+    font-size: 38rpx;
+    font-size: 600;
+  }
+
+  .iconfont {
+    font-size: 40rpx;
+  }
+</style>
+<template>
+  <view>
+    <view class="author">
+      <image src="/img/1.png" />
+    </view>
+    <view class="description">
+      描述描述描述描述描述描述描述描述描述描述描述描述描述
+      描述描述描述描述描述描述描述描述描述
+      描述描述描述描述
+      描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述
+    </view>
+    <view class="Info">
+      <view class="sel">
+        <view>
+          <text>11</text>
+          万
+        </view>
+        <view>累计字数</view>
+      </view>
+      <view class="sel">
+        <view>
+          <text>11</text>
+          万
+        </view>
+        <view>加入天数</view>
+      </view>
+      <view class="sel">
+        <view>
+          <text>11</text>
+          万
+        </view>
+        <view>粉丝量</view>
+      </view>
+    </view>
+    <view class="list">
+      <view class="listTitle">
+        <view>畅销精选</view>
+        <view>
+          更多
+          <icon class="iconfont icon-jiantouyou"></ivon>
+        </view>
+      </view>
+      <view class="listCon">
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+        <view class="con">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+// 页面跳转，传参写法
+// this.$redirect('./page2', {a: 1, b: 2})
+// this.$redirect({
+//   url: './pages?a=1&b=2'
+// });
+// this.$navigate(url)
+
+
+// 水平垂直居中
+// display: flex;
+// align-items: center;
+// justify-content: center;
+
+// 居右
+// flex-direction:row;
+// justify-content:flex-end
+
+// vertical-align:middle;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+
+// 自动换行
+// word-break:break-all;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+<script>
+  import wepy from 'wepy'
+  export default class Authorinfo extends wepy.page {
+    config = {
+      navigationBarTitleText: '作者信息'
+    }
+    // 生命组件ID
+    components = {
+
+    }
+
+    mixins = []
+
+    data = {
+    }
+
+    computed = {}
+
+    methods = {
+      // 底部导航跳转
+      goPage (url, evt) {
+        // 销毁当前页{跳转}
+        this.$redirect(url)
+      }
+    }
+
+    events = {}
+
+    onLoad() {
+      // 个人信息初始化
+    }
+  }
+</script>

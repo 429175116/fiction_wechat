@@ -1,0 +1,225 @@
+<style lang="less">
+  page{
+    background-color: #f7f7f7;
+  }
+  .icon-jiantouyou{
+    color: #c6c6c6;
+  }
+  .icon-xingxing,
+  .icon-yanjing,
+  .icon-yueliang,
+  .icon-book{
+    color: #00aa91;
+  }
+  .userinfo{
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20rpx 35rpx;
+    border-bottom: 1rpx solid #dcdcdc;
+  }
+  .userinfo image {
+    width: 140rpx;
+    height: 140rpx;
+    border-radius: 70rpx;
+  }
+  .userinfo view {
+    padding-left: 30rpx;
+  }
+
+  .recharge{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20rpx 35rpx;
+    background-color: #fff;
+    margin: 20rpx 0;
+  }
+  .recharge view{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .recharge .icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+    width: 45rpx;
+    height: 45rpx;
+    border-radius: 26rpx;
+    background-color: #ffc408;
+    margin-right: 20rpx;
+  }
+  .rechargeButton{
+    width: 120rpx;
+    height: 50rpx;
+    color: #fff;
+    border-radius: 10rpx;
+    background-color: #00aa91;
+    display: flex;
+    align-items: center;
+    justify-content: center !important;
+  }
+  .list{
+    padding: 20rpx 35rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    height: 50rpx;
+    border-bottom: 1rpx solid #dcdcdc;
+    color: #333;
+    vertical-align:middle;
+  }
+  .list{
+    height: 50rpx;
+    line-height: 50rpx;
+  }
+  .info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 750rpx;
+    height: 84rpx;
+    background: #fff;
+  }
+  .info view{
+    width: 249rpx;
+    height: 50rpx;
+    border-right: 1rpx solid #dcdcdc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .info view:nth-child(3){
+    border-width: 0;
+  }
+</style>
+<template>
+  <view>
+    <view class="userinfo">
+      <image src="/img/1.png" />
+      <view>昵称</view>
+    </view>
+    <view class="info">
+      <view>
+        0关注
+      </view>
+      <view>
+        0关注
+      </view>
+      <view>
+        0关注
+      </view>
+    </view>
+    <view class="recharge">
+      <view>
+        <view class="icon">￥</view>
+        <text>1点</text>
+      </view>
+      <view class="rechargeButton">充值</view>
+    </view>
+    <view class="list">
+      <view>
+        <icon class="iconfont icon-xingxing"></ivon>
+        等级
+      </view>
+      <view>
+        LV6.高级VIP
+        <icon class="iconfont icon-jiantouyou"></ivon>
+      </view>
+    </view>
+    <view class="list">
+      <view>
+        <icon class="iconfont icon-yanjing"></ivon>
+        浏览纪录
+      </view>
+      <view>
+        <icon class="iconfont icon-jiantouyou"></ivon>
+      </view>
+    </view>
+    <view class="list">
+      <view>
+        <icon class="iconfont icon-yueliang"></ivon>
+        夜间模式
+      </view>
+      <view>
+        <icon class="iconfont icon-jiantouyou"></ivon>
+      </view>
+    </view>
+    <view class="list">
+      <view>
+        <icon class="iconfont icon-book"></ivon>
+        我的书单
+      </view>
+      <view>
+        <icon class="iconfont icon-jiantouyou"></ivon>
+      </view>
+    </view>
+  </view>
+</template>
+// 页面跳转，传参写法
+// this.$redirect('./page2', {a: 1, b: 2})
+// this.$redirect({
+//   url: './pages?a=1&b=2'
+// });
+// this.$navigate(url)
+
+
+// 水平垂直居中
+// display: flex;
+// align-items: center;
+// justify-content: center;
+
+// 居右
+// flex-direction:row;
+// justify-content:flex-end
+
+// vertical-align:middle;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+
+// 自动换行
+// word-break:break-all;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+<script>
+  import wepy from 'wepy'
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的'
+    }
+    // 生命组件ID
+    components = {
+
+    }
+
+    mixins = []
+
+    data = {
+    }
+
+    computed = {}
+
+    methods = {
+      // 底部导航跳转
+      goPage (url, evt) {
+        // 销毁当前页{跳转}
+        this.$redirect(url)
+      }
+    }
+
+    events = {}
+
+    onLoad() {
+      // 个人信息初始化
+    }
+  }
+</script>
