@@ -165,24 +165,23 @@
       <!-- </block> -->
     </swiper>
     <view class="conNav">
-      <view class="sel">
-        <!-- <image src="/img/user1.png"  /> -->
+      <view class="sel" @tap="goBookListAndType" data-title="分类">
         <icon class="iconfont icon-fenlei" />
         <view>分类</view>
       </view>
-      <view class="sel">
+      <view class="sel" @tap="goBookListAndType" data-title="排行">
         <icon class="iconfont icon-paihangbang" />
         <view>排行</view>
       </view>
-      <view class="sel" @tap="clickMore">
+      <view class="sel" @tap="goBookListAndType" data-title="免费">
         <icon class="iconfont icon-mianfei" />
         <view>免费</view>
       </view>
-      <view class="sel" @tap="clickMore">
+      <view class="sel" @tap="goBookListAndType" data-title="VIP">
         <icon class="iconfont icon-VIP" />
         <view>VIP</view>
       </view>
-      <view class="sel" @tap="clickMore">
+      <view class="sel" @tap="goBookListAndType" data-title="完本">
         <icon class="iconfont icon-shu" />
         <view>完本</view>
       </view>
@@ -541,6 +540,11 @@
     // 进入书本详情
     goBookDetails(e) {
       this.$navigate('/pages/details')
+    }
+    // 进入分类列表
+    goBookListAndType(e) {
+      let typeName = e.currentTarget.dataset.title
+      this.$navigate(`/pages/bookListAndType?typename=${typeName}`)
     }
     // 加载轮播图
     clickMore(e) {

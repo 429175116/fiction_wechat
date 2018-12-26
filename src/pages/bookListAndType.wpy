@@ -11,7 +11,7 @@
     width: 200rpx;
     margin-bottom: 120rpx;
   }
-  .menuClass {
+  .bookClass {
     width: 180rpx;
     height: 100rpx;
     line-height: 100rpx;
@@ -82,15 +82,15 @@
   <scroll-view scroll-y="hidden">
     <view>
       <view class="containerleft">
-        <repeat for="{{ menuClass }}" item="item">
-          <li wx:if='{{ item.id == menuClassId }}' class="menuClass active" @tap="changeMenuClass" data-id='{{ item.id }}'>{{ item.name }}</li>
-          <li wx:else class="menuClass notactive" @tap="changeMenuClass" data-id='{{ item.id }}'>{{ item.name }}</li>
+        <repeat for="{{ bookClass }}" item="item">
+          <li wx:if='{{ item.id == bookClassId }}' class="bookClass active" @tap="changebookClass" data-id='{{ item.id }}'>{{ item.name }}</li>
+          <li wx:else class="bookClass notactive" @tap="changebookClass" data-id='{{ item.id }}'>{{ item.name }}</li>
         </repeat>
-        <li class="menuClass active" @tap="changeMenuClass">1111</li>
-        <li class="menuClass notactive" @tap="changeMenuClass">1111</li>
-        <li class="menuClass notactive" @tap="changeMenuClass">1111</li>
-        <li class="menuClass notactive" @tap="changeMenuClass">1111</li>
-        <li class="menuClass notactive" @tap="changeMenuClass">1111</li>
+        <li class="bookClass active" @tap="changebookClass">1111</li>
+        <li class="bookClass notactive" @tap="changebookClass">1111</li>
+        <li class="bookClass notactive" @tap="changebookClass">1111</li>
+        <li class="bookClass notactive" @tap="changebookClass">1111</li>
+        <li class="bookClass notactive" @tap="changebookClass">1111</li>
       </view>
       <!-- <view class="container1">
         <repeat for="{{ menu }}" item="item">
@@ -152,10 +152,60 @@
     events = {}
 
     onLoad(options) {
-      console.log(options.typeid)
+      // 动态修改页面标题信息
       // 根据获取到的参数修改页面标题
+      wx.setNavigationBarTitle({
+        title: options.typename
+      })
       // 列表加载
+      this.getBookList()
       // 获取更多
+    }
+    // 获取书类型
+    getBookType() {
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/findBistroByQrcode`,
+        method: 'GET',
+        // header: {
+        //   AuthrizeOpenId: this.$parent.globalData.openId
+        // },
+        data: {
+          qr_code: this.qr_code
+        },
+        success: data => {
+          if (data.data.success) {
+
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
+          }
+        }
+      })
+    }
+    // 获取书列表-根据类型
+    getBookList() {
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/findBistroByQrcode`,
+        method: 'GET',
+        // header: {
+        //   AuthrizeOpenId: this.$parent.globalData.openId
+        // },
+        data: {
+          qr_code: this.qr_code
+        },
+        success: data => {
+          if (data.data.success) {
+
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
+          }
+        }
+      })
     }
   }
 </script>
