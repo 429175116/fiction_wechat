@@ -146,25 +146,28 @@
     width: 47rpx;
     height: 47rpx;
   }
+  .search .iconfont{
+    color: #999;
+  }
 </style>
 <template>
   <view>
     <view class="search">
       <view>
-        <image src="/img/user1.png"  />
+        <icon class="iconfont icon-sousuo" />
       </view>
       <view>
         <input type="text" />
       </view>
       <view>
-        <image src="/img/user1.png"  />
+        <icon class="iconfont icon-quxiao" />
       </view>
     </view>
     <view class="searchHistoryTitle">
       <view>搜索热词</view>
-      <view>
+      <!-- <view>
         <image src="/img/user1.png"  />
-      </view>
+      </view> -->
     </view>
     <view class="searchHistory">
       <view>33asdfasdf2</view>
@@ -177,9 +180,9 @@
     </view>
     <view class="searchHistoryTitle">
       <view>为您推荐</view>
-      <view>
+      <!-- <view>
         <image src="/img/user1.png"  />
-      </view>
+      </view> -->
     </view>
     <view class="bookList">
       <view class="list">

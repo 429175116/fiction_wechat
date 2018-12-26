@@ -84,35 +84,41 @@
     height: auto;
   }
   .basicInfo{
+    // width: 740rpx;
+    // padding: 20rpx 10rpx;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .basicInfo view:nth-child(1){
-    width: 234rpx;
-    height: 108rpx;
+  .basicInfo .basicSel{
+    width: 140rpx;
   }
-  .basicInfo view:nth-child(2),
-  .basicInfo view:nth-child(3),
-  .basicInfo view:nth-child(4){
-    width: 150rpx;
-    height: 108rpx;
+  .basicInfo .basicSel text{
+    color: #999;
+    font-weight: 500;
   }
-  .basicInfo view view{
-    width: 100%;
+  .basicInfo .basicSel view{
     text-align: center;
   }
-  .basicInfo view view:nth-child(1){
-    height: 40rpx;
-    line-height: 40rpx;
-    font-size: 40rpx;
-    color: #333;
+  .basicInfo .basicSel:nth-child(1){
+    width: 290rpx;
+    // height: 60rpx;
   }
-  .basicInfo view view:nth-child(2){
-    height: 37rpx;
-    line-height: 37rpx;
-    font-size: 30rpx;
+  .basicInfo .basicSel:nth-child(1) view{
+    text-align: left;
+  }
+  .basicInfo .basicSel view:nth-child(1){
+    font-weight: 600;
+    color: #333;
+    font-size: 35rpx;
+  }
+  .basicInfo .basicSel view:nth-child(2){
     color: #999;
+  }
+  .basicInfo .iconfont{
+    color: #ffcc01;
+    font-size: 39rpx;
   }
   .description{
     height: auto;
@@ -318,6 +324,12 @@
     height: 40rpx;
     margin-top: 15rpx;
   }
+  .tableOfContents .iconfont{
+    font-size: 35rpx;
+  }
+  .commentInfo .iconfont{
+    font-size: 33rpx;
+  }
 </style>
 <template>
   <view>
@@ -341,21 +353,37 @@
     </view>
     <view class="bookInfo">
       <view class="basicInfo">
-        <view>
-          <view>11</view>
-          <view>22</view>
+        <view class="basicSel">
+          <view>
+            11
+            <icon class="iconfont icon-xingxing" />
+            <icon class="iconfont icon-xingxing" />
+            <icon class="iconfont icon-xingxing" />
+            <icon class="iconfont icon-xingxing1" />
+            <icon class="iconfont icon-xingxing1" />
+          </view>
+          <view>评分</view>
         </view>
-        <view>
-          <view>11</view>
-          <view>22</view>
+        <view class="basicSel">
+          <view>
+            11
+            <text>万</text>
+          </view>
+          <view>人气</view>
         </view>
-        <view>
-          <view>11</view>
-          <view>22</view>
+        <view class="basicSel">
+          <view>
+            11
+            <text>万</text>
+          </view>
+          <view>点击</view>
         </view>
-        <view>
-          <view>11</view>
-          <view>22</view>
+        <view class="basicSel">
+          <view>
+            11
+            <text>万</text>
+          </view>
+          <view>粉丝</view>
         </view>
       </view>
       <view class="description">
@@ -378,7 +406,7 @@
       <view>目录</view>
       <view>
         连载至200章·13小时前更新
-        <image src="/img/1.png" />
+        <icon class="iconfont icon-jiantouyou" />
       </view>
     </view>
     <view class="commentList">
@@ -403,11 +431,11 @@
             <view class="time">2018年4月26日 18:30</view>
             <view class="operating">
               <view>
-                <image src="/img/1.png" />
+                <icon class="iconfont icon-dianzan" />
                 0000000
               </view>
               <view>
-                <image src="/img/1.png" />
+                <icon class="iconfont icon-pinglun" />
                 0000000
               </view>
             </view>
@@ -472,15 +500,15 @@
     </view>
     <view class="navSta">
       <view class="sel">
-        <image src="/img/1.png" />
+        <icon class="iconfont icon-shujia" />
         <view>加入书架</view>
       </view>
       <view class="sel">
-        <image src="/img/1.png" />
+        <icon class="iconfont icon-dingyue" />
         <view>批量订阅</view>
       </view>
       <view class="sel">
-        <image src="/img/1.png" />
+        <icon class="iconfont icon-shu1" />
         <view>立即阅读</view>
       </view>
     </view>
@@ -517,7 +545,7 @@
 // white-space:nowrap;
 <script>
   import wepy from 'wepy'
-  export default class Index extends wepy.page {
+  export default class Details extends wepy.page {
     config = {
       navigationBarTitleText: '详情'
     }

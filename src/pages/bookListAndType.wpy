@@ -1,0 +1,161 @@
+<style lang="less">
+
+  .containerleft {
+    min-height: 100vh;
+    height: auto;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background: #eee;
+    float: left;
+    width: 200rpx;
+    margin-bottom: 120rpx;
+  }
+  .menuClass {
+    width: 180rpx;
+    height: 100rpx;
+    line-height: 100rpx;
+    display: inline-block;
+    text-align: left;
+    padding-left: 20rpx;
+    border-bottom: 1rpx solid #E5E5E5;
+  }
+  .active {
+    background: #fff;
+    color: #E64340;
+    border-left: 5rpx solid #E64340;
+    border-radius: 10rpx 0 0 10rpx;
+  }
+
+
+  .listCon {
+    height: 100vh;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    float: right;
+    width: 550rpx;
+  }
+  .con{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 550rpx;
+    height: 175rpx;
+    border-bottom: 1rpx solid #f0f0f0;
+    background-color: #fff;
+  }
+  .con .cover{
+    width: 107rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .con .cover image{
+    width: 107rpx;
+    height: 146rpx;
+  }
+  .con .info{
+    margin-left: 20rpx;
+    width: 400rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .con .info view{
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    color: #999;
+    font-size: 25rpx;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .con .info .title{
+    color: #333;
+    height: 60rpx;
+    line-height: 70rpx;
+    font-size: 38rpx;
+    font-size: 600;
+  }
+</style>
+<template>
+  <scroll-view scroll-y="hidden">
+    <view>
+      <view class="containerleft">
+        <repeat for="{{ menuClass }}" item="item">
+          <li wx:if='{{ item.id == menuClassId }}' class="menuClass active" @tap="changeMenuClass" data-id='{{ item.id }}'>{{ item.name }}</li>
+          <li wx:else class="menuClass notactive" @tap="changeMenuClass" data-id='{{ item.id }}'>{{ item.name }}</li>
+        </repeat>
+        <li class="menuClass active" @tap="changeMenuClass">1111</li>
+        <li class="menuClass notactive" @tap="changeMenuClass">1111</li>
+        <li class="menuClass notactive" @tap="changeMenuClass">1111</li>
+        <li class="menuClass notactive" @tap="changeMenuClass">1111</li>
+        <li class="menuClass notactive" @tap="changeMenuClass">1111</li>
+      </view>
+      <!-- <view class="container1">
+        <repeat for="{{ menu }}" item="item">
+        
+        </repeat>
+        <view wx:if="{{menu.length == 0}}" class="dataNullShow">暂无菜品</view>
+      </view> -->
+      <view class="listCon">
+        <view class="con" @tap="goBookDetails">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+        <view class="con" @tap="goBookDetails">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">书名书名书名书名书名书名</view>
+            <view>描述描述描述描述描述描述描述描述描述</view>
+            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class Booklistandtype extends wepy.page {
+    config = {
+      navigationBarTitleText: '列表包含分类'
+    }
+    // 生命组件ID
+    components = {
+
+    }
+
+    mixins = []
+
+    data = {
+    }
+
+    computed = {}
+
+    methods = {
+      // 底部导航跳转
+      goPage (url, evt) {
+        // 销毁当前页{跳转}
+        this.$redirect(url)
+      }
+    }
+
+    events = {}
+
+    onLoad(options) {
+      console.log(options.typeid)
+      // 根据获取到的参数修改页面标题
+      // 列表加载
+      // 获取更多
+    }
+  }
+</script>

@@ -33,7 +33,7 @@
     align-items: center;
     justify-content: center;
     background-color: #fff;
-    border-left: 1rpx solid #ccc;
+    // border-left: 1rpx solid #ccc;
     color: #00c0a4;
   }
   
@@ -147,20 +147,20 @@
         <view>分类</view>
         <view>分类</view>
       </scroll-view>
-      <view class="search">
+      <view class="search" @tap="goSearch">
         <icon class="iconfont icon-sousuo" />
       </view>
     </view>
     <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <!-- <block wx:for="{{imgUrls}}"> -->
         <swiper-item>
-          <image src="/img/1.png" class="slide-image" width="355" height="150" />
+          <image src="/img/1.png" @tap="goBookDetails" class="slide-image" width="355" height="150" />
         </swiper-item>
         <swiper-item>
-          <image src="/img/1.png" class="slide-image" width="355" height="150" />
+          <image src="/img/1.png" @tap="goBookDetails" class="slide-image" width="355" height="150" />
         </swiper-item>
         <swiper-item>
-          <image src="/img/1.png" class="slide-image" width="355" height="150" />
+          <image src="/img/1.png" @tap="goBookDetails" class="slide-image" width="355" height="150" />
         </swiper-item>
       <!-- </block> -->
     </swiper>
@@ -174,15 +174,15 @@
         <icon class="iconfont icon-paihangbang" />
         <view>排行</view>
       </view>
-      <view class="sel">
+      <view class="sel" @tap="clickMore">
         <icon class="iconfont icon-mianfei" />
         <view>免费</view>
       </view>
-      <view class="sel">
+      <view class="sel" @tap="clickMore">
         <icon class="iconfont icon-VIP" />
         <view>VIP</view>
       </view>
-      <view class="sel">
+      <view class="sel" @tap="clickMore">
         <icon class="iconfont icon-shu" />
         <view>完本</view>
       </view>
@@ -197,7 +197,7 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -207,7 +207,7 @@
             <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
           </view>
         </view>
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -230,7 +230,7 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -240,7 +240,7 @@
             <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
           </view>
         </view>
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -263,7 +263,7 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -273,7 +273,7 @@
             <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
           </view>
         </view>
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -296,7 +296,7 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -306,7 +306,7 @@
             <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
           </view>
         </view>
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -329,7 +329,7 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -339,7 +339,7 @@
             <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
           </view>
         </view>
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -362,7 +362,7 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -372,7 +372,7 @@
             <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
           </view>
         </view>
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -395,7 +395,7 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -405,7 +405,7 @@
             <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
           </view>
         </view>
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -428,7 +428,7 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -438,7 +438,7 @@
             <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
           </view>
         </view>
-        <view class="con">
+        <view class="con" @tap="goBookDetails">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -533,6 +533,14 @@
     // 加载轮播图
     getSwiperData() {
 
+    }
+    // 进入搜索
+    goSearch() {
+      this.$navigate('/pages/search')
+    }
+    // 进入书本详情
+    goBookDetails(e) {
+      this.$navigate('/pages/details')
     }
     // 加载轮播图
     clickMore(e) {
