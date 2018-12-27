@@ -402,7 +402,7 @@
         <view>1111</view>
       </view>
     </view>
-    <view class="tableOfContents">
+    <view class="tableOfContents" @tap="goContents">
       <view>目录</view>
       <view>
         连载至200章·13小时前更新
@@ -445,7 +445,7 @@
       <view class="dataNullShow">暂无评论</view>
       <view class="dataNullShow seeMore">加载更多</view>
     </view>
-    <view class="attentionAuthor">
+    <view class="attentionAuthor" @tap="goAuthor">
       <view class="authorInfo">
         <image src="/img/1.png" />
         <view class="info">
@@ -458,35 +458,35 @@
     <view class="recommend">
       喜欢这本书的人也喜欢
       <view class="recommendList">
-        <view class="recommendCon">
+        <view class="recommendCon" @tap="recommendBook">
           <image src="/img/1.png" />
           <view>书名书名书名</view>
         </view>
-        <view class="recommendCon">
+        <view class="recommendCon" @tap="recommendBook">
           <image src="/img/1.png" />
           <view>书名书名书名</view>
         </view>
-        <view class="recommendCon">
+        <view class="recommendCon" @tap="recommendBook">
           <image src="/img/1.png" />
           <view>书名书名书名</view>
         </view>
-        <view class="recommendCon">
+        <view class="recommendCon" @tap="recommendBook">
           <image src="/img/1.png" />
           <view>书名书名书名</view>
         </view>
-        <view class="recommendCon">
+        <view class="recommendCon" @tap="recommendBook">
           <image src="/img/1.png" />
           <view>书名书名书名</view>
         </view>
-        <view class="recommendCon">
+        <view class="recommendCon" @tap="recommendBook">
           <image src="/img/1.png" />
           <view>书名书名书名</view>
         </view>
-        <view class="recommendCon">
+        <view class="recommendCon" @tap="recommendBook">
           <image src="/img/1.png" />
           <view>书名书名书名</view>
         </view>
-        <view class="recommendCon">
+        <view class="recommendCon" @tap="recommendBook">
           <image src="/img/1.png" />
           <view>书名书名书名</view>
         </view>
@@ -507,66 +507,55 @@
         <icon class="iconfont icon-dingyue" />
         <view>批量订阅</view>
       </view>
-      <view class="sel">
+      <view class="sel" @tap="lookBook">
         <icon class="iconfont icon-shu1" />
         <view>立即阅读</view>
       </view>
     </view>
   </view>
 </template>
-// 页面跳转，传参写法
-// this.$redirect('./page2', {a: 1, b: 2})
-// this.$redirect({
-//   url: './pages?a=1&b=2'
-// });
-// this.$navigate(url)
-
-
-// 水平垂直居中
-// display: flex;
-// align-items: center;
-// justify-content: center;
-
-// 居右
-// flex-direction:row;
-// justify-content:flex-end
-
-// vertical-align:middle;
-
-// overflow:hidden;
-// text-overflow:ellipsis;
-// white-space:nowrap;
-
-// 自动换行
-// word-break:break-all;
-
-// overflow:hidden;
-// text-overflow:ellipsis;
-// white-space:nowrap;
 <script>
-  import wepy from 'wepy'
-  export default class Details extends wepy.page {
-    config = {
-      navigationBarTitleText: '详情'
-    }
-    components = {
+import wepy from 'wepy'
+export default class Details extends wepy.page {
+  config = {
+    navigationBarTitleText: '详情'
+  }
+  components = {
 
-    }
+  }
 
-    mixins = []
+  mixins = []
 
-    data = {
+  data = {
 
-    }
+  }
 
-    computed = {}
+  computed = {}
 
-    methods = {}
-
-    events = {}
-
-    onLoad() {
-
+  methods = {
+    // 查看作者
+    goAuthor() {
+      this.$navigate('/pages/authorInfo')
+    },
+    // 立即阅读
+    lookBook() {
+      this.$navigate(`/pages/lookFiction?bookid=${112}`)
+    },
+    // 查看目录
+    goContents() {
+      this.$navigate(`/pages/bookContents?bookid=${112}`)
+    },
+    // 点击推荐的书
+    recommendBook() {
+      // 刷新当前页数据
+      console.log('刷新当前页数据')
     }
   }
+
+  events = {}
+
+  onLoad() {
+
+  }
+}
 </script>

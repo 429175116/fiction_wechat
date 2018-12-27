@@ -1,0 +1,155 @@
+<style lang="less">
+  .tableOfContents{
+    width: 750rpx;
+    transition: transform .15s;
+    background-color: #fff;
+    transform: translate(0,0);
+    color: #33373d;
+    fill: currentColor;
+    font-family: sans-serif;
+    line-height: 1.5;
+    position: relative;
+  }
+  .catelogX{
+    margin-top: 100rpx;
+    overflow: auto;
+  }
+  .module-header{
+    width: 710rpx;
+    line-height: 60rpx;
+    position: fixed;
+    top: 0;
+    height: 60rpx;
+    border-top: 0;
+    padding: 20rpx;
+    z-index:999;
+    background-color: #fff;
+  }
+  .module-header-l{
+    float: left;
+  }
+  .module-header-r{
+    float: right;
+  }
+  .module-header-l span,
+  .module-header-r span{
+    line-height: 28px;
+    font-size: .875rem;
+    font-weight: 500;
+  }
+  .module-header-l span{
+    font-weight: 600;
+  }
+  .volumes{
+    border-bottom: 1px solid #f0f1f2;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+  }
+  .volumes li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+    list-style: none;
+    padding-right: 2rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font: 15px/22px a;
+    display: block;
+    overflow: hidden;
+    padding: 12px 1rem;
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+    border-top: 1px solid #f0f1f2;
+  }
+  .volumes .action{
+    color: #ed424b;
+  }
+</style>
+<template>
+  <view>
+    <!-- <view class="chapterNav">目录</view> -->
+    <view class="module-header">
+      <view class="module-header-l">
+        <span>
+          共
+          <span>359</span>
+          章
+        </span>
+      </view>
+      <view class="module-header-r">
+        <span>倒序</span>
+      </view>
+    </view>
+    <view class="tableOfContents">
+      <view class="catelogX">
+        <ul class="volumes">
+          <li @tap="lookBook" class="action">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+        </ul>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class Bookcontents extends wepy.page {
+  config = {
+    navigationBarTitleText: '目录页'
+  }
+  // 生命组件ID
+  components = {
+
+  }
+
+  mixins = []
+
+  data = {
+  }
+
+  computed = {}
+
+  methods = {
+    // 立即阅读
+    lookBook() {
+      this.$navigate(`/pages/lookFiction?bookid=${112}&chapter=${22}`)
+    }
+  }
+
+  events = {}
+
+  onLoad(options) {
+    console.log(options.bookid)
+    // 根据获取到的参数修改页面标题
+    // 列表加载
+    // 获取更多
+  }
+}
+</script>

@@ -623,7 +623,8 @@
 
     events = {}
 
-    onLoad() {
+    onLoad(options) {
+      console.log(options.bookid)
       // console.log('onLoad')
       // 初始化页面时，控制日夜间模式
       this.getAtNightStatus()

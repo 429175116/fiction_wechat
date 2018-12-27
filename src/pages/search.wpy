@@ -157,9 +157,9 @@
         <icon class="iconfont icon-sousuo" />
       </view>
       <view>
-        <input type="text" />
+        <input type="text" value="{{searchKey}}" bindinput="searchBook" placeholder="找书" />
       </view>
-      <view>
+      <view @tap="inputReset">
         <icon class="iconfont icon-quxiao" />
       </view>
     </view>
@@ -214,59 +214,45 @@
     </view>
   </view>
 </template>
-// 页面跳转，传参写法
-// this.$redirect('./page2', {a: 1, b: 2})
-// this.$redirect({
-//   url: './pages?a=1&b=2'
-// });
-// this.$navigate(url)
-
-
-// 水平垂直居中
-// display: flex;
-// align-items: center;
-// justify-content: center;
-
-// 居右
-// flex-direction:row;
-// justify-content:flex-end
-
-// vertical-align:middle;
-
-// overflow:hidden;
-// text-overflow:ellipsis;
-// white-space:nowrap;
-
-// 自动换行
-// word-break:break-all;
-
-// overflow:hidden;
-// text-overflow:ellipsis;
-// white-space:nowrap;
 <script>
-  import wepy from 'wepy'
-  export default class Search extends wepy.page {
-    config = {
-      navigationBarTitleText: '搜索'
-    }
-    components = {
+import wepy from 'wepy'
+export default class Search extends wepy.page {
+  config = {
+    navigationBarTitleText: '搜索'
+  }
+  components = {
 
-    }
+  }
 
-    mixins = []
+  mixins = []
 
-    data = {
+  data = {
+    searchKey: '' // 搜索key
+  }
 
-    }
+  computed = {}
 
-    computed = {}
+  methods = {}
 
-    methods = {}
+  events = {}
 
-    events = {}
+  onLoad() {
 
-    onLoad() {
-
+  }
+  // 搜索
+  searchBook(e) {
+    let searchKey = e.detail.value
+    console.log(searchKey)
+    if(searchKey === ''){
+      return
     }
   }
+  // 清空搜索框中的值
+  inputReset() {
+    this.setData({
+      searchKey: ''
+    })
+  }
+  
+}
 </script>

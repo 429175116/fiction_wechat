@@ -93,13 +93,14 @@ export default class extends wepy.app {
     pages: [
       'pages/index', // 首页
       'pages/user', // 个人中心
-      'pages/authorInfo', // 作者中心
+      'pages/authorInfo', // 作者信息
       'pages/browseRecord', // 浏览历史
       'pages/indexSonList', // 首页分类列表
       'pages/details', // 详情
       'pages/bookListAndType', // 分类，包含列表
       'pages/search', // 搜索
       'pages/bookshelf', // 书架
+      'pages/bookContents', // 目录
       'pages/lookFiction' // 看书页
     ],
     window: {
