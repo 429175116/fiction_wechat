@@ -107,7 +107,7 @@
 // white-space:nowrap;
 <script>
   import wepy from 'wepy'
-  export default class Index extends wepy.page {
+  export default class Indexsonlist extends wepy.page {
     config = {
       navigationBarTitleText: '分类列表'
     }

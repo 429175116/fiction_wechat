@@ -2,6 +2,16 @@
   page{
     background-color: #f7f7f7;
   }
+  #getUserInfo {
+    position:fixed;
+    top:0;
+    width:750rpx !important;
+    height:100% !important;
+    padding:0rpx !important;
+    z-index:999;
+    background-color:rgba(255, 255, 255, 0);
+    color:#fff;
+  }
   .topNav{
     background-color: #fff;
     position: relative;
@@ -449,6 +459,9 @@
         </view>
       </view>
     </view>
+    <view>
+      <button open-type="getUserInfo" wx:if="{{authorizationButton}}" id='getUserInfo' lang="zh_CN" @getuserinfo="onGetUserInfo"></button>
+    </view>
     <nav @childFn.user="goPage" />
   </view>
 </template>
@@ -482,75 +495,326 @@
 // text-overflow:ellipsis;
 // white-space:nowrap;
 <script>
-  import wepy from 'wepy'
-  import nav from '../components/nav' // 底部导航
-  export default class Index extends wepy.page {
-    config = {
-      navigationBarTitleText: '首页名称'
-    }
-    // 生命组件ID
-    components = {
-    // 底部导航
-      nav: nav
-    }
 
-    mixins = []
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '首页名称'
+  }
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  }
 
-    data = {
-      imgUrls: [
-        'https://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-        'https://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-        'https://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
-      ],
-      indicatorDots: true,
-      autoplay: true,
-      interval: 1000,
-      duration: 1000,
-      goimg: '/img/1.png'
-    }
+  mixins = []
 
-    computed = {}
+  data = {
+    indicatorDots: true,
+    autoplay: true,
+    interval: 1000,
+    duration: 1000,
+    goimg: '/img/1.png',
+    authorizationButton: true // 控制授权按钮是否显示
+  }
 
-    onLoad() {
-      // 加载分类--顶部
-      // 加载轮播图
-      this.getSwiperData()
-      // 加载分类
-      // 加载分类内容
-    }
+  computed = {}
 
-    methods = {
-      // 底部导航跳转
-      goPage (url, evt) {
-        // 销毁当前页{跳转}
-        this.$redirect(url)
-      }
-    }
-
-    events = {}
-
+  onLoad() {
+    // 加载分类--顶部
     // 加载轮播图
-    getSwiperData() {
+    this.getSwiperData()
+    // 加载分类
+    this.firstCategory()
+    // 加载分类内容
+    // 获取用户信息
+    this.onGetUserInfo()
+  }
 
-    }
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
     // 进入搜索
     goSearch() {
       this.$navigate('/pages/search')
-    }
+    },
     // 进入书本详情
     goBookDetails(e) {
       this.$navigate('/pages/details')
-    }
+    },
     // 进入分类列表
     goBookListAndType(e) {
       let typeName = e.currentTarget.dataset.title
       this.$navigate(`/pages/bookListAndType?typename=${typeName}`)
-    }
-    // 加载轮播图
+    },
+    // 进入更多
     clickMore(e) {
       let id = e.currentTarget.dataset.id
       console.log(id)
       this.$navigate(`/pages/indexSonList?typeid=${id}`)
     }
   }
+
+  events = {}
+
+  // 加载轮播图
+  getSwiperData() {
+
+  }
+  // 获取一级分类
+  firstCategory() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/firstCategory`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取二级分类
+  secondCategory() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/secondCategory${1}`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // xx新书
+  newBooksOfFirstCategory() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory${1}`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 人气连载
+  popularUncompelete() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/popularUncompelete${1}`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 人气分类
+  popularCateGory() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/popularCateGory${1}`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 24小时热销榜
+  twentyFourHourHotSale() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/twentyFourHourHotSale${1}`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 点击周榜
+  clickWeekBang() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/clickWeekBang${1}`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 完本精品
+  compeleteBoutique() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/compeleteBoutique${1}`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取用户信息
+  onGetUserInfo() {
+    // 查看是否授权
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: res => {
+              this.userInfo = res.userInfo
+              if (this.userInfo) {
+                this.authorizationButton = false
+                this.avatarUrl = this.userInfo.avatarUrl
+                this.nickName = this.userInfo.nickName
+                // 数据生效
+                this.$apply()
+                // 提交用户信息
+                this.setUserInfo(this.userInfo)
+                // 登陆
+                // this.userLogin(this.userInfo)
+                this.$parent.globalData.userInfo = this.userInfo
+                this.$apply()
+              }
+            }
+          })
+        }
+      }
+    })
+  }
+  // 提交用户信息
+  setUserInfo(userInfo) {
+    if (this.$parent.globalData.openId) {
+      return
+    }
+    wepy.login({
+      success: res => {
+        if (res.code) {
+          this.code = res.code
+          wx.request({
+            url: `${this.$parent.globalData.requestUrl}/api/addOrUpdateUser`,
+            method: 'POST',
+            data: {
+              code: res.code,
+              nick_name: this.userInfo.nickName,
+              profile: this.userInfo.avatarUrl
+            },
+            success: data => {
+              if (data.data.success) {
+                // 获取用户信息,及openID  并存入全局
+                this.userInfo = data.data.user
+                this.openId = this.userInfo.open_id
+                this.$parent.globalData.userInfo = this.userInfo
+                this.$parent.globalData.openId = this.openId
+                this.$apply()
+              } else {
+                wx.showModal({
+                  title: '',
+                  content: data.data.errmsg
+                })
+              }
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
+  }
+}
+
+
+// 面向对象实验
+// onLoad() {
+//   let getuser = new onGetUserInfo()
+//   console.log(getuser)
+//   if (getuser) {
+//     getuser.setUserInfo()
+//   }
+// }
+// function onGetUserInfo() {
+//   console.log('onGetUserInfo')
+//   // 查看是否授权
+//   wx.getSetting({
+//     success: res => {
+//       if (res.authSetting['scope.userInfo']) {
+//         // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+//         wx.getUserInfo({
+//           success: res => {
+//             let userInfo = res.userInfo
+//             if (userInfo) {
+//               // this.authorizationButton = false
+//               // this.avatarUrl = this.userInfo.avatarUrl
+//               // this.nickName = this.userInfo.nickName
+//               this.userInfo = userInfo
+//               console.log(userInfo)
+//               return true
+//             }
+//           }
+//         })
+//       }
+//     }
+//   })
+// }
+// onGetUserInfo.prototype.setUserInfo = function() {
+//   console.log(this.userInfo)
+//   console.log('setUserInfo')
+//   console.log(this.userInfo)
+// }
 </script>
