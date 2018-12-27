@@ -64,9 +64,8 @@
     font-size: 30rpx;
     text-align: center;
   }
-  .nav image{
-    width: 40rpx;
-    height: 40rpx;
+  .nav .action{
+    color: #ed424b;
   }
   .setBookshelf{
     position: absolute;
@@ -446,24 +445,24 @@
     </view>
     <view class="setBookshelf" wx:if="{{showSetting}}">加入书架</view>
     <view class="nav" wx:if="{{showSetting}}">
-      <view class="sel" @tap="tableOfContentsShow">
-        <image src="/img/user1.png" />
+      <view class="sel action" @tap="tableOfContentsShow">
+        <icon class="iconfont icon-mulu" />
         <view>目录</view>
       </view>
       <view class="sel" @tap="readBtnProgShow">
-        <image src="/img/user1.png" />
+        <icon class="iconfont icon-jindu" />
         <view>进度</view>
       </view>
       <view class="sel" @tap="readOptSet">
-        <image src="/img/user1.png" />
+        <icon class="iconfont icon-setting" />
         <view>设置</view>
       </view>
       <view class="sel" @tap="atNightSet">
-        <image src="/img/user1.png" />
+        <icon class="iconfont icon-taiyang" />
         <view>夜间</view>
       </view>
       <view class="sel">
-        <image src="/img/user1.png" />
+        <icon class="iconfont icon-pinglun" />
         <view>评论</view>
       </view>
     </view>

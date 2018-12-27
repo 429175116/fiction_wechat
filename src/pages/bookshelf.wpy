@@ -140,6 +140,11 @@ export default class Bookshelf extends wepy.page {
   computed = {}
 
   methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
     // 进入书本详情
     goBookDetails(e) {
       this.$navigate('/pages/details')
