@@ -59,7 +59,6 @@
   .list .cover{
     width: 107rpx;
     height: 146rpx;
-    // border: 1rpx solid red;
   }
   .list .cover image{
     width: 107rpx;
@@ -67,9 +66,8 @@
   }
   .list .info{
     margin-left: 20rpx;
-    width: 490rpx;
+    width: 597rpx;
     height: 146rpx;
-    // border: 1rpx solid red;
   }
   .list .info view{
     width: 100%;
@@ -87,18 +85,6 @@
     line-height: 70rpx;
     font-size: 38rpx;
     font-size: 600;
-  }
-  .list .operating{
-    width: 107rpx;
-    height: 146rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    // border: 1rpx solid red;
-  }
-  .list .operating image{
-    width: 47rpx;
-    height: 47rpx;
   }
 </style>
 <template>
@@ -127,76 +113,66 @@
           <view>描述描述描述描述描述描述描述描述描述</view>
           <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
         </view>
-        <view class="operating">
-          <image src="/img/plus.png" />
-        </view>
       </view>
     </view>
     <nav @childFn.user="goPage" />
   </view>
 </template>
-// 页面跳转，传参写法
-// this.$redirect('./page2', {a: 1, b: 2})
-// this.$redirect({
-//   url: './pages?a=1&b=2'
-// });
-// this.$navigate(url)
-
-
-// 水平垂直居中
-// display: flex;
-// align-items: center;
-// justify-content: center;
-
-// 居右
-// flex-direction:row;
-// justify-content:flex-end
-
-// vertical-align:middle;
-
-// overflow:hidden;
-// text-overflow:ellipsis;
-// white-space:nowrap;
-
-// 自动换行
-// word-break:break-all;
-
-// overflow:hidden;
-// text-overflow:ellipsis;
-// white-space:nowrap;
 <script>
-  import wepy from 'wepy'
-  import nav from '../components/nav' // 底部导航
-  export default class Bookshelf extends wepy.page {
-    config = {
-      navigationBarTitleText: '书架'
-    }
-    // 生命组件ID
-    components = {
-    // 底部导航
-      nav: nav
-    }
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Bookshelf extends wepy.page {
+  config = {
+    navigationBarTitleText: '书架'
+  }
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  }
 
-    mixins = []
+  mixins = []
 
-    data = {
-      
-    }
+  data = {
+    
+  }
 
-    computed = {}
+  computed = {}
 
-    methods = {
-      // 底部导航跳转
-      goPage (url, evt) {
-        // 销毁当前页{跳转}
-        this.$redirect(url)
-      }
-    }
-
-    events = {}
-
-    onLoad() {
-
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
     }
   }
+
+  events = {}
+
+  onLoad() {
+    // 用户收藏的书籍
+    this.myStore()
+  }
+  // 用户收藏的书籍
+  myStore() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/myStore`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+}
 </script>
