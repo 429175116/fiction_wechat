@@ -441,7 +441,8 @@ export default class Index extends wepy.page {
     // 进入分类列表
     goBookListAndType(e) {
       let typeName = e.currentTarget.dataset.title
-      this.$navigate(`/pages/bookListAndType?typename=${typeName}`)
+      let id = this.thisfirstCategoryId
+      this.$navigate(`/pages/bookListAndType?typename=${typeName}&typeid=${id}`)
     },
     // 进入更多
     clickMore(e) {

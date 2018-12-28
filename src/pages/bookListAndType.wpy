@@ -20,7 +20,7 @@
     padding-left: 20rpx;
     border-bottom: 1rpx solid #E5E5E5;
   }
-  .active {
+  .action {
     background: #fff;
     color: #E64340;
     border-left: 5rpx solid #E64340;
@@ -82,22 +82,11 @@
   <scroll-view scroll-y="hidden">
     <view>
       <view class="containerleft">
-        <repeat for="{{ bookClass }}" item="item">
-          <li wx:if='{{ item.id == bookClassId }}' class="bookClass active" @tap="changebookClass" data-id='{{ item.id }}'>{{ item.name }}</li>
-          <li wx:else class="bookClass notactive" @tap="changebookClass" data-id='{{ item.id }}'>{{ item.name }}</li>
+        <repeat for="{{ secondCategoryList }}" item="item">
+          <li class="bookClass {{thissecondCategoryId == item.id ? 'action':'noaction'}}" @tap="changebookClass" data-id='{{ item.id }}'>{{ item.name }}</li>
         </repeat>
-        <li class="bookClass active" @tap="changebookClass">1111</li>
-        <li class="bookClass notactive" @tap="changebookClass">1111</li>
-        <li class="bookClass notactive" @tap="changebookClass">1111</li>
-        <li class="bookClass notactive" @tap="changebookClass">1111</li>
-        <li class="bookClass notactive" @tap="changebookClass">1111</li>
+        <view wx:if="{{secondCategoryList.length == 0}}" class="dataNullShow">暂无子类型</view>
       </view>
-      <!-- <view class="container1">
-        <repeat for="{{ menu }}" item="item">
-        
-        </repeat>
-        <view wx:if="{{menu.length == 0}}" class="dataNullShow">暂无菜品</view>
-      </view> -->
       <view class="listCon">
         <view class="con" @tap="goBookDetails">
           <view class="cover">
@@ -137,6 +126,8 @@
     mixins = []
 
     data = {
+      secondCategoryList: null, // 分类列表
+      thissecondCategoryId: ''
     }
 
     computed = {}
@@ -146,6 +137,12 @@
       goPage (url, evt) {
         // 销毁当前页{跳转}
         this.$redirect(url)
+      },
+      changebookClass(e) {
+        let id = e.currentTarget.dataset.id
+        this.thissecondCategoryId = id
+        // 获取书列表-根据类型
+        this.getBookList(id)
       }
     }
 
@@ -158,23 +155,23 @@
         title: options.typename
       })
       // 列表加载
-      this.getBookList()
+      // 获取二级分类
+      this.secondCategory(options.typeid)
       // 获取更多
     }
     // 获取书类型
-    getBookType() {
+    secondCategory(id) {
       wx.request({
-        url: `${this.$parent.globalData.requestUrl}/api/findBistroByQrcode`,
+        url: `${this.$parent.globalData.requestUrl}/api/secondCategory/${id}`,
         method: 'GET',
-        // header: {
-        //   AuthrizeOpenId: this.$parent.globalData.openId
-        // },
-        data: {
-          qr_code: this.qr_code
-        },
         success: data => {
           if (data.data.success) {
-
+            this.secondCategoryList = data.data.second_categories
+            if (this.secondCategoryList.length > 0) {
+              this.thissecondCategoryId = this.secondCategoryList[0].id
+              this.getBookList(this.thissecondCategoryId)
+            }
+            this.$apply()
           } else {
             wx.showModal({
               title: '',
@@ -185,16 +182,11 @@
       })
     }
     // 获取书列表-根据类型
-    getBookList() {
+    getBookList(id) {
+      // 判断多个链接，请求不同类型书的列表
       wx.request({
-        url: `${this.$parent.globalData.requestUrl}/api/findBistroByQrcode`,
+        url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory${id}`,
         method: 'GET',
-        // header: {
-        //   AuthrizeOpenId: this.$parent.globalData.openId
-        // },
-        data: {
-          qr_code: this.qr_code
-        },
         success: data => {
           if (data.data.success) {
 

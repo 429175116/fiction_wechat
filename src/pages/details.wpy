@@ -499,7 +499,7 @@
       <view>免责声明: 本书数字版权有"贝肯伟"提供，并由其设计费技术创新须具有成功找不出缠着你书友并承诺在想不出名字吃饱没你这错别字</view>
     </view>
     <view class="navSta">
-      <view class="sel">
+      <view class="sel" @tap="clickStoreBook">
         <icon class="iconfont icon-shujia" />
         <view>加入书架</view>
       </view>
@@ -527,7 +527,7 @@ export default class Details extends wepy.page {
   mixins = []
 
   data = {
-
+    bookid: ''
   }
 
   computed = {}
@@ -549,6 +549,10 @@ export default class Details extends wepy.page {
     recommendBook() {
       // 刷新当前页数据
       console.log('刷新当前页数据')
+    },
+    // 加入书架
+    clickStoreBook() {
+      this.storeBook()
     }
   }
 
@@ -556,7 +560,26 @@ export default class Details extends wepy.page {
 
   onLoad(options) {
     console.log(options.bookid)
+    this.bookid = options.bookid
 
+  }
+  // 加入书架
+  storeBook() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/storeBook/${this.bookid}`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
   }
 }
 </script>
