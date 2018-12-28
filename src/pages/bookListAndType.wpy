@@ -88,7 +88,7 @@
         <view wx:if="{{secondCategoryList.length == 0}}" class="dataNullShow">暂无子类型</view>
       </view>
       <view class="listCon">
-        <view class="con" @tap="goBookDetails">
+        <view class="con" @tap="goBookDetails" data-id="111">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -98,7 +98,7 @@
             <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
           </view>
         </view>
-        <view class="con" @tap="goBookDetails">
+        <view class="con" @tap="goBookDetails" data-id="111">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -113,91 +113,96 @@
   </scroll-view>
 </template>
 <script>
-  import wepy from 'wepy'
-  export default class Booklistandtype extends wepy.page {
-    config = {
-      navigationBarTitleText: '列表包含分类'
-    }
-    // 生命组件ID
-    components = {
+import wepy from 'wepy'
+export default class Booklistandtype extends wepy.page {
+  config = {
+    navigationBarTitleText: '列表包含分类'
+  }
+  // 生命组件ID
+  components = {
 
-    }
+  }
 
-    mixins = []
+  mixins = []
 
-    data = {
-      secondCategoryList: null, // 分类列表
-      thissecondCategoryId: ''
-    }
+  data = {
+    secondCategoryList: null, // 分类列表
+    thissecondCategoryId: ''
+  }
 
-    computed = {}
+  computed = {}
 
-    methods = {
-      // 底部导航跳转
-      goPage (url, evt) {
-        // 销毁当前页{跳转}
-        this.$redirect(url)
-      },
-      changebookClass(e) {
-        let id = e.currentTarget.dataset.id
-        this.thissecondCategoryId = id
-        // 获取书列表-根据类型
-        this.getBookList(id)
-      }
-    }
-
-    events = {}
-
-    onLoad(options) {
-      // 动态修改页面标题信息
-      // 根据获取到的参数修改页面标题
-      wx.setNavigationBarTitle({
-        title: options.typename
-      })
-      // 列表加载
-      // 获取二级分类
-      this.secondCategory(options.typeid)
-      // 获取更多
-    }
-    // 获取书类型
-    secondCategory(id) {
-      wx.request({
-        url: `${this.$parent.globalData.requestUrl}/api/secondCategory/${id}`,
-        method: 'GET',
-        success: data => {
-          if (data.data.success) {
-            this.secondCategoryList = data.data.second_categories
-            if (this.secondCategoryList.length > 0) {
-              this.thissecondCategoryId = this.secondCategoryList[0].id
-              this.getBookList(this.thissecondCategoryId)
-            }
-            this.$apply()
-          } else {
-            wx.showModal({
-              title: '',
-              content: data.data.errmsg
-            })
-          }
-        }
-      })
-    }
-    // 获取书列表-根据类型
-    getBookList(id) {
-      // 判断多个链接，请求不同类型书的列表
-      wx.request({
-        url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory${id}`,
-        method: 'GET',
-        success: data => {
-          if (data.data.success) {
-
-          } else {
-            wx.showModal({
-              title: '',
-              content: data.data.errmsg
-            })
-          }
-        }
-      })
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    changebookClass(e) {
+      let id = e.currentTarget.dataset.id
+      this.thissecondCategoryId = id
+      // 获取书列表-根据类型
+      this.getBookList(id)
+    },
+    // 进入书本详情
+    goBookDetails(e) {
+      let id = e.currentTarget.dataset.id
+      this.$navigate(`/pages/details?bookid=${id}`)
     }
   }
+
+  events = {}
+
+  onLoad(options) {
+    // 动态修改页面标题信息
+    // 根据获取到的参数修改页面标题
+    wx.setNavigationBarTitle({
+      title: options.typename
+    })
+    // 列表加载
+    // 获取二级分类
+    this.secondCategory(options.typeid)
+    // 获取更多
+  }
+  // 获取书类型
+  secondCategory(id) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/secondCategory/${id}`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          this.secondCategoryList = data.data.second_categories
+          if (this.secondCategoryList.length > 0) {
+            this.thissecondCategoryId = this.secondCategoryList[0].id
+            this.getBookList(this.thissecondCategoryId)
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取书列表-根据类型
+  getBookList(id) {
+    // 判断多个链接，请求不同类型书的列表
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory${id}`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+}
 </script>
