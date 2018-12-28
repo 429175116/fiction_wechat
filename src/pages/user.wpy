@@ -101,8 +101,8 @@
 <template>
   <view>
     <view class="userinfo">
-      <image src="/img/1.png" />
-      <view>昵称</view>
+      <image src="{{userInfo.profile}}" />
+      <view>{{userInfo.nick_name}}</view>
     </view>
     <view class="info">
       <view>
@@ -207,6 +207,8 @@
     mixins = []
 
     data = {
+      userInfo: null,
+      openId: ''
     }
 
     computed = {}
@@ -223,6 +225,9 @@
 
     onLoad() {
       // 个人信息初始化
+      this.userInfo = this.$parent.globalData.userInfo
+      this.openId = this.$parent.globalData.openId
+      console.log(this.openId)
     }
   }
 </script>

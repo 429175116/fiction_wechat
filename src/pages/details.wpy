@@ -449,7 +449,7 @@
       <view class="authorInfo">
         <image src="/img/1.png" />
         <view class="info">
-          <view>name</view>
+          <view>小说名称</view>
           <view>作品数量</view>
         </view>
       </view>
@@ -554,7 +554,7 @@ export default class Details extends wepy.page {
 
   events = {}
 
-  onLoad() {
+  onLoad(options) {
 
   }
 }

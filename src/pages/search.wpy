@@ -244,7 +244,7 @@ export default class Search extends wepy.page {
     let searchKey = e.detail.value
     console.log(searchKey)
     if (searchKey === '') {
-      return
+      return ''
     }
   }
   // 清空搜索框中的值
@@ -254,6 +254,5 @@ export default class Search extends wepy.page {
       searchKey: ''
     })
   }
-  
 }
 </script>

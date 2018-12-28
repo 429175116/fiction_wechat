@@ -119,7 +119,7 @@ export default class extends wepy.app {
 
   globalData = {
     userInfo: null,
-    requestUrl: 'http://novel.tesst.com'
+    requestUrl: 'http://140.143.203.12:8095'
   }
 
   constructor () {

@@ -149,13 +149,11 @@
   <view>
     <view class="topNav">
       <scroll-view scroll-x>
-        <view class="action">
-          <span>123</span>
-        </view>
-        <view>分类</view>
-        <view>分类</view>
-        <view>分类</view>
-        <view>分类</view>
+        <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item">
+          <view class="{{thisfirstCategoryId == item.id ? 'action':'noaction'}}" data-name="{{item.name}}" data-id="{{item.id}}" @tap="clickFirstCategory">
+            <span>{{item.name}}</span>
+          </view>
+        </block>
       </scroll-view>
       <view class="search" @tap="goSearch">
         <icon class="iconfont icon-sousuo" />
@@ -196,10 +194,10 @@
         <view>完本</view>
       </view>
     </view>
-    <!-- 畅销精选 -->
+    <!-- xx新书 -->
     <view class="list">
       <view class="listTitle">
-        <view>畅销精选</view>
+        <view>xx新书</view>
         <view data-id="1" @tap="clickMore">
           更多
           <icon class="iconfont icon-jiantouyou" />
@@ -229,10 +227,10 @@
       </view>
     </view>
 
-    <!-- 主编力荐 -->
+    <!-- 人气连载 -->
     <view class="list">
       <view class="listTitle">
-        <view>主编力荐</view>
+        <view>人气连载</view>
         <view data-id="1" @tap="clickMore">
           更多
           <icon class="iconfont icon-jiantouyou" />
@@ -262,10 +260,10 @@
       </view>
     </view>
 
-    <!-- 限时免费 -->
+    <!-- 人气分类 -->
     <view class="list">
       <view class="listTitle">
-        <view>限时免费</view>
+        <view>人气分类</view>
         <view data-id="1" @tap="clickMore">
           更多
           <icon class="iconfont icon-jiantouyou" />
@@ -295,10 +293,10 @@
       </view>
     </view>
 
-    <!-- 免费新书 -->
+    <!-- 24小时热销榜 -->
     <view class="list">
       <view class="listTitle">
-        <view>免费新书</view>
+        <view>24小时热销榜</view>
         <view data-id="1" @tap="clickMore">
           更多
           <icon class="iconfont icon-jiantouyou" />
@@ -328,10 +326,10 @@
       </view>
     </view>
 
-    <!-- 经典完本 -->
+    <!-- 点击周榜 -->
     <view class="list">
       <view class="listTitle">
-        <view>经典完本</view>
+        <view>点击周榜</view>
         <view data-id="1" @tap="clickMore">
           更多
           <icon class="iconfont icon-jiantouyou" />
@@ -361,76 +359,10 @@
       </view>
     </view>
 
-    <!-- 猜你喜欢 -->
+    <!-- 完本精品 -->
     <view class="list">
       <view class="listTitle">
-        <view>猜你喜欢</view>
-        <view data-id="1" @tap="clickMore">
-          更多
-          <icon class="iconfont icon-jiantouyou" />
-        </view>
-      </view>
-      <view class="listCon">
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-      </view>
-    </view>
-
-    <!-- 书友在读 -->
-    <view class="list">
-      <view class="listTitle">
-        <view>书友在读</view>
-        <view data-id="1" @tap="clickMore">
-          更多
-          <icon class="iconfont icon-jiantouyou" />
-        </view>
-      </view>
-      <view class="listCon">
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-      </view>
-    </view>
-
-    <!-- 畅销精选 -->
-    <view class="list">
-      <view class="listTitle">
-        <view>畅销精选</view>
+        <view>完本精品</view>
         <view data-id="1" @tap="clickMore">
           更多
           <icon class="iconfont icon-jiantouyou" />
@@ -515,8 +447,15 @@ export default class Index extends wepy.page {
     autoplay: true,
     interval: 1000,
     duration: 1000,
-    goimg: '/img/1.png',
-    authorizationButton: true // 控制授权按钮是否显示
+    authorizationButton: true, // 控制授权按钮是否显示
+    firstCategoryData: [], // 一级分类列表数据
+    thisfirstCategoryId: '', // 一级分类对应的选中项
+    newBooksOfFirstCategory: [], // xx新书
+    popularUncompelete: [], // 人气连载
+    popularCateGory: [], // 人气分类
+    twentyFourHourHotSale: [], // 24小时热销榜
+    clickWeekBang: [], // 点击周榜
+    compeleteBoutique: [] // 完本精品
   }
 
   computed = {}
@@ -525,9 +464,9 @@ export default class Index extends wepy.page {
     // 加载分类--顶部
     // 加载轮播图
     this.getSwiperData()
-    // 加载分类
+    // 加载分类--一级
     this.firstCategory()
-    // 加载分类内容
+    
     // 获取用户信息
     this.onGetUserInfo()
   }
@@ -556,6 +495,26 @@ export default class Index extends wepy.page {
       let id = e.currentTarget.dataset.id
       console.log(id)
       this.$navigate(`/pages/indexSonList?typeid=${id}`)
+    },
+    // 点击一级分类
+    clickFirstCategory(e) {
+      let id = e.currentTarget.dataset.id
+      this.thisTypeNmae = e.currentTarget.dataset.name
+      this.thisfirstCategoryId = id
+      // 获取二级分类
+      this.secondCategory(id)
+      // xx新书
+      this.newBooksOfFirstCategory(id)
+      // 人气连载
+      this.popularUncompelete(id)
+      // 人气分类
+      this.popularCateGory(id)
+      // 24小时热销榜
+      this.twentyFourHourHotSale(id)
+      // 点击周榜
+      this.clickWeekBang(id)
+      // 完本精品
+      this.compeleteBoutique(id)
     }
   }
 
@@ -573,7 +532,23 @@ export default class Index extends wepy.page {
       success: data => {
         console.log(data)
         if (data.data.success) {
-          
+          this.firstCategoryData = data.data.first_categories
+          this.thisfirstCategoryId = this.firstCategoryData[0].id
+          let id = this.thisfirstCategoryId
+          // 获取二级分类
+          this.secondCategory(id)
+          // xx新书
+          this.newBooksOfFirstCategory(id)
+          // 人气连载
+          this.popularUncompelete(id)
+          // 人气分类
+          this.popularCateGory(id)
+          // 24小时热销榜
+          this.twentyFourHourHotSale(id)
+          // 点击周榜
+          this.clickWeekBang(id)
+          // 完本精品
+          this.compeleteBoutique(id)
         } else {
           wx.showModal({
             title: '',
@@ -582,11 +557,51 @@ export default class Index extends wepy.page {
         }
       }
     })
+    // 添加一级分类::::用于测试
+    // wx.request({
+    //   url: `${this.$parent.globalData.requestUrl}/backend/createFirstCategory`,
+    //   method: 'POST',
+    //   data: {
+    //     name: '短片'
+    //   },
+    //   success: data => {
+    //     console.log(data)
+    //     if (data.data.success) {
+          
+    //     } else {
+    //       wx.showModal({
+    //         title: '',
+    //         content: data.data.errmsg
+    //       })
+    //     }
+    //   }
+    // }
+
+    // 添加小说
+    // wx.request({
+    //   url: `${this.$parent.globalData.requestUrl}/backend/createNovel`,
+    //   method: 'POST',
+    //   data: {
+    //     name: '吃两个香蕉皮',
+    //     novel_categories_id: 1
+    //   },
+    //   success: data => {
+    //     console.log(data)
+    //     if (data.data.success) {
+          
+    //     } else {
+    //       wx.showModal({
+    //         title: '',
+    //         content: data.data.errmsg
+    //       })
+    //     }
+    //   }
+    // })
   }
   // 获取二级分类
-  secondCategory() {
+  secondCategory(id) {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/secondCategory${1}`,
+      url: `${this.$parent.globalData.requestUrl}/api/secondCategory/${id}`,
       method: 'GET',
       success: data => {
         console.log(data)
@@ -600,11 +615,30 @@ export default class Index extends wepy.page {
         }
       }
     })
+    // // 添加二级分类::::用于测试
+    // wx.request({
+    //   url: `${this.$parent.globalData.requestUrl}/backend/createSecondCategory/${5}`,
+    //   method: 'POST',
+    //   data: {
+    //     name: '测试分类5'
+    //   },
+    //   success: data => {
+    //     console.log(data)
+    //     if (data.data.success) {
+          
+    //     } else {
+    //       wx.showModal({
+    //         title: '',
+    //         content: data.data.errmsg
+    //       })
+    //     }
+    //   }
+    // })
   }
   // xx新书
-  newBooksOfFirstCategory() {
+  newBooksOfFirstCategory(id) {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory${1}`,
+      url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory/${id}`,
       method: 'GET',
       success: data => {
         console.log(data)
@@ -620,9 +654,9 @@ export default class Index extends wepy.page {
     })
   }
   // 人气连载
-  popularUncompelete() {
+  popularUncompelete(id) {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/popularUncompelete${1}`,
+      url: `${this.$parent.globalData.requestUrl}/api/popularUncompelete/${id}`,
       method: 'GET',
       success: data => {
         console.log(data)
@@ -638,9 +672,9 @@ export default class Index extends wepy.page {
     })
   }
   // 人气分类
-  popularCateGory() {
+  popularCateGory(id) {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/popularCateGory${1}`,
+      url: `${this.$parent.globalData.requestUrl}/api/popularCateGory/${id}`,
       method: 'GET',
       success: data => {
         console.log(data)
@@ -656,9 +690,9 @@ export default class Index extends wepy.page {
     })
   }
   // 24小时热销榜
-  twentyFourHourHotSale() {
+  twentyFourHourHotSale(id) {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/twentyFourHourHotSale${1}`,
+      url: `${this.$parent.globalData.requestUrl}/api/twentyFourHourHotSale/${id}`,
       method: 'GET',
       success: data => {
         console.log(data)
@@ -674,9 +708,9 @@ export default class Index extends wepy.page {
     })
   }
   // 点击周榜
-  clickWeekBang() {
+  clickWeekBang(id) {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/clickWeekBang${1}`,
+      url: `${this.$parent.globalData.requestUrl}/api/clickWeekBang/${id}`,
       method: 'GET',
       success: data => {
         console.log(data)
@@ -692,9 +726,9 @@ export default class Index extends wepy.page {
     })
   }
   // 完本精品
-  compeleteBoutique() {
+  compeleteBoutique(id) {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/compeleteBoutique${1}`,
+      url: `${this.$parent.globalData.requestUrl}/api/compeleteBoutique/${id}`,
       method: 'GET',
       success: data => {
         console.log(data)
