@@ -114,7 +114,7 @@
       <image src="/img/plus.png" />
     </view> -->
     <view class="bookList">
-      <view class="list" @tap="goBookDetails">
+      <view class="list" @tap="goBookDetails" data-id="1">
         <view class="cover">
           <image src="/img/1.png" />
         </view>
@@ -124,6 +124,19 @@
           <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
         </view>
       </view>
+      <block wx:for="{{bookshelfList}}" key="index" index="index" item="item">
+        <view class="list" @tap="goBookDetails" data-id="{{item.id}}">
+          <view class="cover">
+            <image src="/img/1.png" />
+          </view>
+          <view class="info">
+            <view class="title">{{item.name}}</view>
+            <view>{{item.name}} · {{item.name}}</view>
+            <view>{{item.name}}</view>
+          </view>
+        </view>
+      </block>
+      <view wx:if="{{bookshelfList.length == 0}}" class="dataNullShow">暂无收藏</view>
     </view>
     <view>
       <button open-type="getUserInfo" wx:if="{{authorizationButton}}" id='getUserInfo' lang="zh_CN" @getuserinfo="onGetUserInfo"></button>
@@ -148,6 +161,7 @@ export default class Bookshelf extends wepy.page {
 
   data = {
     authorizationButton: true, // 控制授权按钮是否显示
+    bookshelfList: [] // 书架列表数据
   }
 
   computed = {}
@@ -160,7 +174,8 @@ export default class Bookshelf extends wepy.page {
     },
     // 进入书本详情
     goBookDetails(e) {
-      this.$navigate('/pages/details')
+      let id = e.currentTarget.dataset.id
+      this.$navigate(`/pages/details?bookid=${id}`)
     }
   }
 
@@ -181,7 +196,7 @@ export default class Bookshelf extends wepy.page {
       success: data => {
         console.log(data)
         if (data.data.success) {
-          
+          this.bookshelfList = data.data.user_stores
         } else {
           wx.showModal({
             title: '',

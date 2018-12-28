@@ -561,7 +561,26 @@ export default class Details extends wepy.page {
   onLoad(options) {
     console.log(options.bookid)
     this.bookid = options.bookid
-
+    // 获取小说详情
+    this.getBookDetails(options.bookid)
+  }
+  // 获取小说详情
+  getBookDetails(id){
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/novelDetail/${this.bookid}`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
   }
   // 加入书架
   storeBook() {
