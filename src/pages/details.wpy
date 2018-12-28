@@ -339,9 +339,9 @@
           <image src="/img/1.png" />
         </view>
         <view class="info">
-          <view class="title">书名书名书名书名书名书名</view>
-          <view>描述描述描述描述描述描述描述描述描述</view>
-          <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+          <view class="title">{{bookInfo.name}}</view>
+          <view>{{bookInfo.name}}</view>
+          <view>{{bookInfo.words_count}}万字 ~ 加个{{bookInfo.sale_amount}} </view>
           <view class="label">
             <view>1111</view>
             <view>1111</view>
@@ -366,7 +366,7 @@
         </view>
         <view class="basicSel">
           <view>
-            11
+            {{bookInfo.read_person_count}}
             <text>万</text>
           </view>
           <view>人气</view>
@@ -527,7 +527,8 @@ export default class Details extends wepy.page {
   mixins = []
 
   data = {
-    bookid: ''
+    bookid: '',
+    bookInfo: null
   }
 
   computed = {}
@@ -543,7 +544,10 @@ export default class Details extends wepy.page {
     },
     // 查看目录
     goContents() {
-      this.$navigate(`/pages/bookContents?bookid=${112}`)
+      console.log(this.bookInfo.chapters)
+      // this.$navigate(`/pages/bookContents?bookid=${112}`)
+      
+      this.$navigate(`/pages/bookContents?bookInfo=${JSON.stringify(this.bookInfo)}`)
     },
     // 点击推荐的书
     recommendBook() {
@@ -563,6 +567,50 @@ export default class Details extends wepy.page {
     this.bookid = options.bookid
     // 获取小说详情
     this.getBookDetails(options.bookid)
+    this.bookInfo = {
+                    "id": 1,
+                    "name": "吃个香蕉皮",
+                    "words_count": 60, // 字数
+                    "read_person_count": 0, // 读人数
+                    "sale_amount": "0.00", // 价格
+                    "wether_complete": "Uncompelete", // 更完整
+                    "read_count": 0, // 读数
+                    "click_count": 0, //点击量
+                    "score": "0.00", // 评分
+                    "score_person_count": 0, // 得分人数
+                    "stored_count": 3, // 存储计数
+                    "download_count": 0, // 下载次数
+                    "chapters": [ // 目录
+                        {
+                            "title": "第一章 捡到了一个香蕉皮改改",
+                            "click_count": 0,
+                            "sale_amount": "0.00",
+                            "words_count": 60,
+                            "wether_vip": "NotVip"
+                        },
+                        {
+                            "title": "第二章 捡到了一个香蕉皮",
+                            "click_count": 0,
+                            "sale_amount": "0.00",
+                            "words_count": 52,
+                            "wether_vip": "NotVip"
+                        },
+                        {
+                            "title": "第三章 捡到了一个香蕉皮",
+                            "click_count": 0,
+                            "sale_amount": "0.00",
+                            "words_count": 55,
+                            "wether_vip": "NotVip"
+                        },
+                        {
+                            "title": "第四章 捡到了一个香蕉皮",
+                            "click_count": 0,
+                            "sale_amount": "0.00",
+                            "words_count": 55,
+                            "wether_vip": "NotVip"
+                        }
+                    ]
+                }
   }
   // 获取小说详情
   getBookDetails(id){

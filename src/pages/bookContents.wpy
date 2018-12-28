@@ -93,26 +93,9 @@
     <view class="tableOfContents">
       <view class="catelogX">
         <ul class="volumes">
-          <li @tap="lookBook" class="action">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
-          <li @tap="lookBook">第1章 豆豆做了我女儿</li>
+          <block wx:for="{{chapters}}" key="index" index="index" item="item">
+            <li @tap="lookBook" data-index="{{index}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li>
+          </block>
         </ul>
       </view>
     </view>
@@ -132,24 +115,31 @@ export default class Bookcontents extends wepy.page {
   mixins = []
 
   data = {
+    chapters: null,
+    id: ''
   }
 
   computed = {}
 
   methods = {
     // 立即阅读
-    lookBook() {
-      this.$navigate(`/pages/lookFiction?bookid=${112}&chapter=${22}`)
+    lookBook(e) {
+      let index = e.currentTarget.dataset.index
+      // index目录下标,确定是那一章
+      this.$navigate(`/pages/lookFiction?bookid=${this.id}&chapter=${index}`)
     }
   }
 
   events = {}
 
   onLoad(options) {
-    console.log(options.bookid)
+    let bookInfo = JSON.parse(options.bookInfo)
+    this.chapters = bookInfo.chapters
+    this.id = bookInfo.id
     // 根据获取到的参数修改页面标题
     // 列表加载
     // 获取更多
+    
   }
 }
 </script>
