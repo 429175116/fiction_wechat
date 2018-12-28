@@ -194,7 +194,7 @@
     color: #ccc;
     border-bottom:1rpx solid #333;
     background-color: rgba(0,0,0,.6);
-    height:250rpx;
+    height:120rpx;
   }
   .read-prog-info{
     border-bottom: 1px solid rgba(255,255,255,.1);
@@ -217,10 +217,12 @@
     right: .375rem;
   }
   .read-prog-val{
+    height: 120rpx;
     font-size: .875rem;
     margin: 0 5rem;
-    padding: .75rem 0 .25rem;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .ell{
     overflow: hidden;
@@ -243,57 +245,7 @@
     text-align: center;
     color: #ccc;
   }
-  .read-prog-bar{
-    padding: 1rem 2rem;
-    display: block;
-    visibility: visible;
-    color:#ccc;
-  }
-  .range{
-    position: absolute;
-    display: inline;
-    height: 30rpx;
-    width: 600rpx;
-  }
-  .range-shadow{
-    display: block;
-    position: absolute;
-    // display: none;
-    width: 12px;
-    height: 12px;
-    margin-top: 1px;
-    margin-left: -6px;
-    opacity: .6;
-    border-radius: 20px;
-    background-color: #ed424b;
-        text-decoration: none;
-    color: inherit;
-    outline: 0;
-  }
-  .range-track{
-    height: 2px;
-    margin-top: 6px;
-    text-align: left;
-    border-left: 0 solid #ed424b;
-    border-radius: 10px;
-    background-color: rgba(255,255,255,.2);
-    border-left-width: 105.084px;
-  }
-  .range-thumb{
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    margin: -11px 0 0 -12px;
-    transition: border-color .15s,background-color .15s;
-    border: 6px solid transparent;
-    border-radius: 20px;
-    background-color: #ed424b;
-    background-clip: content-box;
-    text-decoration: none;
-    color: inherit;
-    outline: 0;
-    text-align: left;
-  }
+
   .readOptSet{
     visibility: visible;
     transition: none;
@@ -338,6 +290,7 @@
     padding: 1.125rem 0;
     display: block;
     color: #fff;
+    text-align: center;
   }
   .readSetSkin, .readSetLayout{
     // padding: .9375rem 1.25rem;
@@ -439,7 +392,7 @@
         </view>
       </view>
     </view>
-    <view wx:if="{{!coverShow}}" class="con {{showModel}}" style="font-size: 50rpx">
+    <view wx:if="{{!coverShow}}" class="con {{showModel}}" style="font-size: {{fontSize}}rpx">
       <view class="switch" @tap="showSettingDom"></view>
       文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章
       文章文章文章文章文章文章文章文章文章文章文章文章文章
@@ -627,31 +580,15 @@
         <view class="read-prog-next">下一章》</view>
         <view class="read-prog-val">
           <view class="ell">第109章 豆豆做了我女儿</view>
-          <view class="readProgVal">30.6%</view>
-        </view>
-      </view>
-      <view class="read-prog-bar">
-        <view class="range">
-          <view class="range-shadow"></view>
-          <view class="range-track"  style="border-left-width: 30rpx;">
-            <view class="range-thumb"></view>
-          </view>
         </view>
       </view>
     </view>
     <!-- 设置对应 -->
     <view class="readOptSet" wx:if="{{readOptSetDomShow}}">
       <view class="read-set-font">
-        <view class="readFontDown">A-</view>
-        <view class="readFontUp">A+</view>
-        <view class="read-font-bar">
-          20
-          <!-- <view class="range">
-            <view class="range-track" style="border-left-width: 20rpx;">
-              <view class="range-thumb"></view>
-            </view>
-          </view> -->
-        </view>
+        <view class="readFontDown" @tap="fontSizeDown">A-</view>
+        <view class="readFontUp" @tap="fontSizeUp">A+</view>
+        <view class="read-font-bar">{{fontSize}}</view>
       </view>
       <view class="readSetSkin">
         <view class="default action" data-color="defaultGg" @tap="setBgColor">
@@ -725,12 +662,24 @@
       tableOfContentsDomShow: false, // 目录是否显示
       readBtnProgDomShow: false, // 进度控制是否显示
       readOptSetDomShow: false, // 设置显示
-      showModel: '' // 显示模型，及背景控制
+      showModel: '', // 显示模型，及背景控制
+      fontSize: 36
     }
 
     computed = {}
 
-    methods = {}
+    methods = {
+      // 字体变大
+      fontSizeUp(){
+        this.fontSize += 1
+        wx.setStorageSync('fontsoze', this.fontSize)
+      },
+      // 字体变小
+      fontSizeDown(){
+        this.fontSize -= 1
+        wx.setStorageSync('fontsoze', this.fontSize)
+      }
+    }
 
     events = {}
 
@@ -739,10 +688,29 @@
       // console.log('onLoad')
       // 初始化页面时，控制日夜间模式
       this.getAtNightStatus()
+      // 获取字体大小
+      this.getFontSize()
     }
     // onShow() {
     //   console.log('onshow')
     // }
+    // 获取字体大小
+    getFontSize() {
+      // 1为日间模式，0为夜间模式
+      wx.getStorage({
+        key: 'fontsoze',
+        success: res => {
+          if (res.data) {
+            console.log(res.data)
+            this.fontSize = res.data
+            this.$apply()
+          } else {
+            this.fontSize = 30
+            this.$apply()
+          }
+        }
+      })
+    }
     // 控制设置框体的显示
     showSettingDom() {
       if (this.showSetting) {
