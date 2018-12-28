@@ -126,6 +126,7 @@ export default class Bookcontents extends wepy.page {
     lookBook(e) {
       let index = e.currentTarget.dataset.index
       // index目录下标,确定是那一章
+      console.log(`/pages/lookFiction?bookid=${this.id}&chapter=${index}`)
       this.$navigate(`/pages/lookFiction?bookid=${this.id}&chapter=${index}`)
     }
   }
@@ -135,7 +136,9 @@ export default class Bookcontents extends wepy.page {
   onLoad(options) {
     let bookInfo = JSON.parse(options.bookInfo)
     this.chapters = bookInfo.chapters
+    console.log(bookInfo.id)
     this.id = bookInfo.id
+    this.$apply()
     // 根据获取到的参数修改页面标题
     // 列表加载
     // 获取更多

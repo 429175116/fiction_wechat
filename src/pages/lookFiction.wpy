@@ -54,6 +54,7 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.6);
     color: #ccc;
+    width: 100vw;
     height: 100rpx;
     display: flex;
     align-items: center;
@@ -663,7 +664,8 @@
       readBtnProgDomShow: false, // 进度控制是否显示
       readOptSetDomShow: false, // 设置显示
       showModel: '', // 显示模型，及背景控制
-      fontSize: 36
+      fontSize: 36, // 默认字体大小
+      novelChapter: null // 章节数据
     }
 
     computed = {}
@@ -685,15 +687,80 @@
 
     onLoad(options) {
       console.log(options.bookid)
+      console.log(options.chapter)
+      // 书的ID
+      let bookid = options.bookid
+      // 章节列表下标,可定位到某一章
+      let chapter = options.chapter
       // console.log('onLoad')
       // 初始化页面时，控制日夜间模式
       this.getAtNightStatus()
       // 获取字体大小
       this.getFontSize()
+      // 获取本章小说详情
+      this.chapterDetail(bookid, chapter)
     }
     // onShow() {
     //   console.log('onshow')
     // }
+    // 获取本章小说详情
+    chapterDetail(bookid, chapter) {
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/chapterDetail/${chapter}`,
+        method: 'GET',
+        data:{
+          novel_id: bookid
+        },
+        success: data => {
+          console.log(data)
+          if (data.data.success) {
+            // this.novelChapter
+            this.novelChapter = {
+                  "data": [
+                      {
+                          "id": 1,
+                          "title": "第一章 捡到了一个香蕉皮改改",
+                          "click_count": 0,
+                          "sale_amount": "0.00",
+                          "words_count": 60,
+                          "wether_vip": "NotVip",
+                          "content": {
+                              "id": 1,
+                              "novel_chapter_id": 1,
+                              "content": "劳资他妈滴捡到一个香蕉皮,一看,卧槽他妈滴烂了,到底吃是不吃算了,还是他妈滴吃吧,有香蕉皮吃就不错了，草他妈的，改个蛇皮",
+                              "created_at": "2018-12-21 02:34:28",
+                              "updated_at": "2018-12-21 08:10:16"
+                          },
+                          "created_at": "2018-12-21 02:34:28",
+                          "updated_at": "2018-12-21 08:10:16"
+                      }
+                  ],
+                  "meta": {
+                      "pagination": {
+                          "total": 4,
+                          "count": 1,
+                          "per_page": 1,
+                          "current_page": 1,
+                          "total_pages": 4,
+                          "links": {
+                              "next": "http://novel.tesst.com/api/chapterDetail?page=2"
+                          }
+                      }
+                  }
+              }
+            // 上一章请求地址
+            this.previousUrl = ''
+            // 下一章请求地址
+            this.nextUrl = ''
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
+          }
+        }
+      })
+    }
     // 获取字体大小
     getFontSize() {
       // 1为日间模式，0为夜间模式
