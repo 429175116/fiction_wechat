@@ -343,9 +343,7 @@
         </block>
       </view>
     </view>
-    <view>
-      <button open-type="getUserInfo" wx:if="{{authorizationButton}}" id='getUserInfo' lang="zh_CN" @getuserinfo="onGetUserInfo"></button>
-    </view>
+
     <nav @childFn.user="goPage" />
   </view>
 </template>
@@ -399,7 +397,6 @@ export default class Index extends wepy.page {
     autoplay: true,
     interval: 1000,
     duration: 1000,
-    authorizationButton: true, // 控制授权按钮是否显示
     firstCategoryData: [], // 一级分类列表数据
     thisfirstCategoryId: '', // 一级分类对应的选中项
     newBooksOfFirstCategory: [], // xx新书
@@ -419,8 +416,7 @@ export default class Index extends wepy.page {
     // 加载分类--一级
     this.firstCategory()
     
-    // 获取用户信息
-    this.onGetUserInfo()
+    
   }
 
   methods = {
@@ -693,74 +689,6 @@ export default class Index extends wepy.page {
             title: '',
             content: data.data.errmsg
           })
-        }
-      }
-    })
-  }
-  // 获取用户信息
-  onGetUserInfo() {
-    // 查看是否授权
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: res => {
-              this.userInfo = res.userInfo
-              if (this.userInfo) {
-                this.authorizationButton = false
-                this.avatarUrl = this.userInfo.avatarUrl
-                this.nickName = this.userInfo.nickName
-                // 数据生效
-                this.$apply()
-                // 提交用户信息
-                this.setUserInfo(this.userInfo)
-                // 登陆
-                // this.userLogin(this.userInfo)
-                this.$parent.globalData.userInfo = this.userInfo
-                this.$apply()
-              }
-            }
-          })
-        }
-      }
-    })
-  }
-  // 提交用户信息
-  setUserInfo(userInfo) {
-    if (this.$parent.globalData.openId) {
-      return
-    }
-    wepy.login({
-      success: res => {
-        if (res.code) {
-          this.code = res.code
-          wx.request({
-            url: `${this.$parent.globalData.requestUrl}/api/addOrUpdateUser`,
-            method: 'POST',
-            data: {
-              code: res.code,
-              nick_name: this.userInfo.nickName,
-              profile: this.userInfo.avatarUrl
-            },
-            success: data => {
-              if (data.data.success) {
-                // 获取用户信息,及openID  并存入全局
-                this.userInfo = data.data.user
-                this.openId = this.userInfo.open_id
-                this.$parent.globalData.userInfo = this.userInfo
-                this.$parent.globalData.openId = this.openId
-                this.$apply()
-              } else {
-                wx.showModal({
-                  title: '',
-                  content: data.data.errmsg
-                })
-              }
-            }
-          })
-        } else {
-          console.log('登录失败！' + res.errMsg)
         }
       }
     })

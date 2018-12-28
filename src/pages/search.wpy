@@ -59,7 +59,7 @@
     justify-content: center;
     margin: 0 33rpx;
     color: #999;
-    font-size: 40rpx;
+    font-size: 35rpx;
   }
   .searchHistoryTitle image{
     width: 40rpx;
@@ -131,7 +131,7 @@
     color: #333;
     height: 60rpx;
     line-height: 70rpx;
-    font-size: 38rpx;
+    font-size: 35rpx;
     font-size: 600;
   }
   .list .operating{
@@ -165,9 +165,6 @@
     </view>
     <view class="searchHistoryTitle">
       <view>搜索热词</view>
-      <!-- <view>
-        <image src="/img/user1.png"  />
-      </view> -->
     </view>
     <view class="searchHistory">
       <view>33asdfasdf2</view>
@@ -252,6 +249,28 @@ export default class Search extends wepy.page {
     // 使用this.searchKey = ''无用
     this.setData({
       searchKey: ''
+    })
+  }
+  // 推荐/猜你喜欢
+  recommendNovel() {
+    // 判断多个链接，请求不同类型书的列表
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/recommendNovel`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
     })
   }
 }

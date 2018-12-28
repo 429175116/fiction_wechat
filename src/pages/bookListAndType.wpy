@@ -190,7 +190,7 @@ export default class Booklistandtype extends wepy.page {
   getBookList(id) {
     // 判断多个链接，请求不同类型书的列表
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory${id}`,
+      url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory/${id}`,
       method: 'GET',
       success: data => {
         if (data.data.success) {

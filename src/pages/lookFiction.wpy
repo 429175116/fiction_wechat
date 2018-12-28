@@ -307,7 +307,7 @@
     color: #fff;
     border-bottom: 0;
     background-color: rgba(0,0,0,.6);
-    height: 320rpx;
+    height: 220rpx;
   }
   .read-set-font{
     padding-top: .5rem;
@@ -439,7 +439,7 @@
         </view>
       </view>
     </view>
-    <view wx:if="{{!coverShow}}" class="con {{showModel}}">
+    <view wx:if="{{!coverShow}}" class="con {{showModel}}" style="font-size: 50rpx">
       <view class="switch" @tap="showSettingDom"></view>
       文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章
       文章文章文章文章文章文章文章文章文章文章文章文章文章
@@ -645,11 +645,12 @@
         <view class="readFontDown">A-</view>
         <view class="readFontUp">A+</view>
         <view class="read-font-bar">
-          <view class="range">
+          20
+          <!-- <view class="range">
             <view class="range-track" style="border-left-width: 20rpx;">
               <view class="range-thumb"></view>
             </view>
-          </view>
+          </view> -->
         </view>
       </view>
       <view class="readSetSkin">
@@ -666,14 +667,14 @@
           <span>√</span>
         </view>
       </view>
-      <view class="readSetLayout">
+      <!-- <view class="readSetLayout">
         <view class="action">
           <span>上下滑动</span>
         </view>
         <view>
           <span>左右滑动</span>
         </view>
-      </view>
+      </view> -->
     </view>
   </view>
 </template>

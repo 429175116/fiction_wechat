@@ -229,6 +229,7 @@
       this.openId = this.$parent.globalData.openId
       console.log(this.userInfo)
       console.log(this.openId)
+      this.$apply()
     }
   }
 </script>
