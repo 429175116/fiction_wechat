@@ -555,6 +555,7 @@ export default class Details extends wepy.page {
   events = {}
 
   onLoad(options) {
+    console.log(options.bookid)
 
   }
 }

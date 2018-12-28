@@ -204,26 +204,18 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
+        <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="cover">
+              <image src="/img/1.png" />
+            </view>
+            <view class="info">
+              <view class="title">{{item.name}}</view>
+              <view>{{item.name}} · {{item.name}}</view>
+              <view>{{item.name}}</view>
+            </view>
           </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
+        </block>
       </view>
     </view>
 
@@ -237,26 +229,18 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
+        <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="cover">
+              <image src="/img/1.png" />
+            </view>
+            <view class="info">
+              <view class="title">{{item.name}}</view>
+              <view>{{item.name}} · {{item.name}}</view>
+              <view>{{item.name}}</view>
+            </view>
           </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
+        </block>
       </view>
     </view>
 
@@ -270,26 +254,18 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
+        <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="cover">
+              <image src="/img/1.png" />
+            </view>
+            <view class="info">
+              <view class="title">{{item.name}}</view>
+              <view>{{item.name}} · {{item.name}}</view>
+              <view>{{item.name}}</view>
+            </view>
           </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
+        </block>
       </view>
     </view>
 
@@ -303,26 +279,18 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
+        <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="cover">
+              <image src="/img/1.png" />
+            </view>
+            <view class="info">
+              <view class="title">{{item.name}}</view>
+              <view>{{item.name}} · {{item.name}}</view>
+              <view>{{item.name}}</view>
+            </view>
           </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
+        </block>
       </view>
     </view>
 
@@ -336,26 +304,18 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
+        <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="cover">
+              <image src="/img/1.png" />
+            </view>
+            <view class="info">
+              <view class="title">{{item.name}}</view>
+              <view>{{item.name}} · {{item.name}}</view>
+              <view>{{item.name}}</view>
+            </view>
           </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
+        </block>
       </view>
     </view>
 
@@ -369,26 +329,18 @@
         </view>
       </view>
       <view class="listCon">
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
+        <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="cover">
+              <image src="/img/1.png" />
+            </view>
+            <view class="info">
+              <view class="title">{{item.name}}</view>
+              <view>{{item.name}} · {{item.name}}</view>
+              <view>{{item.name}}</view>
+            </view>
           </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-        <view class="con" @tap="goBookDetails">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
+        </block>
       </view>
     </view>
     <view>
@@ -483,7 +435,8 @@ export default class Index extends wepy.page {
     },
     // 进入书本详情
     goBookDetails(e) {
-      this.$navigate('/pages/details')
+      let id = e.currentTarget.dataset.id
+      this.$navigate(`/pages/details?bookid=${id}`)
     },
     // 进入分类列表
     goBookListAndType(e) {
