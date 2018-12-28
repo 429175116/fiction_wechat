@@ -128,7 +128,7 @@
         等级
       </view>
       <view>
-        <icon class="iconfont icon-vip4" />
+        <icon class="iconfont icon-vip{{userInfo.level}}" />
         <icon class="iconfont icon-jiantouyou" />
       </view>
     </view>
@@ -227,6 +227,7 @@
       // 个人信息初始化
       this.userInfo = this.$parent.globalData.userInfo
       this.openId = this.$parent.globalData.openId
+      console.log(this.userInfo)
       console.log(this.openId)
     }
   }

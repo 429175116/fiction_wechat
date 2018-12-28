@@ -33,6 +33,7 @@
 .icon-chazhao:before { content: "\e606"; }
 .icon-sousuo:before { content: "\e66a"; }
 // 会员等级
+.icon-vip0:before { content: "\e600"; }
 .icon-vip1:before { content: "\e600"; }
 .icon-vip2:before { content: "\e601"; }
 .icon-vip3:before { content: "\e602"; }
