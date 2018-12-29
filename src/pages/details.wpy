@@ -341,12 +341,13 @@
         <view class="info">
           <view class="title">{{bookInfo.name}}</view>
           <view>{{bookInfo.name}}</view>
-          <view>{{bookInfo.words_count}}万字 ~ 加个{{bookInfo.sale_amount}} </view>
+          <!-- wether_complete:完结状态 -->
+          <view>{{bookInfo.wether_complete}}{{bookInfo.words_count}}万字 ~ 价格{{bookInfo.sale_amount}} </view>
           <view class="label">
-            <view>1111</view>
-            <view>1111</view>
-            <view>1111</view>
-            <view>1111</view>
+            <view>标签</view>
+            <view>标签</view>
+            <view>标签</view>
+            <view>标签</view>
           </view>
         </view>
       </view>
@@ -355,7 +356,8 @@
       <view class="basicInfo">
         <view class="basicSel">
           <view>
-            11
+            <!-- 评分 -->
+            {{bookInfo.score}}
             <icon class="iconfont icon-xingxing" />
             <icon class="iconfont icon-xingxing" />
             <icon class="iconfont icon-xingxing" />
@@ -373,14 +375,16 @@
         </view>
         <view class="basicSel">
           <view>
-            11
+            <!-- 点击量 -->
+            {{bookInfo.click_count}}
             <text>万</text>
           </view>
           <view>点击</view>
         </view>
         <view class="basicSel">
           <view>
-            11
+            <!-- // 得分人数 -->
+            {{bookInfo.score_person_count}}
             <text>万</text>
           </view>
           <view>粉丝</view>
@@ -494,7 +498,7 @@
     </view>
     <view class="bookMoreInfo">
       <view>图书更多信息</view>
-      <view>字数:1000万</view>
+      <view>字数:{{bookInfo.words_count}}万</view>
       <view>上架时间: 2019-04-26</view>
       <view>免责声明: 本书数字版权有"贝肯伟"提供，并由其设计费技术创新须具有成功找不出缠着你书友并承诺在想不出名字吃饱没你这错别字</view>
     </view>
@@ -613,7 +617,7 @@ export default class Details extends wepy.page {
                 }
   }
   // 获取小说详情
-  getBookDetails(id){
+  getBookDetails(id) {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/novelDetail/${this.bookid}`,
       method: 'GET',

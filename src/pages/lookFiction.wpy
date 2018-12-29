@@ -646,299 +646,321 @@
 // text-overflow:ellipsis;
 // white-space:nowrap;
 <script>
-  import wepy from 'wepy'
-  export default class Lookfiction extends wepy.page {
-    config = {
-      navigationBarTitleText: '章节名称'
+import wepy from 'wepy'
+export default class Lookfiction extends wepy.page {
+  config = {
+    navigationBarTitleText: '章节名称'
+  }
+  components = {
+
+  }
+
+  mixins = []
+
+  data = {
+    showSetting: false, // 控制设置框体的显示
+    coverShow: false,
+    tableOfContentsDomShow: false, // 目录是否显示
+    readBtnProgDomShow: false, // 进度控制是否显示
+    readOptSetDomShow: false, // 设置显示
+    showModel: '', // 显示模型，及背景控制
+    fontSize: 36, // 默认字体大小
+    novelChapter: null // 章节数据
+  }
+
+  computed = {}
+
+  methods = {
+    // 字体变大
+    fontSizeUp(){
+      this.fontSize += 1
+      wx.setStorageSync('fontsoze', this.fontSize)
+    },
+    // 字体变小
+    fontSizeDown(){
+      this.fontSize -= 1
+      wx.setStorageSync('fontsoze', this.fontSize)
     }
-    components = {
+  }
 
-    }
+  events = {}
 
-    mixins = []
-
-    data = {
-      showSetting: false, // 控制设置框体的显示
-      coverShow: false,
-      tableOfContentsDomShow: false, // 目录是否显示
-      readBtnProgDomShow: false, // 进度控制是否显示
-      readOptSetDomShow: false, // 设置显示
-      showModel: '', // 显示模型，及背景控制
-      fontSize: 36, // 默认字体大小
-      novelChapter: null // 章节数据
-    }
-
-    computed = {}
-
-    methods = {
-      // 字体变大
-      fontSizeUp(){
-        this.fontSize += 1
-        wx.setStorageSync('fontsoze', this.fontSize)
-      },
-      // 字体变小
-      fontSizeDown(){
-        this.fontSize -= 1
-        wx.setStorageSync('fontsoze', this.fontSize)
-      }
-    }
-
-    events = {}
-
-    onLoad(options) {
-      console.log(options.bookid)
-      console.log(options.chapter)
-      // 书的ID
-      let bookid = options.bookid
-      // 章节列表下标,可定位到某一章
-      let chapter = options.chapter
-      // console.log('onLoad')
-      // 初始化页面时，控制日夜间模式
-      this.getAtNightStatus()
-      // 获取字体大小
-      this.getFontSize()
-      // 获取本章小说详情
-      this.chapterDetail(bookid, chapter)
-    }
-    // onShow() {
-    //   console.log('onshow')
-    // }
-    // 获取本章小说详情
-    chapterDetail(bookid, chapter) {
-      wx.request({
-        url: `${this.$parent.globalData.requestUrl}/api/chapterDetail/${chapter}`,
-        method: 'GET',
-        data:{
-          novel_id: bookid
-        },
-        success: data => {
-          console.log(data)
-          if (data.data.success) {
-            // this.novelChapter
-            this.novelChapter = {
-                  "data": [
-                      {
-                          "id": 1,
-                          "title": "第一章 捡到了一个香蕉皮改改",
-                          "click_count": 0,
-                          "sale_amount": "0.00",
-                          "words_count": 60,
-                          "wether_vip": "NotVip",
-                          "content": {
-                              "id": 1,
-                              "novel_chapter_id": 1,
-                              "content": "劳资他妈滴捡到一个香蕉皮,一看,卧槽他妈滴烂了,到底吃是不吃算了,还是他妈滴吃吧,有香蕉皮吃就不错了，草他妈的，改个蛇皮",
-                              "created_at": "2018-12-21 02:34:28",
-                              "updated_at": "2018-12-21 08:10:16"
-                          },
-                          "created_at": "2018-12-21 02:34:28",
-                          "updated_at": "2018-12-21 08:10:16"
-                      }
-                  ],
-                  "meta": {
-                      "pagination": {
-                          "total": 4,
-                          "count": 1,
-                          "per_page": 1,
-                          "current_page": 1,
-                          "total_pages": 4,
-                          "links": {
-                              "next": "http://novel.tesst.com/api/chapterDetail?page=2"
-                          }
-                      }
-                  }
-              }
-            // 上一章请求地址
-            this.previousUrl = ''
-            // 下一章请求地址
-            this.nextUrl = ''
-          } else {
-            wx.showModal({
-              title: '',
-              content: data.data.errmsg
-            })
-          }
-        }
-      })
-    }
+  onLoad(options) {
+    console.log(options.bookid)
+    console.log(options.chapter)
+    // 书的ID
+    this.bookid = options.bookid
+    // 章节列表下标,可定位到某一章
+    this.chapter = options.chapter
+    // console.log('onLoad')
+    // 初始化页面时，控制日夜间模式
+    this.getAtNightStatus()
     // 获取字体大小
-    getFontSize() {
-      // 1为日间模式，0为夜间模式
-      wx.getStorage({
-        key: 'fontsoze',
-        success: res => {
-          if (res.data) {
-            console.log(res.data)
-            this.fontSize = res.data
-            this.$apply()
-          } else {
-            this.fontSize = 30
-            this.$apply()
-          }
+    this.getFontSize()
+    // 获取小说详情
+    this.getBookDetails()
+    // 获取本章小说详情
+    this.chapterDetail(this.bookid, this.chapter)
+  }
+  
+  // onShow() {
+  //   console.log('onshow')
+  // }
+
+  // 获取小说详情
+  getBookDetails() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/novelDetail/${this.bookid}`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
-      })
-    }
-    // 控制设置框体的显示
-    showSettingDom() {
-      if (this.showSetting) {
-        this.hideAllFrameDom()
-        this.showSetting = false
-      } else {
-        this.hideAllFrameDom()
-        this.showSetting = true
       }
-    }
-    // 控制目录显示
-    tableOfContentsShow() {
-      if (this.tableOfContentsDomShow) {
-        this.hideAllFrameDom()
-      } else {
-        this.hideAllFrameDom()
-        this.tableOfContentsDomShow = true
+    })
+  }
+  // 获取本章小说详情
+  chapterDetail(bookid, chapter) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/chapterDetail/${chapter}`,
+      method: 'GET',
+      data:{
+        novel_id: bookid
+      },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          // this.novelChapter
+          this.novelChapter = {
+                "data": [
+                    {
+                        "id": 1,
+                        "title": "第一章 捡到了一个香蕉皮改改",
+                        "click_count": 0,
+                        "sale_amount": "0.00",
+                        "words_count": 60,
+                        "wether_vip": "NotVip",
+                        "content": {
+                            "id": 1,
+                            "novel_chapter_id": 1,
+                            "content": "劳资他妈滴捡到一个香蕉皮,一看,卧槽他妈滴烂了,到底吃是不吃算了,还是他妈滴吃吧,有香蕉皮吃就不错了，草他妈的，改个蛇皮",
+                            "created_at": "2018-12-21 02:34:28",
+                            "updated_at": "2018-12-21 08:10:16"
+                        },
+                        "created_at": "2018-12-21 02:34:28",
+                        "updated_at": "2018-12-21 08:10:16"
+                    }
+                ],
+                "meta": {
+                    "pagination": {
+                        "total": 4,
+                        "count": 1,
+                        "per_page": 1,
+                        "current_page": 1,
+                        "total_pages": 4,
+                        "links": {
+                            "next": "http://novel.tesst.com/api/chapterDetail?page=2"
+                        }
+                    }
+                }
+            }
+          // 上一章请求地址
+          this.previousUrl = ''
+          // 下一章请求地址
+          this.nextUrl = ''
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
       }
-    }
-    // 进度控制显示
-    readBtnProgShow() {
-      if (this.readBtnProgDomShow) {
-        this.hideAllFrameDom()
-      } else {
-        this.hideAllFrameDom()
-        this.readBtnProgDomShow = true
+    })
+  }
+  // 获取字体大小
+  getFontSize() {
+    // 1为日间模式，0为夜间模式
+    wx.getStorage({
+      key: 'fontsoze',
+      success: res => {
+        if (res.data) {
+          console.log(res.data)
+          this.fontSize = res.data
+          this.$apply()
+        } else {
+          this.fontSize = 30
+          this.$apply()
+        }
       }
+    })
+  }
+  // 控制设置框体的显示
+  showSettingDom() {
+    if (this.showSetting) {
+      this.hideAllFrameDom()
+      this.showSetting = false
+    } else {
+      this.hideAllFrameDom()
+      this.showSetting = true
     }
-    // 设置框显示
-    readOptSet() {
-      if (this.readOptSetDomShow) {
-        this.hideAllFrameDom()
-      } else {
-        this.hideAllFrameDom()
-        this.readOptSetDomShow = true
-      }
+  }
+  // 控制目录显示
+  tableOfContentsShow() {
+    if (this.tableOfContentsDomShow) {
+      this.hideAllFrameDom()
+    } else {
+      this.hideAllFrameDom()
+      this.tableOfContentsDomShow = true
     }
-    // 隐藏所有设置显示（二级框体）
-    hideAllFrameDom() {
-      // 目录显示
-      this.tableOfContentsDomShow = false
-      // 进度显示
-      this.readBtnProgDomShow = false
-      // 设置显示
-      this.readOptSetDomShow = false
+  }
+  // 进度控制显示
+  readBtnProgShow() {
+    if (this.readBtnProgDomShow) {
+      this.hideAllFrameDom()
+    } else {
+      this.hideAllFrameDom()
+      this.readBtnProgDomShow = true
     }
-    // 日夜模式切换
-    atNightSet() {
-      // 此处定义：1为日间模式，0为夜间模式
-      wx.getStorage({
-        key: 'atNightStatus',
-        success: res => {
-          if (res.data) {
-            // 当前为日间模式，设置为夜间模式
-            wx.setStorageSync('atNightStatus', 0)
-            this.showModel = 'nightMode'
-            // 修改title背景颜色，字体颜色
-            this.change(this.showModel)
-            this.$apply()
-            // 如果未日间模式，则控制显示背景
-          } else {
-            // 当前为夜间模式，设置为日间模式
-            wx.setStorageSync('atNightStatus', 1)
-            // 设置日间模式背景
-            this.dayMode()
-          }
-        },
-        fail: res => {
+  }
+  // 设置框显示
+  readOptSet() {
+    if (this.readOptSetDomShow) {
+      this.hideAllFrameDom()
+    } else {
+      this.hideAllFrameDom()
+      this.readOptSetDomShow = true
+    }
+  }
+  // 隐藏所有设置显示（二级框体）
+  hideAllFrameDom() {
+    // 目录显示
+    this.tableOfContentsDomShow = false
+    // 进度显示
+    this.readBtnProgDomShow = false
+    // 设置显示
+    this.readOptSetDomShow = false
+  }
+  // 日夜模式切换
+  atNightSet() {
+    // 此处定义：1为日间模式，0为夜间模式
+    wx.getStorage({
+      key: 'atNightStatus',
+      success: res => {
+        if (res.data) {
           // 当前为日间模式，设置为夜间模式
           wx.setStorageSync('atNightStatus', 0)
+          this.showModel = 'nightMode'
+          // 修改title背景颜色，字体颜色
+          this.change(this.showModel)
+          this.$apply()
+          // 如果未日间模式，则控制显示背景
+        } else {
+          // 当前为夜间模式，设置为日间模式
+          wx.setStorageSync('atNightStatus', 1)
+          // 设置日间模式背景
+          this.dayMode()
+        }
+      },
+      fail: res => {
+        // 当前为日间模式，设置为夜间模式
+        wx.setStorageSync('atNightStatus', 0)
+        // 夜间模式
+        this.showModel = 'nightMode'
+        // 修改title背景颜色，字体颜色
+        this.change(this.showModel)
+        this.$apply()
+      }
+    })
+  }
+  // 初始化页面时，控制日夜间模式
+  getAtNightStatus() {
+    // 1为日间模式，0为夜间模式
+    wx.getStorage({
+      key: 'atNightStatus',
+      success: res => {
+        if (res.data) {
+          // 日间模式,控制显示背景
+          this.dayMode()
+        } else {
           // 夜间模式
           this.showModel = 'nightMode'
           // 修改title背景颜色，字体颜色
           this.change(this.showModel)
           this.$apply()
         }
-      })
-    }
-    // 初始化页面时，控制日夜间模式
-    getAtNightStatus() {
-      // 1为日间模式，0为夜间模式
-      wx.getStorage({
-        key: 'atNightStatus',
-        success: res => {
-          if (res.data) {
-            // 日间模式,控制显示背景
-            this.dayMode()
-          } else {
-            // 夜间模式
-            this.showModel = 'nightMode'
-            // 修改title背景颜色，字体颜色
-            this.change(this.showModel)
-            this.$apply()
-          }
-        }
-      })
-    }
-    // 背景设置
-    setBgColor(e) {
-      let selColor = e.currentTarget.dataset.color
-      wx.setStorageSync('bg', selColor)
-      wx.setStorageSync('atNightStatus', 1)
-      this.showModel = selColor
-      // 修改title背景颜色，字体颜色
-      this.change(this.showModel)
-    }
-    // 日间模式
-    dayMode() {
-      wx.getStorage({
-        key: 'bg',
-        success: res => {
-          if (res.data) {
-            // 日间模式
-            this.showModel = res.data
-            // 修改title背景颜色，字体颜色
-            this.change(this.showModel)
-            this.$apply()
-            // 如果未日间模式，则控制显示背景
-          } else {
-            this.showModel = 'defaultGg'
-            // 修改title背景颜色，字体颜色
-            this.change(this.showModel)
-            this.$apply()
-          }
-        }
-      })
-    }
-    // 获取顶部需要显示的颜色
-    change(showModel) {
-      let fontColor = '#000000'
-      let bgColor = '#dfcfab'
-      switch (showModel) {
-        case 'nightMode': // 夜间模式
-          this.setcolor(fontColor = '#ffffff', bgColor = '#000000')
-          break
-        case 'defaultGg':
-          this.setcolor(fontColor, bgColor = '#dfcfab')
-          break
-        case 'blueGg':
-          this.setcolor(fontColor, bgColor = '#cad9e8')
-          break
-        case 'greenGg':
-          this.setcolor(fontColor, bgColor = '#d1edd1')
-          break
-        case 'lightGg':
-          this.setcolor(fontColor, bgColor = '#e6e6e6')
-          break
-        default:
-          this.setcolor(fontColor, bgColor = '#dfcfab')
       }
-    }
-    // 修改顶部标题颜色
-    setcolor(fontColor, bgColor) {
-      wx.setNavigationBarColor({
-        frontColor: fontColor, // 必写项
-        backgroundColor: bgColor, // 传递的颜色值
-        animation: { // 可选项
-          duration: 400,
-          timingFunc: 'easeIn'
+    })
+  }
+  // 背景设置
+  setBgColor(e) {
+    let selColor = e.currentTarget.dataset.color
+    wx.setStorageSync('bg', selColor)
+    wx.setStorageSync('atNightStatus', 1)
+    this.showModel = selColor
+    // 修改title背景颜色，字体颜色
+    this.change(this.showModel)
+  }
+  // 日间模式
+  dayMode() {
+    wx.getStorage({
+      key: 'bg',
+      success: res => {
+        if (res.data) {
+          // 日间模式
+          this.showModel = res.data
+          // 修改title背景颜色，字体颜色
+          this.change(this.showModel)
+          this.$apply()
+          // 如果未日间模式，则控制显示背景
+        } else {
+          this.showModel = 'defaultGg'
+          // 修改title背景颜色，字体颜色
+          this.change(this.showModel)
+          this.$apply()
         }
-      })
+      }
+    })
+  }
+  // 获取顶部需要显示的颜色
+  change(showModel) {
+    let fontColor = '#000000'
+    let bgColor = '#dfcfab'
+    switch (showModel) {
+      case 'nightMode': // 夜间模式
+        this.setcolor(fontColor = '#ffffff', bgColor = '#000000')
+        break
+      case 'defaultGg':
+        this.setcolor(fontColor, bgColor = '#dfcfab')
+        break
+      case 'blueGg':
+        this.setcolor(fontColor, bgColor = '#cad9e8')
+        break
+      case 'greenGg':
+        this.setcolor(fontColor, bgColor = '#d1edd1')
+        break
+      case 'lightGg':
+        this.setcolor(fontColor, bgColor = '#e6e6e6')
+        break
+      default:
+        this.setcolor(fontColor, bgColor = '#dfcfab')
     }
   }
+  // 修改顶部标题颜色
+  setcolor(fontColor, bgColor) {
+    wx.setNavigationBarColor({
+      frontColor: fontColor, // 必写项
+      backgroundColor: bgColor, // 传递的颜色值
+      animation: { // 可选项
+        duration: 400,
+        timingFunc: 'easeIn'
+      }
+    })
+  }
+}
 </script>
