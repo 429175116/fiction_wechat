@@ -94,7 +94,7 @@
       <view class="catelogX">
         <ul class="volumes">
           <block wx:for="{{chapters}}" key="index" index="index" item="item">
-            <li @tap="lookBook" data-index="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li>
+            <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li>
           </block>
         </ul>
       </view>
@@ -124,10 +124,9 @@ export default class Bookcontents extends wepy.page {
   methods = {
     // 立即阅读
     lookBook(e) {
-      let index = e.currentTarget.dataset.index
+      let id = e.currentTarget.dataset.id
       // index目录下标,确定是那一章
-      console.log(`/pages/lookFiction?bookid=${this.id}&chapter=${index}`)
-      this.$navigate(`/pages/lookFiction?bookid=${this.id}&chapter=${index}firsttime=${false}`)
+      this.$navigate(`/pages/lookFiction?bookid=${this.id}&chapterid=${id}&firsttime=${false}`)
     }
   }
 

@@ -544,7 +544,7 @@ export default class Details extends wepy.page {
     },
     // 立即阅读
     lookBook() {
-      this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapter=${0}&firsttime=${true}`)
+      this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapterid=${1}&firsttime=${true}`)
     },
     // 查看目录
     goContents() {

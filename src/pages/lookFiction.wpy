@@ -373,7 +373,7 @@
 </style>
 <template>
   <view>
-    <view wx:if="{{coverShow}}" class="cover {{showModel}}">
+    <view wx:if="{{coverShow}}" class="cover {{showModel}}" @tap="coverHide">
       <view class="img">
         <image src="/img/1.png" />
       </view>
@@ -442,10 +442,8 @@
           </view>
           <ul class="volumes">
             <block wx:for="{{bookInfo.chapters}}" key="index" index="index" item="item">
-              <li @tap="lookBook" data-index="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li>
+              <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li>
             </block>
-            <!-- <li class="action">第1章 豆豆做了我女儿</li>
-            <li>第1章 豆豆做了我女儿</li> -->
           </ul>
         </view>
       </view>
@@ -514,7 +512,9 @@ export default class Lookfiction extends wepy.page {
     fontSize: 36, // 默认字体大小
     novelChapter: null, // 章节数据
     bookInfo: null, // 书信息
-    chapters: null // 目录
+    chapters: null, // 目录
+    nextUrl: '', // 下一页
+    previousUrl: '' // 上一页
   }
 
   computed = {}
@@ -530,21 +530,34 @@ export default class Lookfiction extends wepy.page {
       this.fontSize -= 1
       wx.setStorageSync('fontsoze', this.fontSize)
     },
+    // 目录倒序/顺序切换
     chaptersReverse() {
-
+      this.chapters = this.chapters.reverse()
+      this.$apply()
+    },
+    // 封面隐藏
+    coverHide() {
+      this.coverShow = false
+      this.$apply()
+    },
+    // 点击目录
+    lookBook(e) {
+      this.showSetting = false
+      this.tableOfContentsDomShow = false
+      this.chapterId = e.currentTarget.dataset.id
+      // 获取本章小说详情
+      this.chapterDetail()
     }
   }
 
   events = {}
 
   onLoad(options) {
-    console.log(options.bookid)
-    console.log(options.chapter)
-    this.coverShow = options.firsttime
     // 书的ID
     this.bookid = options.bookid
     // 章节列表下标,可定位到某一章
-    this.chapter = options.chapter
+    this.chapterId = options.chapterid
+    this.$apply()
     // console.log('onLoad')
     // 初始化页面时，控制日夜间模式
     this.getAtNightStatus()
@@ -555,72 +568,17 @@ export default class Lookfiction extends wepy.page {
     // 获取本章小说详情
     this.chapterDetail(this.bookid, this.chapter)
   }
-  
-  // onShow() {
-  //   console.log('onshow')
-  // }
 
   // 获取小说详情
   getBookDetails() {
-    // this.bookInfo = {
-    //                 "id": 1,
-    //                 "name": "吃个香蕉皮",
-    //                 "words_count": 60, // 字数
-    //                 "read_person_count": 0, // 读人数
-    //                 "sale_amount": "0.00", // 价格
-    //                 "wether_complete": "Uncompelete", // 更完整
-    //                 "read_count": 0, // 读数
-    //                 "click_count": 0, //点击量
-    //                 "score": "0.00", // 评分
-    //                 "score_person_count": 0, // 得分人数
-    //                 "stored_count": 3, // 存储计数
-    //                 "download_count": 0, // 下载次数
-    //                 "chapters": [ // 目录
-    //                     {
-    //                         "title": "第一章 捡到了一个香蕉皮改改",
-    //                         "click_count": 0,
-    //                         "sale_amount": "0.00",
-    //                         "words_count": 60,
-    //                         "wether_vip": "NotVip"
-    //                     },
-    //                     {
-    //                         "title": "第二章 捡到了一个香蕉皮",
-    //                         "click_count": 0,
-    //                         "sale_amount": "0.00",
-    //                         "words_count": 52,
-    //                         "wether_vip": "NotVip"
-    //                     },
-    //                     {
-    //                         "title": "第三章 捡到了一个香蕉皮",
-    //                         "click_count": 0,
-    //                         "sale_amount": "0.00",
-    //                         "words_count": 55,
-    //                         "wether_vip": "NotVip"
-    //                     },
-    //                     {
-    //                         "title": "第四章 捡到了一个香蕉皮",
-    //                         "click_count": 0,
-    //                         "sale_amount": "0.00",
-    //                         "words_count": 55,
-    //                         "wether_vip": "NotVip"
-    //                     }
-    //                 ]
-    //             }
-    // this.chapters = this.bookInfo.chapters
-    // for (i in this.chapters) {
-    //   this.chapters[i]["id"] = i
-    // }
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/novelDetail/${this.bookid}`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
-          this.bookInfo = ''
+          this.bookInfo = data.data.novel
           this.chapters = this.bookInfo.chapters
-          for (i in this.chapters) {
-            this.chapters[i]["id"] = i
-          }
+          this.$apply()
         } else {
           wx.showModal({
             title: '',
@@ -631,75 +589,74 @@ export default class Lookfiction extends wepy.page {
     })
   }
   // 获取本章小说详情
-  chapterDetail(bookid, chapter) {
-    this.novelChapter = {
-                        "id": 1,
-                        "title": "第一章 捡到了一个香蕉皮改改",
-                        "click_count": 0,
-                        "sale_amount": "0.00",
-                        "words_count": 60,
-                        "wether_vip": "NotVip",
-                        "content": {
-                            "id": 1,
-                            "novel_chapter_id": 1,
-                            "content": "劳资他妈滴捡到一个香蕉皮,一看,卧槽他妈滴烂了,到底吃是不吃算了,还是他妈滴吃吧,有香蕉皮吃就不错了，草他妈的，改个蛇皮",
-                            "created_at": "2018-12-21 02:34:28",
-                            "updated_at": "2018-12-21 08:10:16"
-                        },
-                        "created_at": "2018-12-21 02:34:28",
-                        "updated_at": "2018-12-21 08:10:16"
-                    }
-    // 根据获取到的参数修改页面标题
-    wx.setNavigationBarTitle({
-      title: this.novelChapter.title
-    })
+  chapterDetail() {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/chapterDetail/${chapter}`,
+      url: `${this.$parent.globalData.requestUrl}/api/chapterDetail`,
       method: 'GET',
       data:{
-        novel_id: bookid
+        novel_id: this.bookid,
+        chapter_id: this.chapterId
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
+          data = data.data.novel_chapter
+          this.novelChapter = data.data[0]
+          // 回到页面顶部
+          wx.pageScrollTo({
+            scrollTop: 0
+          })
+          // 根据获取到的参数修改页面标题
+          wx.setNavigationBarTitle({
+            title: this.novelChapter.title
+          })
           // this.novelChapter
-          this.novelChapter = {
-                "data": [
-                    {
-                        "id": 1,
-                        "title": "第一章 捡到了一个香蕉皮改改",
-                        "click_count": 0,
-                        "sale_amount": "0.00",
-                        "words_count": 60,
-                        "wether_vip": "NotVip",
-                        "content": {
-                            "id": 1,
-                            "novel_chapter_id": 1,
-                            "content": "劳资他妈滴捡到一个香蕉皮,一看,卧槽他妈滴烂了,到底吃是不吃算了,还是他妈滴吃吧,有香蕉皮吃就不错了，草他妈的，改个蛇皮",
-                            "created_at": "2018-12-21 02:34:28",
-                            "updated_at": "2018-12-21 08:10:16"
-                        },
-                        "created_at": "2018-12-21 02:34:28",
-                        "updated_at": "2018-12-21 08:10:16"
-                    }
-                ],
-                "meta": {
-                    "pagination": {
-                        "total": 4,
-                        "count": 1,
-                        "per_page": 1,
-                        "current_page": 1,
-                        "total_pages": 4,
-                        "links": {
-                            "next": "http://novel.tesst.com/api/chapterDetail?page=2"
-                        }
-                    }
-                }
-            }
           // 上一章请求地址
           this.previousUrl = ''
-          // 下一章请求地址
+          
+          if (data.meta.pagination.links.length !== 0) {
+            // 下一章请求地址
+            this.nextUrl = data.meta.pagination.links.next
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  onReachBottom() {
+    if (!this.nextUrl) {
+      return
+    }
+    wx.request({
+      url: this.nextUrl,
+      method: 'GET',
+      data:{
+        novel_id: this.bookid,
+        chapter_id: this.chapterId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.novel_chapter
+          this.novelChapter = data.data[0]
+          // 回到页面顶部
+          wx.pageScrollTo({
+            scrollTop: 0
+          })
+          // 根据获取到的参数修改页面标题
+          wx.setNavigationBarTitle({
+            title: this.novelChapter.title
+          })
+          this.previousUrl = ''
           this.nextUrl = ''
+          if (data.meta.pagination.links.length !== 0) {
+            // 下一章请求地址
+            this.nextUrl = data.meta.pagination.links.next
+          }
+          this.$apply()
         } else {
           wx.showModal({
             title: '',
