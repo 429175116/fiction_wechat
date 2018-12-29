@@ -86,7 +86,7 @@
           章
         </span>
       </view>
-      <view class="module-header-r" @tap="reverse">
+      <view class="module-header-r" @tap="chaptersReverse">
         <span>倒序</span>
       </view>
     </view>
@@ -147,7 +147,7 @@ export default class Bookcontents extends wepy.page {
     // 获取更多
   }
   // 目录数组颠倒
-  reverse() {
+  chaptersReverse() {
     this.chapters = this.chapters.reverse()
     this.$apply()
   }

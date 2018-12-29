@@ -230,9 +230,12 @@
       console.log(this.userInfo)
       console.log(this.openId)
       this.$apply()
-      this.login()
-      this.createNovel()
+      // this.login()
+      // this.createNovel()
     }
+
+
+    
     // 添加小说
     login() {
       wx.request({
