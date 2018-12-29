@@ -82,11 +82,11 @@
       <view class="module-header-l">
         <span>
           共
-          <span>359</span>
+          <span>{{chapters.length}}</span>
           章
         </span>
       </view>
-      <view class="module-header-r">
+      <view class="module-header-r" @tap="reverse">
         <span>倒序</span>
       </view>
     </view>
@@ -94,7 +94,7 @@
       <view class="catelogX">
         <ul class="volumes">
           <block wx:for="{{chapters}}" key="index" index="index" item="item">
-            <li @tap="lookBook" data-index="{{index}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li>
+            <li @tap="lookBook" data-index="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li>
           </block>
         </ul>
       </view>
@@ -135,14 +135,21 @@ export default class Bookcontents extends wepy.page {
 
   onLoad(options) {
     let bookInfo = JSON.parse(options.bookInfo)
-    this.chapters = bookInfo.chapters
-    console.log(bookInfo.id)
     this.id = bookInfo.id
+    this.chapters = bookInfo.chapters
+    let i = 0 
+    for (i in this.chapters) {
+      this.chapters[i]["id"] = i
+    }
     this.$apply()
     // 根据获取到的参数修改页面标题
     // 列表加载
     // 获取更多
-    
+  }
+  // 目录数组颠倒
+  reverse() {
+    this.chapters = this.chapters.reverse()
+    this.$apply()
   }
 }
 </script>
