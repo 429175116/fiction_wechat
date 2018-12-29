@@ -412,10 +412,10 @@
         </view>
       </view>
     </view>
-    <view wx:if="{{!coverShow}}" class="con {{showModel}}" style="font-size: {{fontSize}}rpx">
+    <view wx:if="{{!coverShow}}" class="con {{showModel}}">
       <view class="switch" @tap="showSettingDom"></view>
       <!-- 小说内容显示 -->
-      <text>{{novelChapter.content.content}}</text>
+      <text style="font-size: {{fontSize}}rpx">{{novelChapter.content.content}}</text>
       <view class="nextAndPrevious"  wx:if="{{nextAndPrevious}}">
         <view data-page="previous" @tap="goNextAndPrevious">上一章</view>
         <view data-page="next" @tap="goNextAndPrevious">下一章</view>
@@ -464,7 +464,8 @@
           </view>
           <ul class="volumes">
             <block wx:for="{{bookInfo.chapters}}" key="index" index="index" item="item">
-              <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li>
+              <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}}">{{item.title}}</li>
+              <!-- <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li> -->
             </block>
           </ul>
         </view>
@@ -672,14 +673,8 @@ export default class Lookfiction extends wepy.page {
       }
     })
   }
-  // onReachBottom() {
-  //   // this.nextAndPrevious = true
-  //   return
-  //   if (!this.nextUrl) {
-  //     return
-  //   }
-    
-  // }
+  // 下拉触底执行
+  // onReachBottom() {}
   getNextAndPreviousData(url) {
     wx.request({
       url: url,
