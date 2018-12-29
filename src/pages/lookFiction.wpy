@@ -370,6 +370,24 @@
     width: 50vw;
     height: 40vh;
   }
+  .nextAndPrevious{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .nextAndPrevious view{
+    width: 250rpx;
+    height: 60rpx;
+    margin: 30rpx 68.5rpx;
+    border: 1rpx solid #0099CC;
+    background-color: #0099CC;
+    border-radius: 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
 </style>
 <template>
   <view>
@@ -397,7 +415,11 @@
     <view wx:if="{{!coverShow}}" class="con {{showModel}}" style="font-size: {{fontSize}}rpx">
       <view class="switch" @tap="showSettingDom"></view>
       <!-- 小说内容显示 -->
-      {{novelChapter.content.content}}
+      <text>{{novelChapter.content.content}}</text>
+      <view class="nextAndPrevious"  wx:if="{{nextAndPrevious}}">
+        <view data-page="previous" @tap="goNextAndPrevious">上一章</view>
+        <view data-page="next" @tap="goNextAndPrevious">下一章</view>
+      </view>
     </view>
     <view class="setBookshelf" wx:if="{{showSetting}}">加入书架</view>
     <view class="nav" wx:if="{{showSetting}}">
@@ -514,7 +536,8 @@ export default class Lookfiction extends wepy.page {
     bookInfo: null, // 书信息
     chapters: null, // 目录
     nextUrl: '', // 下一页
-    previousUrl: '' // 上一页
+    previousUrl: '', // 上一页
+    nextAndPrevious: true // 显示上一页下一页按钮
   }
 
   computed = {}
@@ -547,7 +570,27 @@ export default class Lookfiction extends wepy.page {
       this.chapterId = e.currentTarget.dataset.id
       // 获取本章小说详情
       this.chapterDetail()
+    },
+    // 点击上一页或者下一页
+    goNextAndPrevious(e) {
+      let pageType = e.currentTarget.dataset.page
+      let url = this.nextUrl
+      if (pageType === 'next') {
+        url = this.nextUrl
+      } else {
+        url = this.previousUrl
+      }
+      this.novelChapter.content.content = ''
+      if (!url) {
+        return
+      }
+      // 回到页面顶部
+      wx.pageScrollTo({
+        scrollTop: 0
+      })
+      this.getNextAndPreviousData(url)
     }
+    // 
   }
 
   events = {}
@@ -601,6 +644,8 @@ export default class Lookfiction extends wepy.page {
         if (data.data.success) {
           data = data.data.novel_chapter
           this.novelChapter = data.data[0]
+          // 碰到空格换行
+          this.novelChapter.content.content.replace(/ /g,'/n')
           // 回到页面顶部
           wx.pageScrollTo({
             scrollTop: 0
@@ -627,12 +672,17 @@ export default class Lookfiction extends wepy.page {
       }
     })
   }
-  onReachBottom() {
-    if (!this.nextUrl) {
-      return
-    }
+  // onReachBottom() {
+  //   // this.nextAndPrevious = true
+  //   return
+  //   if (!this.nextUrl) {
+  //     return
+  //   }
+    
+  // }
+  getNextAndPreviousData(url) {
     wx.request({
-      url: this.nextUrl,
+      url: url,
       method: 'GET',
       data:{
         novel_id: this.bookid,
@@ -642,10 +692,8 @@ export default class Lookfiction extends wepy.page {
         if (data.data.success) {
           data = data.data.novel_chapter
           this.novelChapter = data.data[0]
-          // 回到页面顶部
-          wx.pageScrollTo({
-            scrollTop: 0
-          })
+          // 碰到空格换行
+          this.novelChapter.content.content.replace(/ /g,'/n')
           // 根据获取到的参数修改页面标题
           wx.setNavigationBarTitle({
             title: this.novelChapter.title
