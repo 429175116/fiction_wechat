@@ -453,7 +453,7 @@
       <view class="authorInfo">
         <image src="/img/1.png" />
         <view class="info">
-          <view>小说名称</view>
+          <view>作者名称</view>
           <view>作品数量</view>
         </view>
       </view>

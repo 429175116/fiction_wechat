@@ -212,35 +212,58 @@
 // text-overflow:ellipsis;
 // white-space:nowrap;
 <script>
-  import wepy from 'wepy'
-  export default class Authorinfo extends wepy.page {
-    config = {
-      navigationBarTitleText: '作者信息'
-    }
-    // 生命组件ID
-    components = {
+import wepy from 'wepy'
+export default class Authorinfo extends wepy.page {
+  config = {
+    navigationBarTitleText: '作者信息'
+  }
+  // 生命组件ID
+  components = {
 
-    }
+  }
 
-    mixins = []
+  mixins = []
 
-    data = {
-    }
+  data = {
+  }
 
-    computed = {}
+  computed = {}
 
-    methods = {
-      // 底部导航跳转
-      goPage (url, evt) {
-        // 销毁当前页{跳转}
-        this.$redirect(url)
-      }
-    }
-
-    events = {}
-
-    onLoad() {
-      // 个人信息初始化
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
     }
   }
+
+  events = {}
+
+  onLoad() {
+    // 个人信息初始化
+    // 作家的其他作品以及数量
+    this.authorOtherNovel()
+  }
+  // 作家的其他作品以及数量
+  authorOtherNovel() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/authorOtherNovel/${1}`,
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+}
 </script>
