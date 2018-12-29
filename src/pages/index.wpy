@@ -204,7 +204,7 @@
         </view>
       </view>
       <view class="listCon">
-        <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item">
+        <block wx:for="{{newBooks}}" key="index" index="index" item="item">
           <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
             <view class="cover">
               <image src="/img/1.png" />
@@ -404,7 +404,8 @@ export default class Index extends wepy.page {
     popularCateGory: [], // 人气分类
     twentyFourHourHotSale: [], // 24小时热销榜
     clickWeekBang: [], // 点击周榜
-    compeleteBoutique: [] // 完本精品
+    compeleteBoutique: [], // 完本精品
+    newBooks: [] // 新书
   }
 
   computed = {}
@@ -593,7 +594,8 @@ export default class Index extends wepy.page {
       success: data => {
         console.log(data)
         if (data.data.success) {
-          
+          this.newBooks = data.data.new_books
+
         } else {
           wx.showModal({
             title: '',

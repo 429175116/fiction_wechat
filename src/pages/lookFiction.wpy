@@ -540,6 +540,7 @@ export default class Lookfiction extends wepy.page {
   onLoad(options) {
     console.log(options.bookid)
     console.log(options.chapter)
+    this.coverShow = options.firsttime
     // 书的ID
     this.bookid = options.bookid
     // 章节列表下标,可定位到某一章
@@ -561,61 +562,65 @@ export default class Lookfiction extends wepy.page {
 
   // 获取小说详情
   getBookDetails() {
-    this.bookInfo = {
-                    "id": 1,
-                    "name": "吃个香蕉皮",
-                    "words_count": 60, // 字数
-                    "read_person_count": 0, // 读人数
-                    "sale_amount": "0.00", // 价格
-                    "wether_complete": "Uncompelete", // 更完整
-                    "read_count": 0, // 读数
-                    "click_count": 0, //点击量
-                    "score": "0.00", // 评分
-                    "score_person_count": 0, // 得分人数
-                    "stored_count": 3, // 存储计数
-                    "download_count": 0, // 下载次数
-                    "chapters": [ // 目录
-                        {
-                            "title": "第一章 捡到了一个香蕉皮改改",
-                            "click_count": 0,
-                            "sale_amount": "0.00",
-                            "words_count": 60,
-                            "wether_vip": "NotVip"
-                        },
-                        {
-                            "title": "第二章 捡到了一个香蕉皮",
-                            "click_count": 0,
-                            "sale_amount": "0.00",
-                            "words_count": 52,
-                            "wether_vip": "NotVip"
-                        },
-                        {
-                            "title": "第三章 捡到了一个香蕉皮",
-                            "click_count": 0,
-                            "sale_amount": "0.00",
-                            "words_count": 55,
-                            "wether_vip": "NotVip"
-                        },
-                        {
-                            "title": "第四章 捡到了一个香蕉皮",
-                            "click_count": 0,
-                            "sale_amount": "0.00",
-                            "words_count": 55,
-                            "wether_vip": "NotVip"
-                        }
-                    ]
-                }
-    this.chapters = this.bookInfo.chapters
-    for (i in this.chapters) {
-      this.chapters[i]["id"] = i
-    }
+    // this.bookInfo = {
+    //                 "id": 1,
+    //                 "name": "吃个香蕉皮",
+    //                 "words_count": 60, // 字数
+    //                 "read_person_count": 0, // 读人数
+    //                 "sale_amount": "0.00", // 价格
+    //                 "wether_complete": "Uncompelete", // 更完整
+    //                 "read_count": 0, // 读数
+    //                 "click_count": 0, //点击量
+    //                 "score": "0.00", // 评分
+    //                 "score_person_count": 0, // 得分人数
+    //                 "stored_count": 3, // 存储计数
+    //                 "download_count": 0, // 下载次数
+    //                 "chapters": [ // 目录
+    //                     {
+    //                         "title": "第一章 捡到了一个香蕉皮改改",
+    //                         "click_count": 0,
+    //                         "sale_amount": "0.00",
+    //                         "words_count": 60,
+    //                         "wether_vip": "NotVip"
+    //                     },
+    //                     {
+    //                         "title": "第二章 捡到了一个香蕉皮",
+    //                         "click_count": 0,
+    //                         "sale_amount": "0.00",
+    //                         "words_count": 52,
+    //                         "wether_vip": "NotVip"
+    //                     },
+    //                     {
+    //                         "title": "第三章 捡到了一个香蕉皮",
+    //                         "click_count": 0,
+    //                         "sale_amount": "0.00",
+    //                         "words_count": 55,
+    //                         "wether_vip": "NotVip"
+    //                     },
+    //                     {
+    //                         "title": "第四章 捡到了一个香蕉皮",
+    //                         "click_count": 0,
+    //                         "sale_amount": "0.00",
+    //                         "words_count": 55,
+    //                         "wether_vip": "NotVip"
+    //                     }
+    //                 ]
+    //             }
+    // this.chapters = this.bookInfo.chapters
+    // for (i in this.chapters) {
+    //   this.chapters[i]["id"] = i
+    // }
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/novelDetail/${this.bookid}`,
       method: 'GET',
       success: data => {
         console.log(data)
         if (data.data.success) {
-          
+          this.bookInfo = ''
+          this.chapters = this.bookInfo.chapters
+          for (i in this.chapters) {
+            this.chapters[i]["id"] = i
+          }
         } else {
           wx.showModal({
             title: '',

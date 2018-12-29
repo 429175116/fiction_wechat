@@ -127,7 +127,7 @@ export default class Bookcontents extends wepy.page {
       let index = e.currentTarget.dataset.index
       // index目录下标,确定是那一章
       console.log(`/pages/lookFiction?bookid=${this.id}&chapter=${index}`)
-      this.$navigate(`/pages/lookFiction?bookid=${this.id}&chapter=${index}`)
+      this.$navigate(`/pages/lookFiction?bookid=${this.id}&chapter=${index}firsttime=${false}`)
     }
   }
 
