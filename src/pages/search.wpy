@@ -113,7 +113,7 @@
   }
   .list .info{
     margin-left: 20rpx;
-    width: 490rpx;
+    width: 597rpx;
     height: 146rpx;
     // border: 1rpx solid red;
   }
@@ -167,13 +167,36 @@
       <view>搜索热词</view>
     </view>
     <view class="searchHistory">
-      <view>33asdfasdf2</view>
-      <view>sssewe</view>
-      <view>332</view>
-      <view>332</view>
-      <view>332</view>
-      <view>332</view>
-      <view>332</view>
+      <view @tap="clicklabel" data-name="{{'33asdfasdf2'}}">33asdfasdf2</view>
+      <view @tap="clicklabel" data-name="{{'sssewe'}}">sssewe</view>
+      <view @tap="clicklabel" data-name="{{'332'}}">332</view>
+      <view @tap="clicklabel" data-name="{{'332'}}">332</view>
+      <view @tap="clicklabel" data-name="{{'332'}}">332</view>
+      <view @tap="clicklabel" data-name="{{'332'}}">332</view>
+      <view @tap="clicklabel" data-name="{{'332'}}">332</view>
+    </view>
+    <!-- 搜索结果 -->
+    <view class="bookList">
+      <view class="list">
+        <view class="cover">
+          <image src="/img/1.png" />
+        </view>
+        <view class="info">
+          <view class="title">书名书名书名书名书名书名</view>
+          <view>描述描述描述描述描述描述描述描述描述</view>
+          <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+        </view>
+      </view>
+      <view class="list">
+        <view class="cover">
+          <image src="/img/1.png" />
+        </view>
+        <view class="info">
+          <view class="title">书名书名书名书名书名书名</view>
+          <view>描述描述描述描述描述描述描述描述描述</view>
+          <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
+        </view>
+      </view>
     </view>
     <view class="searchHistoryTitle">
       <view>为您推荐</view>
@@ -191,9 +214,6 @@
           <view>描述描述描述描述描述描述描述描述描述</view>
           <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
         </view>
-        <view class="operating">
-          <image src="/img/plus.png" />
-        </view>
       </view>
       <view class="list">
         <view class="cover">
@@ -203,9 +223,6 @@
           <view class="title">书名书名书名书名书名书名</view>
           <view>描述描述描述描述描述描述描述描述描述</view>
           <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-        </view>
-        <view class="operating">
-          <image src="/img/plus.png" />
         </view>
       </view>
     </view>
@@ -229,7 +246,35 @@ export default class Search extends wepy.page {
 
   computed = {}
 
-  methods = {}
+  methods = {
+    // 清空搜索框中的值
+    inputReset() {
+      // 使用this.searchKey = ''无用
+      this.setData({
+        searchKey: ''
+      })
+    },
+    // 搜索
+    searchBook(e) {
+      let searchKey = e.detail.value
+      console.log(searchKey)
+      if (searchKey === '') {
+        return ''
+      }
+      // 执行搜索
+      this.runSearch(searchKey)
+    },
+    // 标签搜索
+    clicklabel(e) {
+      let searchKey = e.currentTarget.dataset.name
+      console.log(searchKey)
+      if (searchKey === '') {
+        return ''
+      }
+      // 执行搜索
+      this.runSearch(searchKey)
+    }
+  }
 
   events = {}
 
@@ -237,20 +282,28 @@ export default class Search extends wepy.page {
 
   }
   // 搜索
-  searchBook(e) {
-    let searchKey = e.detail.value
-    console.log(searchKey)
-    if (searchKey === '') {
-      return ''
-    }
+  runSearch(searchKey) {
+    // wx.request({
+    //   url: `${this.$parent.globalData.requestUrl}/api/recommendNovel`,
+    //   method: 'GET',
+    //   header: {
+    //     AuthrizeOpenId: this.$parent.globalData.openId
+    //   },
+    //   success: data => {
+    //     console.log(data)
+    //     if (data.data.success) {
+
+    //     } else {
+    //       wx.showModal({
+    //         title: '',
+    //         content: data.data.errmsg
+    //       })
+    //     }
+    //   }
+    // })
   }
-  // 清空搜索框中的值
-  inputReset() {
-    // 使用this.searchKey = ''无用
-    this.setData({
-      searchKey: ''
-    })
-  }
+
+  
   // 推荐/猜你喜欢
   recommendNovel() {
     // 判断多个链接，请求不同类型书的列表
