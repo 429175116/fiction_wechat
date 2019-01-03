@@ -528,7 +528,11 @@ export default class Details extends wepy.page {
       this.$navigate(`/pages/bookContents?bookInfo=${JSON.stringify(this.bookInfo)}`)
     },
     // 点击推荐的书
-    recommendBook() {
+    recommendBook(e) {
+      this.bookid = e.currentTarget.dataset.id
+      // 获取小说详情
+      this.getBookDetails()
+      this.userLikeThisBookLikeOthers()
       // 刷新当前页数据
       console.log('刷新当前页数据')
     },
