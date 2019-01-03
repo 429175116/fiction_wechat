@@ -486,10 +486,16 @@
     <!-- 进度对应 -->
     <view class="readBtnProg" wx:if="{{readBtnProgDomShow}}">
       <view class="read-prog-info">
-        <view class="read-prog-prev">《上一章</view>
-        <view class="read-prog-next">下一章》</view>
+        <view class="read-prog-prev" data-page="previous" @tap="goNextAndPrevious">
+          <icon class="iconfont icon-jiantouzuo" />
+          上一章
+        </view>
+        <view class="read-prog-next" data-page="next" @tap="goNextAndPrevious">
+          下一章
+          <icon class="iconfont icon-jiantouyou" />
+        </view>
         <view class="read-prog-val">
-          <view class="ell">第109章 豆豆做了我女儿</view>
+          <view class="ell">{{novelChapter.title}}</view>
         </view>
       </view>
     </view>
@@ -593,10 +599,10 @@ export default class Lookfiction extends wepy.page {
       } else {
         url = this.previousUrl
       }
-      this.novelChapter.content.content = ''
       if (!url) {
         return
       }
+      this.novelChapter.content.content = ''
       // 回到页面顶部
       wx.pageScrollTo({
         scrollTop: 0
