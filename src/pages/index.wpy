@@ -176,7 +176,7 @@
         </swiper-item>
       <!-- </block> -->
     </swiper>
-    <view class="conNav">
+    <!-- <view class="conNav">
       <view class="sel" @tap="goBookListAndType" data-title="分类">
         <icon class="iconfont icon-fenlei" />
         <view>分类</view>
@@ -197,7 +197,7 @@
         <icon class="iconfont icon-shu" />
         <view>完本</view>
       </view>
-    </view>
+    </view> -->
     <view class="booklist">
       <!-- xx新书 -->
       <view class="list" wx:if="{{newBooks.length > 0}}">
