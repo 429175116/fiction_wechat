@@ -459,41 +459,17 @@
       </view>
       <view class="attention">+ 关注</view>
     </view>
-    <view class="recommend">
+    <!-- 若otherNovels中无数据，则该模块不显示 -->
+    <view class="recommend" wx:if="{{otherNovels.length > 0}}">
       喜欢这本书的人也喜欢
       <view class="recommendList">
-        <view class="recommendCon" @tap="recommendBook">
-          <image src="/img/1.png" />
-          <view>书名书名书名</view>
-        </view>
-        <view class="recommendCon" @tap="recommendBook">
-          <image src="/img/1.png" />
-          <view>书名书名书名</view>
-        </view>
-        <view class="recommendCon" @tap="recommendBook">
-          <image src="/img/1.png" />
-          <view>书名书名书名</view>
-        </view>
-        <view class="recommendCon" @tap="recommendBook">
-          <image src="/img/1.png" />
-          <view>书名书名书名</view>
-        </view>
-        <view class="recommendCon" @tap="recommendBook">
-          <image src="/img/1.png" />
-          <view>书名书名书名</view>
-        </view>
-        <view class="recommendCon" @tap="recommendBook">
-          <image src="/img/1.png" />
-          <view>书名书名书名</view>
-        </view>
-        <view class="recommendCon" @tap="recommendBook">
-          <image src="/img/1.png" />
-          <view>书名书名书名</view>
-        </view>
-        <view class="recommendCon" @tap="recommendBook">
-          <image src="/img/1.png" />
-          <view>书名书名书名</view>
-        </view>
+        <block wx:for="{{otherNovels}}" key="index" index="index" item="item">
+          <view class="recommendCon" @tap="recommendBook" data-id="{{item.id}}">
+            <image src="/img/1.png" />
+            <view>{{item.name}}</view>
+          </view>
+        </block>
+        <!-- <view wx:if="{{bookshelfList.length == 0}}" class="dataNullShow">暂无收藏</view> -->
       </view>
     </view>
     <view class="bookMoreInfo">
@@ -532,7 +508,8 @@ export default class Details extends wepy.page {
 
   data = {
     bookid: '',
-    bookInfo: null
+    bookInfo: null,
+    otherNovels: []
   }
 
   computed = {}
@@ -568,6 +545,7 @@ export default class Details extends wepy.page {
     this.bookid = options.bookid
     // 获取小说详情
     this.getBookDetails(options.bookid)
+    this.userLikeThisBookLikeOthers()
     // this.bookInfo = 
   }
   // 获取小说详情
@@ -580,6 +558,7 @@ export default class Details extends wepy.page {
         if (data.data.success) {
           this.bookInfo = data.data.novel
           this.bookid = this.bookInfo.id
+          this.$apply()
         } else {
           wx.showModal({
             title: '',
@@ -604,6 +583,28 @@ export default class Details extends wepy.page {
             title: '',
             content: '添加成功'
           })
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 喜欢这本书的人也喜欢
+  userLikeThisBookLikeOthers() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userLikeThisBookLikeOther/${this.bookid}`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          this.otherNovels = data.data.other_novels
+          this.$apply()
         } else {
           wx.showModal({
             title: '',

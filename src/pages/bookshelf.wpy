@@ -122,16 +122,6 @@
       <image src="/img/plus.png" />
     </view> -->
     <view class="bookList">
-      <!-- <view class="list" @tap="goBookDetails" data-id="1">
-        <view class="cover">
-          <image src="/img/1.png" />
-        </view>
-        <view class="info">
-          <view class="title">书名书名书名书名书名书名</view>
-          <view>描述描述描述描述描述描述描述描述描述</view>
-          <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-        </view>
-      </view> -->
       <block wx:for="{{bookshelfList}}" key="index" index="index" item="item">
         <view class="list">
           <view class="cover" @tap="goBookDetails" data-id="{{item.id}}">
