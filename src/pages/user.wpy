@@ -134,8 +134,8 @@
     </view>
     <view class="list">
       <view>
-        <icon class="iconfont icon-yanjing" />
-        浏览纪录
+        <icon class="iconfont icon-piaowu" />
+        月票
       </view>
       <view>
         <icon class="iconfont icon-jiantouyou" />
@@ -143,8 +143,8 @@
     </view>
     <view class="list">
       <view>
-        <icon class="iconfont icon-yueliang" />
-        夜间模式
+        <icon class="iconfont icon-yanjing" />
+        浏览纪录
       </view>
       <view>
         <icon class="iconfont icon-jiantouyou" />
