@@ -162,35 +162,6 @@
     <nav @childFn.user="goPage" />
   </view>
 </template>
-// 页面跳转，传参写法
-// this.$redirect('./page2', {a: 1, b: 2})
-// this.$redirect({
-//   url: './pages?a=1&b=2'
-// });
-// this.$navigate(url)
-
-
-// 水平垂直居中
-// display: flex;
-// align-items: center;
-// justify-content: center;
-
-// 居右
-// flex-direction:row;
-// justify-content:flex-end
-
-// vertical-align:middle;
-
-// overflow:hidden;
-// text-overflow:ellipsis;
-// white-space:nowrap;
-
-// 自动换行
-// word-break:break-all;
-
-// overflow:hidden;
-// text-overflow:ellipsis;
-// white-space:nowrap;
 <script>
   import wepy from 'wepy'
   import nav from '../components/nav' // 底部导航

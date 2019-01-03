@@ -122,7 +122,8 @@ export default class extends wepy.app {
 
   globalData = {
     userInfo: null,
-    requestUrl: 'http://140.143.203.12:8095'
+    requestUrl: 'http://140.143.203.12:8095',
+    imgUrl: 'http://140.143.203.12:8095'
   }
 
   constructor () {

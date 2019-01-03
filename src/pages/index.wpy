@@ -349,8 +349,6 @@
         </view>
       </view>
     </view>
-    
-
     <nav @childFn.user="goPage" />
   </view>
 </template>
@@ -476,9 +474,9 @@ export default class Index extends wepy.page {
       // 24小时热销榜
       this.twentyFourHourHotSale(id)
       // 点击周榜
-      this.clickWeekBang(id)
+      this.clickWeekBangs(id)
       // 完本精品
-      this.compeleteBoutique(id)
+      this.compeleteBoutiques(id)
     }
   }
 
@@ -510,9 +508,9 @@ export default class Index extends wepy.page {
           // 24小时热销榜
           this.twentyFourHourHotSale(id)
           // 点击周榜
-          this.clickWeekBang(id)
+          this.clickWeekBangs(id)
           // 完本精品
-          this.compeleteBoutique(id)
+          this.compeleteBoutiques(id)
         } else {
           wx.showModal({
             title: '',
@@ -620,7 +618,7 @@ export default class Index extends wepy.page {
     })
   }
   // 点击周榜
-  clickWeekBang(id) {
+  clickWeekBangs(id) {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/clickWeekBang/${id}`,
       method: 'GET',
@@ -639,7 +637,7 @@ export default class Index extends wepy.page {
     })
   }
   // 完本精品
-  compeleteBoutique(id) {
+  compeleteBoutiques(id) {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/compeleteBoutique/${id}`,
       method: 'GET',

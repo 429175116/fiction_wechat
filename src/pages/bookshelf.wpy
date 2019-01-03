@@ -114,7 +114,7 @@
       <image src="/img/plus.png" />
     </view> -->
     <view class="bookList">
-      <view class="list" @tap="goBookDetails" data-id="1">
+      <!-- <view class="list" @tap="goBookDetails" data-id="1">
         <view class="cover">
           <image src="/img/1.png" />
         </view>
@@ -123,16 +123,16 @@
           <view>描述描述描述描述描述描述描述描述描述</view>
           <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
         </view>
-      </view>
+      </view> -->
       <block wx:for="{{bookshelfList}}" key="index" index="index" item="item">
         <view class="list" @tap="goBookDetails" data-id="{{item.id}}">
           <view class="cover">
-            <image src="/img/1.png" />
+            <image src="{{imgUrl + item.novel.img}}/img/1.png" />
           </view>
           <view class="info">
-            <view class="title">{{item.name}}</view>
-            <view>{{item.name}} · {{item.name}}</view>
-            <view>{{item.name}}</view>
+            <view class="title">{{item.novel.name}}</view>
+            <view>{{item.novel.name}} · {{item.novel.name}}</view>
+            <view>{{item.novel.intro}}</view>
           </view>
         </view>
       </block>
@@ -182,6 +182,8 @@ export default class Bookshelf extends wepy.page {
   events = {}
 
   onLoad(options) {
+    // 获取图片路径前缀
+    this.imgUrl = this.$parent.globalData.imgUrl
     // 获取用户信息
     this.onGetUserInfo()
   }
@@ -194,9 +196,12 @@ export default class Bookshelf extends wepy.page {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
-        console.log(data)
+        // console.log(data)
         if (data.data.success) {
           this.bookshelfList = data.data.user_stores
+          console.log(this.bookshelfList)
+          this.$apply()
+          
         } else {
           wx.showModal({
             title: '',

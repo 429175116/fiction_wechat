@@ -593,7 +593,10 @@ export default class Details extends wepy.page {
   storeBook() {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/storeBook/${this.bookid}`,
-      method: 'GET',
+      method: 'PUT',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
       success: data => {
         console.log(data)
         if (data.data.success) {
