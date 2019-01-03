@@ -433,7 +433,7 @@
         <view data-page="next" @tap="goNextAndPrevious">下一章</view>
       </view>
     </view>
-    <view class="setBookshelf" wx:if="{{showSetting}}">加入书架</view>
+    <view class="setBookshelf" wx:if="{{showSetting}}" @tap="storeBook">加入书架</view>
     <view class="nav" wx:if="{{showSetting}}">
       <view class="sel action" @tap="tableOfContentsShow">
         <icon class="iconfont icon-mulu" />
@@ -616,6 +616,10 @@ export default class Lookfiction extends wepy.page {
     // 投月票
     addMontTicket() {
       this.runAddMontTickets()
+    },
+    // 加入书架
+    storeBook() {
+      this.runStoreBook()
     }
     // 
   }
@@ -966,6 +970,30 @@ export default class Lookfiction extends wepy.page {
       animation: { // 可选项
         duration: 400,
         timingFunc: 'easeIn'
+      }
+    })
+  }
+  // 加入书架
+  runStoreBook() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/storeBook/${this.bookid}`,
+      method: 'PUT',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '添加成功'
+          })
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
       }
     })
   }
