@@ -82,6 +82,7 @@
   .list .del{
     width: 100rpx;
     height: 146rpx;
+    color: #444;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -142,7 +143,7 @@
             <view>{{item.novel.intro}}</view>
           </view>
           <view class="del" @tap="deleteShelf" data-id="{{item.id}}">
-            <icon class="iconfont icon-mianfei" />
+            <icon class="iconfont icon-shanchu" />
           </view>
         </view>
       </block>
@@ -194,6 +195,7 @@ export default class Bookshelf extends wepy.page {
         success: res => {
           if (!res.cancel) {
               //点击确定
+              // 执行删除
               this.delStore(e)
           }
         }

@@ -27,6 +27,7 @@
 .icon-dianzan:before { content: "\e611"; }
 .icon-pinglun:before { content: "\e629"; }
 .icon-dingyue:before { content: "\e63f"; }
+.icon-shanchu:before { content: "\e645"; }
 
 // 导航
 .icon-shujia:before { content: "\e622"; }
