@@ -388,6 +388,14 @@
     justify-content: center;
     color: #fff;
   }
+  .icon-dianzan,.icon-piaowu{
+    width: 160rpx !important;
+    height: 160rpx !important;
+    border-radius: 80rpx !important;
+    font-size: 100rpx;
+    background-color: #ed424b !important;
+    border-color:  #ed424b !important;
+  }
 </style>
 <template>
   <view>
@@ -416,6 +424,10 @@
       <view class="switch" @tap="showSettingDom"></view>
       <!-- 小说内容显示 -->
       <text style="font-size: {{fontSize}}rpx">{{novelChapter.content.content}}</text>
+      <view class="nextAndPrevious"  wx:if="{{nextAndPrevious}}">
+        <view @tap="chapterLikes" class="iconfont icon-dianzan"></view>
+        <view @tap="addMontTicket" class="iconfont icon-piaowu"></view>
+      </view>
       <view class="nextAndPrevious"  wx:if="{{nextAndPrevious}}">
         <view data-page="previous" @tap="goNextAndPrevious">上一章</view>
         <view data-page="next" @tap="goNextAndPrevious">下一章</view>
@@ -590,6 +602,14 @@ export default class Lookfiction extends wepy.page {
         scrollTop: 0
       })
       this.getNextAndPreviousData(url)
+    },
+    // 章节点赞
+    chapterLikes() {
+      this.runChapterLikes()
+    },
+    // 投月票
+    addMontTicket() {
+      this.runAddMontTickets()
     }
     // 
   }
@@ -612,7 +632,62 @@ export default class Lookfiction extends wepy.page {
     // 获取本章小说详情
     this.chapterDetail(this.bookid, this.chapter)
   }
-
+  // 投月票执行
+  runAddMontTickets() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/addMontTicket`,
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data:{
+        novel_id: this.bookid,
+        ticket_count: 1
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '投票成功'
+          })
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 点赞执行
+  runChapterLikes() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/chapterLike`,
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data:{
+        novel_id: this.bookid,
+        chapter_id: this.chapterId
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '点赞成功'
+          })
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
   // 获取小说详情
   getBookDetails() {
     wx.request({
