@@ -52,92 +52,103 @@
     <!-- 畅销精选 -->
     <view class="list">
       <view class="listCon">
-        <view class="con">
-          <view class="cover">
-            <image src="/img/1.png" />
+        <block wx:for="{{books}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="cover">
+              <image src="/img/1.png" />
+            </view>
+            <view class="info">
+              <view class="title">{{item.name}}</view>
+              <view>{{item.name}} · {{item.name}}</view>
+              <view>{{item.name}}</view>
+            </view>
           </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-        <view class="con">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
+        </block>
       </view>
     </view>
   </view>
 </template>
-// 页面跳转，传参写法
-// this.$redirect('./page2', {a: 1, b: 2})
-// this.$redirect({
-//   url: './pages?a=1&b=2'
-// });
-// this.$navigate(url)
-
-
-// 水平垂直居中
-// display: flex;
-// align-items: center;
-// justify-content: center;
-
-// 居右
-// flex-direction:row;
-// justify-content:flex-end
-
-// vertical-align:middle;
-
-// overflow:hidden;
-// text-overflow:ellipsis;
-// white-space:nowrap;
-
-// 自动换行
-// word-break:break-all;
-
-// overflow:hidden;
-// text-overflow:ellipsis;
-// white-space:nowrap;
 <script>
-  import wepy from 'wepy'
-  export default class Indexsonlist extends wepy.page {
-    config = {
-      navigationBarTitleText: '分类列表'
-    }
-    // 生命组件ID
-    components = {
+import wepy from 'wepy'
+export default class Indexsonlist extends wepy.page {
+  config = {
+    navigationBarTitleText: '分类列表'
+  }
+  // 生命组件ID
+  components = {
 
-    }
+  }
 
-    mixins = []
+  mixins = []
 
-    data = {
-    }
+  data = {
+    books: []
+  }
 
-    computed = {}
+  computed = {}
 
-    methods = {
-      // 底部导航跳转
-      goPage (url, evt) {
-        // 销毁当前页{跳转}
-        this.$redirect(url)
-      }
-    }
-
-    events = {}
-
-    onLoad(options) {
-      console.log(options.typeid)
-      // 根据获取到的参数修改页面标题
-      // 列表加载
-      // 获取更多
+  methods = {
+    // 进入书本详情
+    goBookDetails(e) {
+      let id = e.currentTarget.dataset.id
+      this.$navigate(`/pages/details?bookid=${id}`)
     }
   }
+
+  events = {}
+
+  onLoad(options) {
+    console.log(options.typeid)
+    let typeid = options.typeid
+    let typename = options.typename
+    let url = options.url
+    // 修改页面标题
+    wx.setNavigationBarTitle({
+      title: typename
+    })
+    // 获取列表数据
+    this.getListData(typeid, url)
+    // 根据获取到的参数修改页面标题
+    // 列表加载
+    // 获取更多
+  }
+  getListData(typeid, url) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/${url}/${typeid}`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          switch (url) {
+            case 'newBooksOfFirstCategory':
+              this.books = data.data.new_books
+              break
+            case 'popularUncompelete':
+              this.books = data.data.popular_books
+              break
+            case 'popularCateGory':
+              this.books = data.data.popular_category_books
+              break
+            case 'twentyFourHourHotSale':
+              this.books = data.data.twentyfourhour_hot_sale
+              break
+            case 'clickWeekBang':
+              this.books = data.data.click_week_bang
+              break
+            case 'compeleteBoutique':
+              this.books = data.data.compelete_boutique
+              break
+            default:
+              break;
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+}
 </script>
