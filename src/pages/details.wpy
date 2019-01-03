@@ -445,8 +445,35 @@
             </view>
           </view>
         </view>
+        <!-- chapterCommentList -->
+        <block wx:for="{{chapterCommentList}}" key="index" index="index" item="item">
+          <view class="listCon">
+            <view class="user">
+              <image src="/img/1.png" />
+              猪豆豆
+            </view>
+            <view class="description">
+              描述描述描述描述描述描述描述描述描述描述描述描述
+              描述描述描述描述描述描述描述描述描述描述描述描述
+              描述描述描述描述描述描述描述描述描述描述描述描述
+            </view>
+            <view class="commentInfo">
+              <view class="time">2018年4月26日 18:30</view>
+              <view class="operating">
+                <view>
+                  <icon class="iconfont icon-dianzan" />
+                  0000000
+                </view>
+                <view>
+                  <icon class="iconfont icon-pinglun" />
+                  0000000
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
       </view>
-      <view class="dataNullShow">暂无评论</view>
+      <view class="dataNullShow"  wx:if="{{chapterCommentList.length > 0}}">暂无评论</view>
       <view class="dataNullShow seeMore">加载更多</view>
     </view>
     <view class="attentionAuthor" @tap="goAuthor">
@@ -509,7 +536,8 @@ export default class Details extends wepy.page {
   data = {
     bookid: '',
     bookInfo: null,
-    otherNovels: []
+    otherNovels: [],
+    chapterCommentList: []
   }
 
   computed = {}
@@ -549,8 +577,10 @@ export default class Details extends wepy.page {
     this.bookid = options.bookid
     // 获取小说详情
     this.getBookDetails(options.bookid)
+    // 获取推荐
     this.userLikeThisBookLikeOthers()
-    // this.bookInfo = 
+    // 获取评论
+    this.chapterCommentLists()
   }
   // 获取小说详情
   getBookDetails(id) {
@@ -608,6 +638,27 @@ export default class Details extends wepy.page {
         console.log(data)
         if (data.data.success) {
           this.otherNovels = data.data.other_novels
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取评论列表
+  chapterCommentLists() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/chapterCommentList/${this.bookid}`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          data = data.data.first_chapter_comment
+          this.chapterCommentList = data.data
+          // let nextUrl = data.mata.pagination.links
           this.$apply()
         } else {
           wx.showModal({
