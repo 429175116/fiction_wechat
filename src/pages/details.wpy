@@ -565,16 +565,17 @@ export default class Details extends wepy.page {
           console.log(res)
           if (res.data) {
             this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapterid=${res.data}&firsttime=${true}`)
-          } else {
-            if (this.bookInfo.chapters.length === 0) {
-              wx.showModal({
-                title: '',
-                content: '暂无章节'
-              })
-              return
-            }
-            this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapterid=${this.bookInfo.chapters[0].id}&firsttime=${true}`)
           }
+        },
+        fail: res => {
+          if (this.bookInfo.chapters.length === 0) {
+            wx.showModal({
+              title: '',
+              content: '暂无章节'
+            })
+            return
+          }
+          this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapterid=${this.bookInfo.chapters[0].id}&firsttime=${true}`)
         }
       })
     },
