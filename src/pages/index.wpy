@@ -217,7 +217,7 @@
               <view class="info">
                 <view class="title">{{item.name}}</view>
                 <view>{{item.name}} · {{item.name}}</view>
-                <view>{{item.name}}</view>
+                <view>{{item.intro}}</view>
               </view>
             </view>
           </block>
@@ -242,7 +242,7 @@
               <view class="info">
                 <view class="title">{{item.name}}</view>
                 <view>{{item.name}} · {{item.name}}</view>
-                <view>{{item.name}}</view>
+                <view>{{item.intro}}</view>
               </view>
             </view>
           </block>
@@ -267,7 +267,7 @@
               <view class="info">
                 <view class="title">{{item.name}}</view>
                 <view>{{item.name}} · {{item.name}}</view>
-                <view>{{item.name}}</view>
+                <view>{{item.intro}}</view>
               </view>
             </view>
           </block>
@@ -287,12 +287,12 @@
           <block wx:for="{{twentyfourhourHotSale}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
-                <image src="/img/1.png" />
+                <image src="{{item.novel.img}}" />
               </view>
               <view class="info">
-                <view class="title">{{item.name}}</view>
-                <view>{{item.name}} · {{item.name}}</view>
-                <view>{{item.name}}</view>
+                <view class="title">{{item.novel.name}}</view>
+                <view>{{item.novel.name}} · {{item.novel.name}}</view>
+                <view>{{item.novel.intro}}</view>
               </view>
             </view>
           </block>
@@ -312,12 +312,12 @@
           <block wx:for="{{clickWeekBang}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
-                <image src="/img/1.png" />
+                <image src="{{item.novel.img}}" />
               </view>
               <view class="info">
-                <view class="title">{{item.name}}</view>
-                <view>{{item.name}} · {{item.name}}</view>
-                <view>{{item.name}}</view>
+                <view class="title">{{item.novel.name}}</view>
+                <view>{{item.novel.name}} · {{item.novel.name}}</view>
+                <view>{{item.novel.intro}}</view>
               </view>
             </view>
           </block>
@@ -342,7 +342,7 @@
               <view class="info">
                 <view class="title">{{item.name}}</view>
                 <view>{{item.name}} · {{item.name}}</view>
-                <view>{{item.name}}</view>
+                <view>{{item.intro}}</view>
               </view>
             </view>
           </block>

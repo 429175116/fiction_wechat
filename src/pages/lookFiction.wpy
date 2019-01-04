@@ -778,8 +778,7 @@ export default class Lookfiction extends wepy.page {
           wx.setNavigationBarTitle({
             title: this.novelChapter.title
           })
-          this.chapterId = this.novelChapter.id
-          wx.setStorageSync(`bookid${this.bookid}`, this.chapterId)
+          wx.setStorageSync(`bookid${this.bookid}`, this.novelChapter.id)
           this.previousUrl = ''
           this.nextUrl = ''
           if (data.meta.pagination.links.length !== 0) {
