@@ -330,6 +330,35 @@
   .commentInfo .iconfont{
     font-size: 33rpx;
   }
+  .search{
+    padding: 20rpx 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search view{
+    height: 75rpx;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search input{
+    width: 100%;
+    height: 100%;
+    color: #333;
+    font-size: 30rpx;
+  }
+  .search view:nth-child(1){
+    width: 600rpx;
+    border: 1rpx solid #f0f0f0;
+  }
+  .search view:nth-child(2){
+    width: 80rpx;
+    border: 1rpx solid #f0f0f0;
+    border-left: 0;
+    border-radius: 0 20rpx 20rpx 0;
+  }
 </style>
 <template>
   <view>
@@ -424,61 +453,40 @@
         </view>
         <view>写书评</view>
       </view>
-      <view class="list">
-        <view class="listCon">
-          <view class="user">
-            <image src="/img/1.png" />
-            猪豆豆
-          </view>
-          <view class="description">
-            描述描述描述描述描述描述描述描述描述描述描述描述
-            描述描述描述描述描述描述描述描述描述描述描述描述
-            描述描述描述描述描述描述描述描述描述描述描述描述
-          </view>
-          <view class="commentInfo">
-            <view class="time">2018年4月26日 18:30</view>
-            <view class="operating">
-              <view>
-                <icon class="iconfont icon-dianzan" />
-                0000000
-              </view>
-              <view>
-                <icon class="iconfont icon-pinglun" />
-                0000000
-              </view>
-            </view>
-          </view>
+      <view class="search">
+        <view>
+          <input type="text" bindinput="commentBook" placeholder="填写评论" />
         </view>
-        <!-- chapterCommentList -->
+        <view @tap="updataComment">
+          <icon class="iconfont icon-wodetijiao" />
+        </view>
+      </view>
+      <view class="list">
         <block wx:for="{{chapterCommentList}}" key="index" index="index" item="item">
-          <view class="listCon">
+          <view class="listCon" data-id="{{item.id}}" data-level="{{item.level}}">
             <view class="user">
-              <image src="/img/1.png" />
-              猪豆豆
+              <image src="{{item.profile}}" />
+              {{item.user_nickname}}
             </view>
-            <view class="description">
-              描述描述描述描述描述描述描述描述描述描述描述描述
-              描述描述描述描述描述描述描述描述描述描述描述描述
-              描述描述描述描述描述描述描述描述描述描述描述描述
-            </view>
+            <view class="description">{{item.content}}</view>
             <view class="commentInfo">
-              <view class="time">2018年4月26日 18:30</view>
+              <view class="time">{{item.updated_at}}</view>
               <view class="operating">
                 <view>
                   <icon class="iconfont icon-dianzan" />
-                  0000000
+                  {{item.likes_number}}
                 </view>
                 <view>
                   <icon class="iconfont icon-pinglun" />
-                  0000000
+                  {{item.wethere_author}}
                 </view>
               </view>
             </view>
           </view>
         </block>
       </view>
-      <view class="dataNullShow"  wx:if="{{chapterCommentList.length > 0}}">暂无评论</view>
-      <view class="dataNullShow seeMore">加载更多</view>
+      <view class="dataNullShow"  wx:if="{{chapterCommentList.length === 0}}">暂无评论</view>
+      <!-- <view class="dataNullShow seeMore">加载更多</view> -->
     </view>
     <view class="attentionAuthor" @tap="goAuthor">
       <view class="authorInfo">
@@ -541,7 +549,9 @@ export default class Details extends wepy.page {
     bookid: '',
     bookInfo: null,
     otherNovels: [],
-    chapterCommentList: []
+    chapterCommentList: [],
+    commentConOne: '',
+    commentConTow: ''
   }
 
   computed = {}
@@ -588,12 +598,23 @@ export default class Details extends wepy.page {
     // 加入书架
     clickStoreBook() {
       this.storeBook()
+    },
+    // 获取评论内容
+    commentBook(e) {
+      this.commentConOne = e.detail.value
+    },
+    // 提交评论
+    updataComment() {
+      // 提交一级评论
+      this.updataCommentCon()
     }
   }
 
   events = {}
 
   onLoad(options) {
+    this.userInfo = this.$parent.globalData.userInfo
+    console.log(this.userInfo)
     console.log(options.bookid)
     this.bookid = options.bookid
     // 获取小说详情
@@ -602,6 +623,33 @@ export default class Details extends wepy.page {
     this.userLikeThisBookLikeOthers()
     // 获取评论
     this.chapterCommentLists()
+  }
+  // 提交一级评论
+  updataCommentCon() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/firstNovelComment`,
+      method: 'POST',
+      data: {
+        user_id: this.userInfo.id,
+        novel_id: this.bookid,
+        content: this.commentConOne
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '评论成功'
+          })
+          // 获取评论
+          this.chapterCommentLists()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
   }
   // 获取小说详情
   getBookDetails(id) {
@@ -673,13 +721,13 @@ export default class Details extends wepy.page {
   // 获取评论列表
   chapterCommentLists() {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/chapterCommentList/${this.bookid}`,
+      url: `${this.$parent.globalData.requestUrl}/api/NovelCommentList/${this.bookid}`,
       method: 'GET',
       success: data => {
         console.log(data)
         if (data.data.success) {
-          data = data.data.first_chapter_comment
-          this.chapterCommentList = data.data
+          this.chapterCommentList = data.data.first_novel_comment
+          // this.chapterCommentList = data
           // let nextUrl = data.mata.pagination.links
           this.$apply()
         } else {

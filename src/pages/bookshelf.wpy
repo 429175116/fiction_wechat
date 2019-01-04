@@ -82,7 +82,7 @@
   .list .del{
     width: 100rpx;
     height: 146rpx;
-    color: #444;
+    color: #ed424b;
     display: flex;
     align-items: center;
     justify-content: center;
