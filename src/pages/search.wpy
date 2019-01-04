@@ -177,26 +177,24 @@
     </view>
     <!-- 搜索结果 -->
     <view class="bookList">
-      <view class="list">
-        <view class="cover">
-          <image src="/img/1.png" />
+      <!-- searchBook -->
+      <block wx:for="{{searchBook}}" key="index" index="index" item="item">
+        <view class="list" data-id="{{item.id}}">
+          <view class="cover">
+            <image src="{{item.img}}" />
+          </view>
+          <view class="info">
+            <view class="title">{{item.name}}</view>
+            <view>
+              <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+              <text wx:elif>完结</text>
+               | 
+              {{item.words_count}}字
+            </view>
+            <view>点击量:{{item.click_count}}</view>
+          </view>
         </view>
-        <view class="info">
-          <view class="title">书名书名书名书名书名书名</view>
-          <view>描述描述描述描述描述描述描述描述描述</view>
-          <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-        </view>
-      </view>
-      <view class="list">
-        <view class="cover">
-          <image src="/img/1.png" />
-        </view>
-        <view class="info">
-          <view class="title">书名书名书名书名书名书名</view>
-          <view>描述描述描述描述描述描述描述描述描述</view>
-          <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-        </view>
-      </view>
+      </block>
     </view>
     <view class="searchHistoryTitle">
       <view>为您推荐</view>
@@ -241,7 +239,9 @@ export default class Search extends wepy.page {
   mixins = []
 
   data = {
-    searchKey: '' // 搜索key
+    imgUrl: '',
+    searchKey: '', // 搜索key
+    searchBook: [] // 搜索到的书
   }
 
   computed = {}
@@ -279,28 +279,30 @@ export default class Search extends wepy.page {
   events = {}
 
   onLoad() {
-
+    this.imgUrl = this.$parent.globalData.imgUrl
   }
   // 搜索
   runSearch(searchKey) {
-    // wx.request({
-    //   url: `${this.$parent.globalData.requestUrl}/api/recommendNovel`,
-    //   method: 'GET',
-    //   header: {
-    //     AuthrizeOpenId: this.$parent.globalData.openId
-    //   },
-    //   success: data => {
-    //     console.log(data)
-    //     if (data.data.success) {
-
-    //     } else {
-    //       wx.showModal({
-    //         title: '',
-    //         content: data.data.errmsg
-    //       })
-    //     }
-    //   }
-    // })
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/searchNovel`,
+      method: 'GET',
+      data:{
+        novel_name: searchKey
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.novels
+          this.searchBook = data.data
+          // this.nextUrl = data.meta
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
   }
 
   
