@@ -163,21 +163,16 @@
         <icon class="iconfont icon-quxiao" />
       </view>
     </view>
-    <view class="searchHistoryTitle">
+    <view class="searchHistoryTitle" wx:if="{{hotWord.length > 0}}">
       <view>搜索热词</view>
     </view>
-    <view class="searchHistory">
-      <view @tap="clicklabel" data-name="{{'33asdfasdf2'}}">33asdfasdf2</view>
-      <view @tap="clicklabel" data-name="{{'sssewe'}}">sssewe</view>
-      <view @tap="clicklabel" data-name="{{'332'}}">332</view>
-      <view @tap="clicklabel" data-name="{{'332'}}">332</view>
-      <view @tap="clicklabel" data-name="{{'332'}}">332</view>
-      <view @tap="clicklabel" data-name="{{'332'}}">332</view>
-      <view @tap="clicklabel" data-name="{{'332'}}">332</view>
+    <view class="searchHistory" wx:if="{{hotWord.length > 0}}">
+      <block wx:for="{{searchBook}}" key="index" index="index" item="item">
+        <view @tap="clicklabel" data-name="{{item.words}}">{{item.words}}</view>
+      </block>
     </view>
     <!-- 搜索结果 -->
     <view class="bookList">
-      <!-- searchBook -->
       <block wx:for="{{searchBook}}" key="index" index="index" item="item">
         <view class="list" data-id="{{item.id}}">
           <view class="cover">
@@ -241,7 +236,9 @@ export default class Search extends wepy.page {
   data = {
     imgUrl: '',
     searchKey: '', // 搜索key
-    searchBook: [] // 搜索到的书
+    searchBook: [], // 搜索到的书
+    hotWord: [] // 热词
+
   }
 
   computed = {}
@@ -280,6 +277,10 @@ export default class Search extends wepy.page {
 
   onLoad() {
     this.imgUrl = this.$parent.globalData.imgUrl
+    // 热词
+    this.getHotWords()
+    // 猜你喜欢
+    this.recommendNovel()
   }
   // 搜索
   runSearch(searchKey) {
@@ -304,8 +305,24 @@ export default class Search extends wepy.page {
       }
     })
   }
-
-  
+  // 热词
+  getHotWords() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/hotWords`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          this.hotWord = data.data.hot_words
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
   // 推荐/猜你喜欢
   recommendNovel() {
     // 判断多个链接，请求不同类型书的列表
