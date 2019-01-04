@@ -451,9 +451,9 @@
         <view>
           书圈<text>68.9万粉丝，18.3万条发言</text>
         </view>
-        <view>写书评</view>
+        <view @tap="setcommentShow">写书评</view>
       </view>
-      <view class="search">
+      <view class="search" wx:if="{{setcomment}}">
         <view>
           <input type="text" bindinput="commentBook" placeholder="填写评论" />
         </view>
@@ -551,7 +551,8 @@ export default class Details extends wepy.page {
     otherNovels: [],
     chapterCommentList: [],
     commentConOne: '',
-    commentConTow: ''
+    commentConTow: '',
+    setcomment: false
   }
 
   computed = {}
@@ -607,6 +608,15 @@ export default class Details extends wepy.page {
     updataComment() {
       // 提交一级评论
       this.updataCommentCon()
+    },
+    // 输入评论是否展示
+    setcommentShow() {
+      if (this.setcomment) {
+        this.setcomment = false
+      } else {
+        this.setcomment = true
+      }
+      this.$apply()
     }
   }
 
