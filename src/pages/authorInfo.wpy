@@ -166,7 +166,7 @@
         <block wx:for="{{authorBook}}" key="index" index="index" item="item">
           <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
             <view class="cover">
-              <image src="{{imgUrl + item.img}}" />
+              <image src="{{item.img}}" />
             </view>
             <view class="info">
               <view class="title">{{item.name}}</view>
@@ -233,6 +233,7 @@ export default class Authorinfo extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.authorBook = data.data.other_novels
+          this.authorBook = this.$parent.getImgUrlList(this.authorBook)
           this.$apply()
         } else {
           wx.showModal({

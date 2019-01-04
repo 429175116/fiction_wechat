@@ -55,7 +55,7 @@
         <block wx:for="{{books}}" key="index" index="index" item="item">
           <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
             <view class="cover">
-              <image src="/img/1.png" />
+              <image src="{{item.img}}" />
             </view>
             <view class="info">
               <view class="title">{{item.name}}</view>
@@ -117,21 +117,27 @@ export default class Indexsonlist extends wepy.page {
           switch (url) {
             case 'newBooksOfFirstCategory':
               this.books = data.data.new_books
+              this.books = this.$parent.getImgUrlList(this.books)
               break
             case 'popularUncompelete':
               this.books = data.data.popular_books
+              this.books = this.$parent.getImgUrlList(this.books)
               break
             case 'popularCateGory':
               this.books = data.data.popular_category_books
+              this.books = this.$parent.getImgUrlList(this.books)
               break
             case 'twentyFourHourHotSale':
               this.books = data.data.twentyfourhour_hot_sale
+              this.books = this.$parent.getImgUrlNovelList(this.books)
               break
             case 'clickWeekBang':
               this.books = data.data.click_week_bang
+              this.books = this.$parent.getImgUrlNovelList(this.books)
               break
             case 'compeleteBoutique':
               this.books = data.data.compelete_boutique
+              this.books = this.$parent.getImgUrlList(this.books)
               break
             default:
               break;

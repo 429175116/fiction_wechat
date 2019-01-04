@@ -56,7 +56,11 @@
   .swiper{
     background-color: #fff;
     width: 750rpx;
-    height: 260rpx;
+    height: 460rpx;
+  }
+  .swiper image{
+    width: 100%;
+    height: 100%;
   }
   .conNav{
     background-color: #fff;
@@ -166,7 +170,7 @@
     <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{swiperData}}" key="index" index="index" item="item">
         <swiper-item>
-          <image src="{{imgUrl + item.img}}" data-id="{{item.id}}" @tap="goBookDetails" class="slide-image" width="355" height="150" />
+          <image src="{{item.img}}" data-id="{{item.id}}" @tap="goBookDetails" class="slide-image" />
         </swiper-item>
       </block>
     </swiper>
@@ -206,7 +210,7 @@
           <block wx:for="{{newBooks}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
-                <image src="{{imgUrl + item.img}}" />
+                <image src="{{item.img}}" />
               </view>
               <view class="info">
                 <view class="title">{{item.name}}</view>
@@ -234,7 +238,7 @@
           <block wx:for="{{popularBooks}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
-                <image src="{{imgUrl + item.img}}" />
+                <image src="{{item.img}}" />
               </view>
               <view class="info">
                 <view class="title">{{item.name}}</view>
@@ -262,7 +266,7 @@
           <block wx:for="{{popularCategoryBooks}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
-                <image src="{{imgUrl + item.img}}" />
+                <image src="{{item.img}}" />
               </view>
               <view class="info">
                 <view class="title">{{item.name}}</view>
@@ -340,7 +344,7 @@
           <block wx:for="{{compeleteBoutique}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
-                <image src="{{imgUrl + item.img}}" />
+                <image src="{{item.img}}" />
               </view>
               <view class="info">
                 <view class="title">{{item.name}}</view>
@@ -497,6 +501,7 @@ export default class Index extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.swiperData = data.data.rolling_img
+          this.swiperData = this.$parent.getImgUrlList(this.swiperData)
           this.$apply()
         } else {
           wx.showModal({
@@ -513,7 +518,6 @@ export default class Index extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/api/firstCategory`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.firstCategoryData = data.data.first_categories
           this.thisfirstCategoryId = this.firstCategoryData[0].id
@@ -547,7 +551,6 @@ export default class Index extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/api/secondCategory/${id}`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
           
         } else {
@@ -565,10 +568,10 @@ export default class Index extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory/${id}`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.newBooks = data.data.new_books
           this.newBooks = this.getListShowData(this.newBooks)
+          this.newBooks = this.$parent.getImgUrlList(this.newBooks)
           this.$apply()
         } else {
           wx.showModal({
@@ -585,10 +588,10 @@ export default class Index extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/api/popularUncompelete/${id}`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.popularBooks = data.data.popular_books
           this.popularBooks = this.getListShowData(this.popularBooks)
+          this.popularBooks = this.$parent.getImgUrlList(this.popularBooks)
           this.$apply()
         } else {
           wx.showModal({
@@ -605,13 +608,13 @@ export default class Index extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/api/popularCateGory/${id}`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
           // 人气分类
           this.poplarCategory = data.data.poplar_category
           // 人气分类书
           this.popularCategoryBooks = data.data.popular_category_books
           this.popularCategoryBooks = this.getListShowData(this.popularCategoryBooks)
+          this.popularCategoryBooks = this.$parent.getImgUrlList(this.popularCategoryBooks)
           this.$apply()
         } else {
           wx.showModal({
@@ -628,10 +631,10 @@ export default class Index extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/api/twentyFourHourHotSale/${id}`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.twentyfourhourHotSale = data.data.twentyfourhour_hot_sale
           this.twentyfourhourHotSale = this.getListShowData(this.twentyfourhourHotSale)
+          this.twentyfourhourHotSale = this.$parent.getImgUrlNovelList(this.twentyfourhourHotSale)
           this.$apply()
         } else {
           wx.showModal({
@@ -648,10 +651,10 @@ export default class Index extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/api/clickWeekBang/${id}`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.clickWeekBang = data.data.click_week_bang
           this.clickWeekBang = this.getListShowData(this.clickWeekBang)
+          this.clickWeekBang = this.$parent.getImgUrlNovelList(this.clickWeekBang)
           this.$apply()
         } else {
           wx.showModal({
@@ -668,10 +671,10 @@ export default class Index extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/api/compeleteBoutique/${id}`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.compeleteBoutique = data.data.compelete_boutique
           this.compeleteBoutique = this.getListShowData(this.compeleteBoutique)
+          this.compeleteBoutique = this.$parent.getImgUrlList(this.compeleteBoutique)
           this.$apply()
         } else {
           wx.showModal({
@@ -696,13 +699,11 @@ export default class Index extends wepy.page {
 // 面向对象实验
 // onLoad() {
 //   let getuser = new onGetUserInfo()
-//   console.log(getuser)
 //   if (getuser) {
 //     getuser.setUserInfo()
 //   }
 // }
 // function onGetUserInfo() {
-//   console.log('onGetUserInfo')
 //   // 查看是否授权
 //   wx.getSetting({
 //     success: res => {
@@ -716,7 +717,6 @@ export default class Index extends wepy.page {
 //               // this.avatarUrl = this.userInfo.avatarUrl
 //               // this.nickName = this.userInfo.nickName
 //               this.userInfo = userInfo
-//               console.log(userInfo)
 //               return true
 //             }
 //           }
@@ -726,8 +726,5 @@ export default class Index extends wepy.page {
 //   })
 // }
 // onGetUserInfo.prototype.setUserInfo = function() {
-//   console.log(this.userInfo)
-//   console.log('setUserInfo')
-//   console.log(this.userInfo)
 // }
 </script>

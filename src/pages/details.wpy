@@ -395,7 +395,7 @@
     <view class="bookList">
       <view class="booktitleInfo">
         <view class="cover">
-          <image src="/img/1.png" />
+          <image src="{{bookInfo.img}}" />
         </view>
         <view class="info">
           <view class="title">{{bookInfo.name}}</view>
@@ -500,7 +500,7 @@
                 </view>
                 <view @tap="commentReplyShow" data-id="{{item.id}}">
                   <icon class="iconfont icon-pinglun" />
-                  {{item.wethere_author}}
+                  {{item.subCommentCount}}
                 </view>
               </view>
             </view>
@@ -624,7 +624,6 @@ export default class Details extends wepy.page {
       wx.getStorage({
         key: `bookid${this.bookid}`,
         success: res => {
-          console.log(res)
           if (res.data) {
             this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapterid=${res.data}&firsttime=${true}`)
           }
@@ -652,7 +651,6 @@ export default class Details extends wepy.page {
       this.getBookDetails()
       this.userLikeThisBookLikeOthers()
       // 刷新当前页数据
-      console.log('刷新当前页数据')
     },
     // 加入书架
     clickStoreBook() {
@@ -690,6 +688,8 @@ export default class Details extends wepy.page {
       this.replyId = e.currentTarget.dataset.id
       if (this.commentDomReplyShow) {
         this.commentDomReplyShow = false
+        // 获取评论列表
+        this.chapterCommentLists()
       } else {
         this.commentDomReplyShow = true
         // 获取回复
@@ -710,8 +710,6 @@ export default class Details extends wepy.page {
 
   onLoad(options) {
     this.userInfo = this.$parent.globalData.userInfo
-    console.log(this.userInfo)
-    console.log(options.bookid)
     this.bookid = options.bookid
     // 获取小说详情
     this.getBookDetails(options.bookid)
@@ -813,7 +811,9 @@ export default class Details extends wepy.page {
       },
       success: data => {
         if (data.data.success) {
-          this.ReplyCon = data.data.sub_novel_comment_list
+          data = data.data.sub_novel_comment_list
+          // this.ReplyCon = data.data.sub_novel_comment_list
+          this.ReplyCon = data.data
           this.$apply()
         } else {
           wx.showModal({
@@ -832,6 +832,7 @@ export default class Details extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.bookInfo = data.data.novel
+          this.bookInfo.img = this.$parent.getImgUrl(this.bookInfo.img)
           this.bookInfo.score = parseFloat(this.bookInfo.score)
           this.bookid = this.bookInfo.id
           this.bookInfo.words_count = Math.floor(this.bookInfo.words_count / 10000)
@@ -855,7 +856,6 @@ export default class Details extends wepy.page {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
           wx.showModal({
             title: '',
@@ -879,7 +879,6 @@ export default class Details extends wepy.page {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.otherNovels = data.data.other_novels
           this.$apply()
@@ -898,9 +897,9 @@ export default class Details extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/api/NovelCommentList/${this.bookid}`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
-          this.chapterCommentList = data.data.first_novel_comment
+          data = data.data.first_novel_comment
+          this.chapterCommentList = data.data
           // this.chapterCommentList = data
           // let nextUrl = data.mata.pagination.links
           this.$apply()

@@ -124,7 +124,7 @@
     </view>
     <view class="list">
       <view>
-        <icon class="iconfont icon-xingxing" />
+        <icon class="iconfont icon-VIP" />
         等级
       </view>
       <view>
@@ -141,7 +141,7 @@
         <icon class="iconfont icon-jiantouyou" />
       </view>
     </view>
-    <view class="list">
+    <!-- <view class="list">
       <view>
         <icon class="iconfont icon-yanjing" />
         浏览纪录
@@ -158,7 +158,7 @@
       <view>
         <icon class="iconfont icon-jiantouyou" />
       </view>
-    </view>
+    </view> -->
     <nav @childFn.user="goPage" />
   </view>
 </template>

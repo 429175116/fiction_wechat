@@ -125,7 +125,7 @@
       <block wx:for="{{bookshelfList}}" key="index" index="index" item="item">
         <view class="list">
           <view class="cover" @tap="goBookDetails" data-id="{{item.id}}">
-            <image src="{{imgUrl + item.novel.img}}/img/1.png" />
+            <image src="{{item.novel.img}}" />
           </view>
           <view class="info" @tap="goBookDetails" data-id="{{item.id}}">
             <view class="title">{{item.novel.name}}</view>
@@ -238,6 +238,7 @@ export default class Bookshelf extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.bookshelfList = data.data.user_stores
+          this.bookshelfList = this.$parent.getImgUrlNovelList(this.bookshelfList)
           this.$apply()
         } else {
           wx.showModal({

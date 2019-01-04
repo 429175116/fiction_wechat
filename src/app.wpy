@@ -109,7 +109,6 @@ export default class extends wepy.app {
       'pages/details', // 详情
       'pages/bookListAndType', // 分类，包含列表
       'pages/search', // 搜索
-      
       'pages/bookContents', // 目录
       'pages/lookFiction', // 看书页
       
@@ -149,6 +148,33 @@ export default class extends wepy.app {
         cb && cb(res.userInfo)
       }
     })
+  }
+  // 图片路径解析
+  getImgUrl(imgUrl) {
+    // https://img.1391.com/api/v1/bookcenter/cover/1/2044462/2044462_e80d3461cf30401293568bff7fa8966d.jpg/
+    // http://img.1391.com/api/v1/bookcenter/cover/1/2044462/2044462_e80d3461cf30401293568bff7fa8966d.jpg/
+    // http%3A%2F%2Fimg.1391.com%2Fapi%2Fv1%2Fbookcenter%2Fcover%2F1%2F2044462%2F2044462_e80d3461cf30401293568bff7fa8966d.jpg%2F
+    imgUrl = imgUrl.split('/').pop()
+    imgUrl = imgUrl.replace(/%3A/g, ':')
+    imgUrl = imgUrl.replace(/%2F/g, '/')
+    imgUrl = imgUrl.replace(/http/g, 'https')
+    return imgUrl
+  }
+  // 包含图片路径列表数据中图片路径解析
+  getImgUrlList(list) {
+    let i = 0
+    for (i in list) {
+      list[i].img = this.getImgUrl(list[i].img)
+    }
+    return list
+  }
+  // 包含图片路径列表数据中图片路径解析
+  getImgUrlNovelList(list) {
+    let i = 0
+    for (i in list) {
+      list[i].novel.img = this.getImgUrl(list[i].novel.img)
+    }
+    return list
   }
 }
 </script>
