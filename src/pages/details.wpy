@@ -362,11 +362,11 @@
           <view>
             <!-- 评分 -->
             {{bookInfo.score}}
-            <icon class="iconfont icon-xingxing" />
-            <icon class="iconfont icon-xingxing" />
-            <icon class="iconfont icon-xingxing" />
-            <icon class="iconfont icon-xingxing1" />
-            <icon class="iconfont icon-xingxing1" />
+            <icon class="iconfont {{bookInfo.score >=2 ? 'icon-xingxing':'icon-xingxing1'}}" />
+            <icon class="iconfont {{bookInfo.score >=4 ? 'icon-xingxing':'icon-xingxing1'}}" />
+            <icon class="iconfont {{bookInfo.score >=6 ? 'icon-xingxing':'icon-xingxing1'}}" />
+            <icon class="iconfont {{bookInfo.score >=8 ? 'icon-xingxing':'icon-xingxing1'}}" />
+            <icon class="iconfont {{bookInfo.score >=10 ? 'icon-xingxing':'icon-xingxing1'}}" />
           </view>
           <view>评分</view>
         </view>
@@ -611,6 +611,7 @@ export default class Details extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.bookInfo = data.data.novel
+          this.bookInfo.score = parseFloat(this.bookInfo.score)
           this.bookid = this.bookInfo.id
           this.bookInfo.words_count = Math.floor(this.bookInfo.words_count / 10000)
           this.$apply()
