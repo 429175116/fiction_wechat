@@ -198,26 +198,24 @@
       </view> -->
     </view>
     <view class="bookList">
-      <view class="list">
-        <view class="cover">
-          <image src="/img/1.png" />
+      <!-- recommendNovels -->
+      <block wx:for="{{recommendNovels}}" key="index" index="index" item="item">
+        <view class="list" data-id="{{item.id}}">
+          <view class="cover">
+            <image src="{{imgUrl+item.img}}" />
+          </view>
+          <view class="info">
+            <view class="title">{{item.name}}</view>
+            <view>
+              <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+              <text wx:elif>完结</text>
+               | 
+              {{item.words_count}}字
+            </view>
+            <view>点击量:{{item.click_count}}</view>
+          </view>
         </view>
-        <view class="info">
-          <view class="title">书名书名书名书名书名书名</view>
-          <view>描述描述描述描述描述描述描述描述描述</view>
-          <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-        </view>
-      </view>
-      <view class="list">
-        <view class="cover">
-          <image src="/img/1.png" />
-        </view>
-        <view class="info">
-          <view class="title">书名书名书名书名书名书名</view>
-          <view>描述描述描述描述描述描述描述描述描述</view>
-          <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-        </view>
-      </view>
+      </block>
     </view>
   </view>
 </template>
@@ -237,8 +235,8 @@ export default class Search extends wepy.page {
     imgUrl: '',
     searchKey: '', // 搜索key
     searchBook: [], // 搜索到的书
-    hotWord: [] // 热词
-
+    hotWord: [], // 热词
+    recommendNovels: [] // 猜你喜欢
   }
 
   computed = {}
@@ -311,9 +309,9 @@ export default class Search extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/api/hotWords`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.hotWord = data.data.hot_words
+          this.$apply()
         } else {
           wx.showModal({
             title: '',
@@ -323,7 +321,7 @@ export default class Search extends wepy.page {
       }
     })
   }
-  // 推荐/猜你喜欢
+  // 猜你喜欢
   recommendNovel() {
     // 判断多个链接，请求不同类型书的列表
     wx.request({
@@ -333,9 +331,9 @@ export default class Search extends wepy.page {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
-
+          this.recommendNovels = data.data.recommend_novels
+          this.$apply()
         } else {
           wx.showModal({
             title: '',

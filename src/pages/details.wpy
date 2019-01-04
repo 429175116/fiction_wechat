@@ -423,15 +423,7 @@
           <view>粉丝</view>
         </view>
       </view>
-      <view class="description">
-        描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述
-        描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述
-        描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述
-        描述描述描述描述描述描述描述
-        描述描述描述描述描述描述描述
-        描述描述描述描述描述描述描述描述描述描述描述
-        描述描述描述描述描述描述描述描述
-      </view>
+      <view class="description">{{bookInfo.intro}}</view>
       <view class="label">
         <view>1111</view>
         <view>1111</view>
@@ -490,13 +482,13 @@
     </view>
     <view class="attentionAuthor" @tap="goAuthor">
       <view class="authorInfo">
-        <image src="/img/1.png" />
+        <image src="{{authorInfoData.user.profile}}" />
         <view class="info">
-          <view>作者名称</view>
-          <view>作品数量</view>
+          <view>{{authorInfoData.pen_name}}</view>
+          <view>作品数量:{{authorInfoData.user.wether_author}}</view>
         </view>
       </view>
-      <view class="attention">+ 关注</view>
+      <!-- <view class="attention">+ 关注</view> -->
     </view>
     <!-- 若otherNovels中无数据，则该模块不显示 -->
     <view class="recommend" wx:if="{{otherNovels.length > 0}}">
@@ -504,7 +496,7 @@
       <view class="recommendList">
         <block wx:for="{{otherNovels}}" key="index" index="index" item="item">
           <view class="recommendCon" @tap="recommendBook" data-id="{{item.id}}">
-            <image src="/img/1.png" />
+            <image src="{{imgUrl + item.img}}" />
             <view>{{item.name}}</view>
           </view>
         </block>
@@ -552,7 +544,8 @@ export default class Details extends wepy.page {
     chapterCommentList: [],
     commentConOne: '',
     commentConTow: '',
-    setcomment: false
+    setcomment: false,
+    authorInfoData: null // 作家信息
   }
 
   computed = {}
@@ -706,6 +699,7 @@ export default class Details extends wepy.page {
           this.bookInfo.score = parseFloat(this.bookInfo.score)
           this.bookid = this.bookInfo.id
           this.bookInfo.words_count = Math.floor(this.bookInfo.words_count / 10000)
+          this.authorInfoData = data.data.author
           this.$apply()
         } else {
           wx.showModal({

@@ -206,12 +206,15 @@
           <block wx:for="{{newBooks}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
-                <image src="/img/1.png" />
+                <image src="{{imgUrl + item.img}}" />
               </view>
               <view class="info">
                 <view class="title">{{item.name}}</view>
-                <view>{{item.name}} · {{item.name}}</view>
-                <view>{{item.intro}}</view>
+                <view>
+                  <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+                  <text wx:elif>完结</text>
+                   · {{item.words_count}}字</view>
+                <view>上架时间{{item.updated_at}}</view>
               </view>
             </view>
           </block>
@@ -231,12 +234,15 @@
           <block wx:for="{{popularBooks}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
-                <image src="/img/1.png" />
+                <image src="{{imgUrl + item.img}}" />
               </view>
               <view class="info">
                 <view class="title">{{item.name}}</view>
-                <view>{{item.name}} · {{item.name}}</view>
-                <view>{{item.intro}}</view>
+                <view>
+                  <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+                  <text wx:elif>完结</text>
+                   · {{item.words_count}}字</view>
+                <view>上架时间{{item.updated_at}}</view>
               </view>
             </view>
           </block>
@@ -256,12 +262,15 @@
           <block wx:for="{{popularCategoryBooks}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
-                <image src="/img/1.png" />
+                <image src="{{imgUrl + item.img}}" />
               </view>
               <view class="info">
                 <view class="title">{{item.name}}</view>
-                <view>{{item.name}} · {{item.name}}</view>
-                <view>{{item.intro}}</view>
+                <view>
+                  <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+                  <text wx:elif>完结</text>
+                   · {{item.words_count}}字</view>
+                <view>上架时间{{item.updated_at}}</view>
               </view>
             </view>
           </block>
@@ -331,7 +340,7 @@
           <block wx:for="{{compeleteBoutique}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
-                <image src="/img/1.png" />
+                <image src="{{imgUrl + item.img}}" />
               </view>
               <view class="info">
                 <view class="title">{{item.name}}</view>
