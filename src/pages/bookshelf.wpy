@@ -195,7 +195,7 @@ export default class Bookshelf extends wepy.page {
 
   events = {}
 
-  onLoad(options) {
+  onShow(options) {
     // 获取图片路径前缀
     this.imgUrl = this.$parent.globalData.imgUrl
     // 获取用户信息
