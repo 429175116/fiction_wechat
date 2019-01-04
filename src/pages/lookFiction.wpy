@@ -632,7 +632,6 @@ export default class Lookfiction extends wepy.page {
     // 章节列表下标,可定位到某一章
     this.chapterId = options.chapterid
     this.$apply()
-    // console.log('onLoad')
     // 初始化页面时，控制日夜间模式
     this.getAtNightStatus()
     // 获取字体大小
@@ -767,6 +766,7 @@ export default class Lookfiction extends wepy.page {
       data:{
         novel_id: this.bookid,
         chapter_id: this.chapterId
+        // chapter_id: 1
       },
       success: data => {
         if (data.data.success) {
@@ -778,6 +778,8 @@ export default class Lookfiction extends wepy.page {
           wx.setNavigationBarTitle({
             title: this.novelChapter.title
           })
+          this.chapterId = this.novelChapter.id
+          wx.setStorageSync(`bookid${this.bookid}`, this.chapterId)
           this.previousUrl = ''
           this.nextUrl = ''
           if (data.meta.pagination.links.length !== 0) {

@@ -342,7 +342,11 @@
           <view class="title">{{bookInfo.name}}</view>
           <view>{{bookInfo.name}}</view>
           <!-- wether_complete:完结状态 -->
-          <view>{{bookInfo.wether_complete}}{{bookInfo.words_count}}万字 ~ 价格{{bookInfo.sale_amount}} </view>
+          <view>
+            <text wx:if="{{bookInfo.wether_complete === 'Uncompelete'}}">连载</text>
+            <text wx:elif>完结</text>
+             |
+            {{bookInfo.words_count}}万字 ~ 价格{{bookInfo.sale_amount}} </view>
           <view class="label">
             <view>标签</view>
             <view>标签</view>
@@ -549,7 +553,24 @@ export default class Details extends wepy.page {
     },
     // 立即阅读
     lookBook() {
-      this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapterid=${1}&firsttime=${true}`)
+      wx.getStorage({
+        key: `bookid${this.bookid}`,
+        success: res => {
+          console.log(res)
+          if (res.data) {
+            this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapterid=${res.data}&firsttime=${true}`)
+          } else {
+            if (this.bookInfo.chapters.length === 0) {
+              wx.showModal({
+                title: '',
+                content: '暂无章节'
+              })
+              return
+            }
+            this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapterid=${this.bookInfo.chapters[0].id}&firsttime=${true}`)
+          }
+        }
+      })
     },
     // 查看目录
     goContents() {
@@ -588,10 +609,10 @@ export default class Details extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/api/novelDetail/${this.bookid}`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.bookInfo = data.data.novel
           this.bookid = this.bookInfo.id
+          this.bookInfo.words_count = Math.floor(this.bookInfo.words_count / 10000)
           this.$apply()
         } else {
           wx.showModal({
