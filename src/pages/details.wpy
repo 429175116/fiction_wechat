@@ -359,6 +359,36 @@
     border-left: 0;
     border-radius: 0 20rpx 20rpx 0;
   }
+  .commentReply{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    z-index: 10;
+  }
+  .commentReplyList{
+    padding: 20rpx 5vw;
+    width: 90vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    margin-bottom: 130rpx;
+  }
+  .commentReplyUp{
+    width: 100vw;
+    height: 100rpx;
+    position: absolute;
+    bottom: 20rpx;
+  }
+  .icon-quxiao{
+    position: absolute;
+    top: 20rpx;
+    right: 20rpx;
+    color: #333;
+    z-index: 999;
+  }
 </style>
 <template>
   <view>
@@ -434,7 +464,7 @@
     <view class="tableOfContents" @tap="goContents">
       <view>目录</view>
       <view>
-        连载至200章·13小时前更新
+        查看目录
         <icon class="iconfont icon-jiantouyou" />
       </view>
     </view>
@@ -449,7 +479,7 @@
         <view>
           <input type="text" bindinput="commentBook" placeholder="填写评论" />
         </view>
-        <view @tap="updataComment">
+        <view @tap="updataComment"> 
           <icon class="iconfont icon-wodetijiao" />
         </view>
       </view>
@@ -468,7 +498,7 @@
                   <icon class="iconfont icon-dianzan" />
                   {{item.likes_number}}
                 </view>
-                <view>
+                <view @tap="commentReplyShow" data-id="{{item.id}}">
                   <icon class="iconfont icon-pinglun" />
                   {{item.wethere_author}}
                 </view>
@@ -476,6 +506,35 @@
             </view>
           </view>
         </block>
+        <view class="commentReply" wx:if="{{commentDomReplyShow}}">
+          <view class="iconfont icon-quxiao" @tap="commentReplyShow"></view>
+          <scroll-view scroll-y="hidden" class="commentReplyList">
+            <block wx:for="{{ReplyCon}}" key="index" index="index" item="item">
+              <view class="listCon" data-id="{{item.id}}" data-level="{{item.level}}">
+                <view class="user">
+                  <image src="{{item.profile}}" />
+                  {{item.user_nickname}}
+                </view>
+                <view class="description">{{item.content}}</view>
+                <view class="commentInfo">
+                  <view class="time">{{item.updated_at}}</view>
+                  <view class="operating"></view>
+                </view>
+              </view>
+            </block>
+            <view class="dataNullShow" wx:if="{{ReplyCon.length === 0}}">暂无回复</view>
+          </scroll-view>
+          <view class="commentReplyUp">
+            <view class="search">
+              <view>
+                <input type="text" bindinput="commentReply" placeholder="填写回复" />
+              </view>
+              <view @tap="updataReply" data-id="{{replyId}}"> 
+                <icon class="iconfont icon-wodetijiao" />
+              </view>
+            </view>
+          </view>
+        </view>
       </view>
       <view class="dataNullShow"  wx:if="{{chapterCommentList.length === 0}}">暂无评论</view>
       <!-- <view class="dataNullShow seeMore">加载更多</view> -->
@@ -544,8 +603,11 @@ export default class Details extends wepy.page {
     chapterCommentList: [],
     commentConOne: '',
     commentConTow: '',
+    commentDomReplyShow: false,
     setcomment: false,
-    authorInfoData: null // 作家信息
+    authorInfoData: null, // 作家信息
+    replyId: '',
+    ReplyCon: []
   }
 
   computed = {}
@@ -600,10 +662,19 @@ export default class Details extends wepy.page {
     commentBook(e) {
       this.commentConOne = e.detail.value
     },
+    commentReply(e){
+      this.commentConTow = e.detail.value
+    },
     // 提交评论
     updataComment() {
       // 提交一级评论
       this.updataCommentCon()
+    },
+    // 提交回复
+    updataReply(e) {
+      // 提交二级评论
+      let id = e.currentTarget.dataset.id
+      this.updataReplyCon(id)
     },
     // 输入评论是否展示
     setcommentShow() {
@@ -611,6 +682,18 @@ export default class Details extends wepy.page {
         this.setcomment = false
       } else {
         this.setcomment = true
+      }
+      this.$apply()
+    },
+    // 控制回复内容是否显示
+    commentReplyShow(e) {
+      this.replyId = e.currentTarget.dataset.id
+      if (this.commentDomReplyShow) {
+        this.commentDomReplyShow = false
+      } else {
+        this.commentDomReplyShow = true
+        // 获取回复
+        this.getReplyCon(this.replyId)
       }
       this.$apply()
     },
@@ -682,6 +765,56 @@ export default class Details extends wepy.page {
           })
           // 获取评论
           this.chapterCommentLists()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 提交回复
+  updataReplyCon(id) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/secondNovelComment`,
+      method: 'POST',
+      data: {
+        user_id: this.userInfo.id,
+        novel_id: this.bookid,
+        parent_id: id,
+        content: this.commentConTow
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '评论成功'
+          })
+          // 获取评论
+          this.getReplyCon(id)
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取回复
+  getReplyCon(id) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/subNovelCommentList/${id}`,
+      method: 'GET',
+      data: {
+        novel_id: this.bookid,
+        parent_id: id
+      },
+      success: data => {
+        if (data.data.success) {
+          this.ReplyCon = data.data.sub_novel_comment_list
+          this.$apply()
         } else {
           wx.showModal({
             title: '',
