@@ -2,7 +2,7 @@
   page{
     background-color: #f7f7f7;
   }
-  .author{
+  .authorImg{
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -10,10 +10,19 @@
     height: 140rpx;
     background-color: #fff;
   }
-  .author image{
+  .authorImg image{
     width: 100rpx;
     height: 100rpx;
     border-radius: 50rpx;
+  }
+  .author{
+    font-size: 40rpx;
+    color: #333;
+    padding: 40rpx 90rpx;
+    background-color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .description{
     padding: 40rpx 90rpx;
@@ -117,29 +126,25 @@
 </style>
 <template>
   <view>
-    <view class="author">
-      <image src="/img/1.png" />
+    <view class="authorImg">
+      <image src="{{authorinfodata.user.profile}}" />
     </view>
-    <view class="description">
-      描述描述描述描述描述描述描述描述描述描述描述描述描述
-      描述描述描述描述描述描述描述描述描述
-      描述描述描述描述
-      描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述
-    </view>
+    <view class="author">{{authorinfodata.pen_name}}</view>
+    <!-- <view class="description">
+      描述描述描述描述描述描述描
+    </view> -->
     <view class="Info">
       <view class="sel">
         <view>
-          <text>11</text>
-          万
+          <text>{{authorBook.length}}</text>
         </view>
-        <view>累计字数</view>
+        <view>作品数量</view>
       </view>
       <view class="sel">
         <view>
-          <text>11</text>
-          万
+          <text>{{authorinfodata.user.level}}</text>
         </view>
-        <view>加入天数</view>
+        <view>等级</view>
       </view>
       <view class="sel">
         <view>
@@ -151,66 +156,32 @@
     </view>
     <view class="list">
       <view class="listTitle">
-        <view>畅销精选</view>
-        <view>
+        <view>作者作品</view>
+        <!-- <view>
           更多
           <icon class="iconfont icon-jiantouyou"></ivon>
-        </view>
+        </view> -->
       </view>
       <view class="listCon">
-        <view class="con">
-          <view class="cover">
-            <image src="/img/1.png" />
+        <block wx:for="{{authorBook}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="cover">
+              <image src="{{imgUrl + item.img}}" />
+            </view>
+            <view class="info">
+              <view class="title">{{item.name}}</view>
+              <view>
+                <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+                <text wx:elif>完结</text>
+                  · {{item.words_count}}字</view>
+              <view>上架时间{{item.updated_at}}</view>
+            </view>
           </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-        <view class="con">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
+        </block>
       </view>
     </view>
   </view>
 </template>
-// 页面跳转，传参写法
-// this.$redirect('./page2', {a: 1, b: 2})
-// this.$redirect({
-//   url: './pages?a=1&b=2'
-// });
-// this.$navigate(url)
-
-
-// 水平垂直居中
-// display: flex;
-// align-items: center;
-// justify-content: center;
-
-// 居右
-// flex-direction:row;
-// justify-content:flex-end
-
-// vertical-align:middle;
-
-// overflow:hidden;
-// text-overflow:ellipsis;
-// white-space:nowrap;
-
-// 自动换行
-// word-break:break-all;
-
-// overflow:hidden;
-// text-overflow:ellipsis;
-// white-space:nowrap;
 <script>
 import wepy from 'wepy'
 export default class Authorinfo extends wepy.page {
@@ -225,6 +196,8 @@ export default class Authorinfo extends wepy.page {
   mixins = []
 
   data = {
+    authorBook: [],
+    authorinfodata: null
   }
 
   computed = {}
@@ -239,7 +212,12 @@ export default class Authorinfo extends wepy.page {
 
   events = {}
 
-  onLoad() {
+  onLoad(options) {
+    // console.log(options.authorid)
+    this.authorid = options.authorid
+    this.authorinfodata = JSON.parse(options.authorinfodata)
+    console.log(this.authorinfodata)
+    this.$apply()
     // 个人信息初始化
     // 作家的其他作品以及数量
     this.authorOtherNovel()
@@ -247,15 +225,15 @@ export default class Authorinfo extends wepy.page {
   // 作家的其他作品以及数量
   authorOtherNovel() {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/authorOtherNovel/${1}`,
-      method: 'POST',
+      url: `${this.$parent.globalData.requestUrl}/api/authorOtherNovel/${this.authorid}`,
+      method: 'GET',
       header: {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
-          
+          this.authorBook = data.data.other_novels
+          this.$apply()
         } else {
           wx.showModal({
             title: '',

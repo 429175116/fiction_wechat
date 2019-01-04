@@ -480,7 +480,7 @@
       <view class="dataNullShow"  wx:if="{{chapterCommentList.length === 0}}">暂无评论</view>
       <!-- <view class="dataNullShow seeMore">加载更多</view> -->
     </view>
-    <view class="attentionAuthor" @tap="goAuthor">
+    <view class="attentionAuthor" @tap="goAuthor" data-id="{{authorInfoData.id}}">
       <view class="authorInfo">
         <image src="{{authorInfoData.user.profile}}" />
         <view class="info">
@@ -552,8 +552,10 @@ export default class Details extends wepy.page {
 
   methods = {
     // 查看作者
-    goAuthor() {
-      this.$navigate('/pages/authorInfo')
+    goAuthor(e) {
+      let id = e.currentTarget.dataset.id
+      let authorInfoData = JSON.stringify(this.authorInfoData)
+      this.$navigate(`/pages/authorInfo?authorid=${id}&authorinfodata=${authorInfoData}`)
     },
     // 立即阅读
     lookBook() {
