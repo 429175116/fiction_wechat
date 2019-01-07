@@ -563,12 +563,12 @@ export default class Lookfiction extends wepy.page {
 
   methods = {
     // 字体变大
-    fontSizeUp(){
+    fontSizeUp() {
       this.fontSize += 1
       wx.setStorageSync('fontsoze', this.fontSize)
     },
     // 字体变小
-    fontSizeDown(){
+    fontSizeDown() {
       this.fontSize -= 1
       wx.setStorageSync('fontsoze', this.fontSize)
     },
@@ -621,7 +621,6 @@ export default class Lookfiction extends wepy.page {
     storeBook() {
       this.runStoreBook()
     }
-    // 
   }
 
   events = {}
@@ -649,7 +648,7 @@ export default class Lookfiction extends wepy.page {
       header: {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
-      data:{
+      data: {
         novel_id: this.bookid,
         ticket_count: 1
       },
@@ -677,7 +676,7 @@ export default class Lookfiction extends wepy.page {
       header: {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
-      data:{
+      data: {
         novel_id: this.bookid,
         chapter_id: this.chapterId
       },
@@ -721,7 +720,7 @@ export default class Lookfiction extends wepy.page {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/chapterDetail`,
       method: 'GET',
-      data:{
+      data: {
         novel_id: this.bookid,
         chapter_id: this.chapterId
       },
@@ -730,7 +729,7 @@ export default class Lookfiction extends wepy.page {
           data = data.data.novel_chapter
           this.novelChapter = data.data[0]
           // 碰到空格换行
-          this.novelChapter.content.content.replace(/ /g,'/n')
+          this.novelChapter.content.content.replace(/ /g, '/n')
           // 回到页面顶部
           wx.pageScrollTo({
             scrollTop: 0
@@ -742,7 +741,6 @@ export default class Lookfiction extends wepy.page {
           // this.novelChapter
           // 上一章请求地址
           this.previousUrl = ''
-          
           if (data.meta.pagination.links.length !== 0) {
             // 下一章请求地址
             this.nextUrl = data.meta.pagination.links.next
@@ -763,7 +761,7 @@ export default class Lookfiction extends wepy.page {
     wx.request({
       url: url,
       method: 'GET',
-      data:{
+      data: {
         novel_id: this.bookid,
         chapter_id: this.chapterId
         // chapter_id: 1
@@ -773,7 +771,7 @@ export default class Lookfiction extends wepy.page {
           data = data.data.novel_chapter
           this.novelChapter = data.data[0]
           // 碰到空格换行
-          this.novelChapter.content.content.replace(/ /g,'/n')
+          this.novelChapter.content.content.replace(/ /g, '/n')
           // 根据获取到的参数修改页面标题
           wx.setNavigationBarTitle({
             title: this.novelChapter.title

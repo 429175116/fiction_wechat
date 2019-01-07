@@ -140,7 +140,7 @@ export default class Indexsonlist extends wepy.page {
               this.books = this.$parent.getImgUrlList(this.books)
               break
             default:
-              break;
+              break
           }
           this.$apply()
         } else {

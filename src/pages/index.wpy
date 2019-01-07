@@ -423,8 +423,6 @@ export default class Index extends wepy.page {
     poplarCategory: [], // 人气分类
     popularCategoryBooks: [], // 人气分类书
     twentyfourhourHotSale: [], // 24小时热销榜
-    clickWeekBang: [], // 点击周榜
-    compeleteBoutique: [], // 完本精品
     swiperData: [] // 轮播图
   }
 
@@ -437,8 +435,6 @@ export default class Index extends wepy.page {
     this.getSwiperData()
     // 加载分类--一级
     this.firstCategory()
-    
-    
   }
 
   methods = {
@@ -552,7 +548,7 @@ export default class Index extends wepy.page {
       method: 'GET',
       success: data => {
         if (data.data.success) {
-          
+          console.log(data)
         } else {
           wx.showModal({
             title: '',
@@ -689,13 +685,11 @@ export default class Index extends wepy.page {
     if (arr.length <= 3) {
       return arr
     } else {
-      arr = arr.slice(0,3)
+      arr = arr.slice(0, 3)
       return arr
     }
   }
 }
-
-
 // 面向对象实验
 // onLoad() {
 //   let getuser = new onGetUserInfo()

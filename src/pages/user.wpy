@@ -201,101 +201,95 @@
       console.log(this.userInfo)
       console.log(this.openId)
       this.$apply()
-      // this.login()
-      // this.createNovel()
-    }
-
-
-    
-    // 添加小说
-    login() {
-      wx.request({
-        url: `${this.$parent.globalData.requestUrl}/backend/login`,
-        method: 'POST',
-        header: {
-          AuthrizeOpenId: 1
-        },
-        data: {
-          account: "luow",
-          password: '123456'
-        },
-        success: data => {
-          console.log(data)
-          if (data.data.success) {
-            
-          } else {
-            wx.showModal({
-              title: '',
-              content: data.data.errmsg
-            })
-          }
-        }
-      })
     }
     // 添加小说
-    createNovel() {
-      wx.request({
-        url: `${this.$parent.globalData.requestUrl}/backend/createNovel`,
-        method: 'POST',
-        header: {
-          Authorization: 1
-        },
-        data: {
-          name: "吃33个香蕉皮",
-          novel_categories_id: 4
-        },
-        success: data => {
-          console.log(data)
-          if (data.data.success) {
+    // login() {
+    //   wx.request({
+    //     url: `${this.$parent.globalData.requestUrl}/backend/login`,
+    //     method: 'POST',
+    //     header: {
+    //       AuthrizeOpenId: 1
+    //     },
+    //     data: {
+    //       account: "luow",
+    //       password: '123456'
+    //     },
+    //     success: data => {
+    //       console.log(data)
+    //       if (data.data.success) {
             
-          } else {
-            wx.showModal({
-              title: '',
-              content: data.data.errmsg
-            })
-          }
-        }
-      })
-    }
-    // 作者申请
-    applicateToBeAnAnthor() {
-      // 作者信息
-      // account:"luow"
-      // created_at:"2018-12-29 09:29:13"
-      // id:1
-      // id_number:"61012419930125273X"
-      // password:"$2y$10$Sas1tpsZnPxgcx8j7RVUQe8qWj497vscHA7B8t.rPrJJc2d08CLAK"
-      // pen_name:"山下日狗"
-      // profile:"https://wx.qlogo.cn/mmopen/vi_32/90DWsNicbNLISvKpBn6oGMN0sxSrPTicVUsO2DiaB64nu9qP3uAZUJZ7r1m5jnPfPLtqibVpia2lHZGMcosQmpFfN4w/132"
-      // real_name:"雒伟"
-      // updated_at:"2018-12-29 09:29:13"
-      // user_id:1
-      wx.request({
-        url: `${this.$parent.globalData.requestUrl}/api/applicateToBeAnAnthor`,
-        method: 'POST',
-        header: {
-          AuthrizeOpenId: this.$parent.globalData.openId
-        },
-        data: {
-          real_name: "雒伟",
-          pen_name: "山下日狗",
-          id_number: "61012419930125273X",
-          profile: "https://wx.qlogo.cn/mmopen/vi_32/90DWsNicbNLISvKpBn6oGMN0sxSrPTicVUsO2DiaB64nu9qP3uAZUJZ7r1m5jnPfPLtqibVpia2lHZGMcosQmpFfN4w/132",
-          account: "luow",
-          password: "123456"
-        },
-        success: data => {
-          console.log(data)
-          if (data.data.success) {
+    //       } else {
+    //         wx.showModal({
+    //           title: '',
+    //           content: data.data.errmsg
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
+    // // 添加小说
+    // createNovel() {
+    //   wx.request({
+    //     url: `${this.$parent.globalData.requestUrl}/backend/createNovel`,
+    //     method: 'POST',
+    //     header: {
+    //       Authorization: 1
+    //     },
+    //     data: {
+    //       name: "吃33个香蕉皮",
+    //       novel_categories_id: 4
+    //     },
+    //     success: data => {
+    //       console.log(data)
+    //       if (data.data.success) {
             
-          } else {
-            wx.showModal({
-              title: '',
-              content: data.data.errmsg
-            })
-          }
-        }
-      })
-    }
+    //       } else {
+    //         wx.showModal({
+    //           title: '',
+    //           content: data.data.errmsg
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
+    // // 作者申请
+    // applicateToBeAnAnthor() {
+    //   // 作者信息
+    //   // account:"luow"
+    //   // created_at:"2018-12-29 09:29:13"
+    //   // id:1
+    //   // id_number:"61012419930125273X"
+    //   // password:"$2y$10$Sas1tpsZnPxgcx8j7RVUQe8qWj497vscHA7B8t.rPrJJc2d08CLAK"
+    //   // pen_name:"山下日狗"
+    //   // profile:"https://wx.qlogo.cn/mmopen/vi_32/90DWsNicbNLISvKpBn6oGMN0sxSrPTicVUsO2DiaB64nu9qP3uAZUJZ7r1m5jnPfPLtqibVpia2lHZGMcosQmpFfN4w/132"
+    //   // real_name:"雒伟"
+    //   // updated_at:"2018-12-29 09:29:13"
+    //   // user_id:1
+    //   wx.request({
+    //     url: `${this.$parent.globalData.requestUrl}/api/applicateToBeAnAnthor`,
+    //     method: 'POST',
+    //     header: {
+    //       AuthrizeOpenId: this.$parent.globalData.openId
+    //     },
+    //     data: {
+    //       real_name: "雒伟",
+    //       pen_name: "山下日狗",
+    //       id_number: "61012419930125273X",
+    //       profile: "https://wx.qlogo.cn/mmopen/vi_32/90DWsNicbNLISvKpBn6oGMN0sxSrPTicVUsO2DiaB64nu9qP3uAZUJZ7r1m5jnPfPLtqibVpia2lHZGMcosQmpFfN4w/132",
+    //       account: "luow",
+    //       password: "123456"
+    //     },
+    //     success: data => {
+    //       if (data.data.success) {
+    //         console.log(data)       
+    //       } else {
+    //         wx.showModal({
+    //           title: '',
+    //           content: data.data.errmsg
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
   }
 </script>

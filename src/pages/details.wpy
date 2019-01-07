@@ -660,7 +660,7 @@ export default class Details extends wepy.page {
     commentBook(e) {
       this.commentConOne = e.detail.value
     },
-    commentReply(e){
+    commentReply(e) {
       this.commentConTow = e.detail.value
     },
     // 提交评论

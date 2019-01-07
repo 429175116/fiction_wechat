@@ -110,8 +110,7 @@ export default class extends wepy.app {
       'pages/bookListAndType', // 分类，包含列表
       'pages/search', // 搜索
       'pages/bookContents', // 目录
-      'pages/lookFiction', // 看书页
-      
+      'pages/lookFiction' // 看书页
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -157,7 +156,7 @@ export default class extends wepy.app {
     imgUrl = imgUrl.split('/').pop()
     imgUrl = imgUrl.replace(/%3A/g, ':')
     imgUrl = imgUrl.replace(/%2F/g, '/')
-    imgUrl = imgUrl.replace(/http/g, 'https')
+    imgUrl = imgUrl.replace(/http:/g, 'https:')
     return imgUrl
   }
   // 包含图片路径列表数据中图片路径解析

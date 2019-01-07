@@ -137,9 +137,9 @@ export default class Bookcontents extends wepy.page {
     let bookInfo = JSON.parse(options.bookInfo)
     this.id = bookInfo.id
     this.chapters = bookInfo.chapters
-    let i = 0 
+    let i = 0
     for (i in this.chapters) {
-      this.chapters[i]["id"] = i
+      this.chapters[i]['id'] = i
     }
     this.$apply()
     // 根据获取到的参数修改页面标题

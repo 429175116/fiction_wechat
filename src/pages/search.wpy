@@ -193,16 +193,12 @@
     </view>
     <view class="searchHistoryTitle">
       <view>为您推荐</view>
-      <!-- <view>
-        <image src="/img/user1.png"  />
-      </view> -->
     </view>
     <view class="bookList">
-      <!-- recommendNovels -->
       <block wx:for="{{recommendNovels}}" key="index" index="index" item="item">
         <view class="list" data-id="{{item.id}}">
           <view class="cover">
-            <image src="{{imgUrl+item.img}}" />
+            <image src="{{item.img}}" />
           </view>
           <view class="info">
             <view class="title">{{item.name}}</view>
@@ -285,13 +281,14 @@ export default class Search extends wepy.page {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/searchNovel`,
       method: 'GET',
-      data:{
+      data: {
         novel_name: searchKey
       },
       success: data => {
         if (data.data.success) {
           data = data.data.novels
           this.searchBook = data.data
+          this.searchBook = this.$parent.getImgUrlList(this.searchBook)
           // this.nextUrl = data.meta
           this.$apply()
         } else {
@@ -333,6 +330,7 @@ export default class Search extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.recommendNovels = data.data.recommend_novels
+          this.recommendNovels = this.$parent.getImgUrlList(this.recommendNovels)
           this.$apply()
         } else {
           wx.showModal({
