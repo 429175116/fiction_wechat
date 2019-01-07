@@ -537,7 +537,7 @@
         </view>
       </view>
       <view class="dataNullShow"  wx:if="{{chapterCommentList.length === 0}}">暂无评论</view>
-      <!-- <view class="dataNullShow seeMore">加载更多</view> -->
+      <view class="dataNullShow seeMore" wx:if="{{nextReplyUrl !== ''}}" @tap="getMoreReplyCon">查看更多</view>
     </view>
     <view class="attentionAuthor" @tap="goAuthor" data-id="{{authorInfoData.id}}">
       <view class="authorInfo">
@@ -607,12 +607,17 @@ export default class Details extends wepy.page {
     setcomment: false,
     authorInfoData: null, // 作家信息
     replyId: '',
-    ReplyCon: []
+    ReplyCon: [],
+    nextReplyUrl: ''
   }
 
   computed = {}
 
   methods = {
+    // 获取更多评论
+    getMoreReplyCon() {
+      this.runMoreReplyCon()
+    },
     // 查看作者
     goAuthor(e) {
       let id = e.currentTarget.dataset.id
@@ -812,8 +817,8 @@ export default class Details extends wepy.page {
       success: data => {
         if (data.data.success) {
           data = data.data.sub_novel_comment_list
-          // this.ReplyCon = data.data.sub_novel_comment_list
           this.ReplyCon = data.data
+          
           this.$apply()
         } else {
           wx.showModal({
@@ -824,6 +829,7 @@ export default class Details extends wepy.page {
       }
     })
   }
+
   // 获取小说详情
   getBookDetails(id) {
     wx.request({
@@ -900,8 +906,36 @@ export default class Details extends wepy.page {
         if (data.data.success) {
           data = data.data.first_novel_comment
           this.chapterCommentList = data.data
-          // this.chapterCommentList = data
-          // let nextUrl = data.mata.pagination.links
+          this.nextReplyUrl = ''
+          if (data.meta.pagination.links) {
+            this.nextReplyUrl = data.meta.pagination.links.next
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取更多评论
+  runMoreReplyCon() {
+    wx.request({
+      url: this.nextReplyUrl,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          data = data.data.first_novel_comment
+          let ReplyConList = data.data
+          for (let i in ReplyConList) {
+            this.chapterCommentList.push(ReplyConList[i])
+          }
+          this.nextReplyUrl = ''
+          if (data.meta.pagination.links) {
+            this.nextReplyUrl = data.meta.pagination.links.next
+          }
           this.$apply()
         } else {
           wx.showModal({
