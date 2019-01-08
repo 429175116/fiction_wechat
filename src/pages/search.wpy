@@ -288,7 +288,7 @@ export default class Search extends wepy.page {
         if (data.data.success) {
           data = data.data.novels
           this.searchBook = data.data
-          this.searchBook = this.$parent.getImgUrlList(this.searchBook)
+          // this.searchBook = this.$parent.getImgUrlList(this.searchBook)
           // this.nextUrl = data.meta
           this.$apply()
         } else {
@@ -330,7 +330,7 @@ export default class Search extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.recommendNovels = data.data.recommend_novels
-          this.recommendNovels = this.$parent.getImgUrlList(this.recommendNovels)
+          // this.recommendNovels = this.$parent.getImgUrlList(this.recommendNovels)
           this.$apply()
         } else {
           wx.showModal({

@@ -233,7 +233,7 @@ export default class Authorinfo extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.authorBook = data.data.other_novels
-          this.authorBook = this.$parent.getImgUrlList(this.authorBook)
+          // this.authorBook = this.$parent.getImgUrlList(this.authorBook)
           this.$apply()
         } else {
           wx.showModal({

@@ -497,7 +497,7 @@ export default class Index extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.swiperData = data.data.rolling_img
-          this.swiperData = this.$parent.getImgUrlList(this.swiperData)
+          // this.swiperData = this.$parent.getImgUrlList(this.swiperData)
           this.$apply()
         } else {
           wx.showModal({
@@ -567,7 +567,7 @@ export default class Index extends wepy.page {
         if (data.data.success) {
           this.newBooks = data.data.new_books
           this.newBooks = this.getListShowData(this.newBooks)
-          this.newBooks = this.$parent.getImgUrlList(this.newBooks)
+          // this.newBooks = this.$parent.getImgUrlList(this.newBooks)
           this.$apply()
         } else {
           wx.showModal({
@@ -587,7 +587,7 @@ export default class Index extends wepy.page {
         if (data.data.success) {
           this.popularBooks = data.data.popular_books
           this.popularBooks = this.getListShowData(this.popularBooks)
-          this.popularBooks = this.$parent.getImgUrlList(this.popularBooks)
+          // this.popularBooks = this.$parent.getImgUrlList(this.popularBooks)
           this.$apply()
         } else {
           wx.showModal({
@@ -610,7 +610,7 @@ export default class Index extends wepy.page {
           // 人气分类书
           this.popularCategoryBooks = data.data.popular_category_books
           this.popularCategoryBooks = this.getListShowData(this.popularCategoryBooks)
-          this.popularCategoryBooks = this.$parent.getImgUrlList(this.popularCategoryBooks)
+          // this.popularCategoryBooks = this.$parent.getImgUrlList(this.popularCategoryBooks)
           this.$apply()
         } else {
           wx.showModal({
@@ -630,7 +630,7 @@ export default class Index extends wepy.page {
         if (data.data.success) {
           this.twentyfourhourHotSale = data.data.twentyfourhour_hot_sale
           this.twentyfourhourHotSale = this.getListShowData(this.twentyfourhourHotSale)
-          this.twentyfourhourHotSale = this.$parent.getImgUrlNovelList(this.twentyfourhourHotSale)
+          // this.twentyfourhourHotSale = this.$parent.getImgUrlNovelList(this.twentyfourhourHotSale)
           this.$apply()
         } else {
           wx.showModal({
@@ -650,7 +650,7 @@ export default class Index extends wepy.page {
         if (data.data.success) {
           this.clickWeekBang = data.data.click_week_bang
           this.clickWeekBang = this.getListShowData(this.clickWeekBang)
-          this.clickWeekBang = this.$parent.getImgUrlNovelList(this.clickWeekBang)
+          // this.clickWeekBang = this.$parent.getImgUrlNovelList(this.clickWeekBang)
           this.$apply()
         } else {
           wx.showModal({
@@ -670,7 +670,7 @@ export default class Index extends wepy.page {
         if (data.data.success) {
           this.compeleteBoutique = data.data.compelete_boutique
           this.compeleteBoutique = this.getListShowData(this.compeleteBoutique)
-          this.compeleteBoutique = this.$parent.getImgUrlList(this.compeleteBoutique)
+          // this.compeleteBoutique = this.$parent.getImgUrlList(this.compeleteBoutique)
           this.$apply()
         } else {
           wx.showModal({

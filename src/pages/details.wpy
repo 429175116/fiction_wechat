@@ -407,10 +407,10 @@
              |
             {{bookInfo.words_count}}万字 ~ 价格{{bookInfo.sale_amount}} </view>
           <view class="label">
+            <!-- <view>标签</view>
             <view>标签</view>
             <view>标签</view>
-            <view>标签</view>
-            <view>标签</view>
+            <view>标签</view> -->
           </view>
         </view>
       </view>
@@ -455,10 +455,10 @@
       </view>
       <view class="description">{{bookInfo.intro}}</view>
       <view class="label">
+        <!-- <view>1111</view>
         <view>1111</view>
         <view>1111</view>
-        <view>1111</view>
-        <view>1111</view>
+        <view>1111</view> -->
       </view>
     </view>
     <view class="tableOfContents" @tap="goContents">
@@ -838,7 +838,7 @@ export default class Details extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.bookInfo = data.data.novel
-          this.bookInfo.img = this.$parent.getImgUrl(this.bookInfo.img)
+          // this.bookInfo.img = this.$parent.getImgUrl(this.bookInfo.img)
           this.bookInfo.score = parseFloat(this.bookInfo.score)
           this.bookid = this.bookInfo.id
           this.bookInfo.words_count = Math.floor(this.bookInfo.words_count / 10000)

@@ -238,7 +238,7 @@ export default class Bookshelf extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.bookshelfList = data.data.user_stores
-          this.bookshelfList = this.$parent.getImgUrlNovelList(this.bookshelfList)
+          // this.bookshelfList = this.$parent.getImgUrlNovelList(this.bookshelfList)
           this.$apply()
         } else {
           wx.showModal({
