@@ -408,7 +408,7 @@ export default class Index extends wepy.page {
     imgUrl: '',
     indicatorDots: true,
     autoplay: true,
-    interval: 1000,
+    interval: 5000,
     duration: 1000,
     firstCategoryData: [], // 一级分类列表数据
     thisfirstCategoryId: '', // 一级分类对应的选中项
