@@ -97,6 +97,15 @@
   font-size: 38rpx;
   font-size: 600;
 }
+.goList{
+  width: 710rpx;
+  padding: 20rpx;
+  font-size: 30rpx;
+  color: #0066CC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
 <template>
   <view>
@@ -108,51 +117,28 @@
       </view>
     </view>
     <view class="list-sidelong">
-      <view class="item">
-        <image src="/img/1.png" />
-        <view class="name">书名书名书名书名书名书名</view>
-      </view>
-      <view class="item">
-        <image src="/img/1.png" />
-        <view class="name">书名书名书名书名书名书名</view>
-      </view>
-      <view class="item">
-        <image src="/img/1.png" />
-        <view class="name">书名书名书名书名书名书名</view>
-      </view>
+      <block wx:for="{{sellSellData1}}" key="index" index="index" item="item">
+        <view class="item">
+          <image src="{{item.img}}" />
+          <view class="name">{{item.name}}</view>
+        </view>
+      </block>
     </view>
     <view class="list-vertical">
-      <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
-        <view class="cover">
-          <image src="/img/1.png" />
+      <block wx:for="{{sellSellData2}}" key="index" index="index" item="item">
+        <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+          <view class="cover">
+            <image src="{{item.img}}" />
+          </view>
+          <view class="info">
+            <view class="title">{{item.name}}</view>
+            <view>{{item.name}} · {{item.name}}</view>
+            <view>{{item.name}}</view>
+          </view>
         </view>
-        <view class="info">
-          <view class="title">书名书名书名书名书名书名</view>
-          <view>书名书名书名书名书名书名 · 书名书名书名书名书名书名</view>
-          <view>书名书名书名书名书名书名</view>
-        </view>
-      </view>
-      <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
-        <view class="cover">
-          <image src="/img/1.png" />
-        </view>
-        <view class="info">
-          <view class="title">书名书名书名书名书名书名</view>
-          <view>书名书名书名书名书名书名 · 书名书名书名书名书名书名</view>
-          <view>书名书名书名书名书名书名</view>
-        </view>
-      </view>
-      <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
-        <view class="cover">
-          <image src="/img/1.png" />
-        </view>
-        <view class="info">
-          <view class="title">书名书名书名书名书名书名</view>
-          <view>书名书名书名书名书名书名 · 书名书名书名书名书名书名</view>
-          <view>书名书名书名书名书名书名</view>
-        </view>
-      </view>
+      </block>
     </view>
+    <view class="goList" @tap="goList">查看人气榜</view>
     <view class="listTitle">
       <view>{{thisTypeName}}热销榜</view>
       <view @tap="selType" class="{{typeClass}}" data-typename="热销榜">
@@ -160,51 +146,28 @@
       </view>
     </view>
     <view class="list-sidelong">
-      <view class="item">
-        <image src="/img/1.png" />
-        <view class="name">书名书名书名书名书名书名</view>
-      </view>
-      <view class="item">
-        <image src="/img/1.png" />
-        <view class="name">书名书名书名书名书名书名</view>
-      </view>
-      <view class="item">
-        <image src="/img/1.png" />
-        <view class="name">书名书名书名书名书名书名</view>
-      </view>
+      <block wx:for="{{popularityData1}}" key="index" index="index" item="item">
+        <view class="item">
+          <image src="{{item.img}}" />
+          <view class="name">{{item.name}}</view>
+        </view>
+      </block>
     </view>
     <view class="list-vertical">
-      <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
-        <view class="cover">
-          <image src="/img/1.png" />
+      <block wx:for="{{popularityData2}}" key="index" index="index" item="item">
+        <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+          <view class="cover">
+            <image src="{{item.img}}" />
+          </view>
+          <view class="info">
+            <view class="title">{{item.name}}</view>
+            <view>{{item.name}} · {{item.name}}</view>
+            <view>{{item.name}}</view>
+          </view>
         </view>
-        <view class="info">
-          <view class="title">书名书名书名书名书名书名</view>
-          <view>书名书名书名书名书名书名 · 书名书名书名书名书名书名</view>
-          <view>书名书名书名书名书名书名</view>
-        </view>
-      </view>
-      <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
-        <view class="cover">
-          <image src="/img/1.png" />
-        </view>
-        <view class="info">
-          <view class="title">书名书名书名书名书名书名</view>
-          <view>书名书名书名书名书名书名 · 书名书名书名书名书名书名</view>
-          <view>书名书名书名书名书名书名</view>
-        </view>
-      </view>
-      <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
-        <view class="cover">
-          <image src="/img/1.png" />
-        </view>
-        <view class="info">
-          <view class="title">书名书名书名书名书名书名</view>
-          <view>书名书名书名书名书名书名 · 书名书名书名书名书名书名</view>
-          <view>书名书名书名书名书名书名</view>
-        </view>
-      </view>
+      </block>
     </view>
+    <view class="goList" @tap="goList">查看热销榜</view>
     <nav @childFn.user="goPage" />
   </view>
 </template>
@@ -230,8 +193,11 @@
       openId: '',
       typeClass: 'female',
       thisTypeName: '男生',
-      typeName: '女生'
-      
+      typeName: '女生',
+      sellSellData1: [],
+      sellSellData2: [],
+      popularityData1: [],
+      popularityData2: []
     }
 
     computed = {}
@@ -247,12 +213,22 @@
           this.thisTypeName = '男生'
           this.typeName = '女生'
           this.typeClass = 'female'
+          this.sellSellList(1)
+          this.popularityList(1)
         } else {
           this.thisTypeName = '女生'
           this.typeName = '男生'
           this.typeClass = 'male'
+          this.sellSellList(2)
+          this.popularityList(2)
         }
         this.$apply()
+      },
+      goList(e) {
+        let id = e.currentTarget.dataset.id
+        let typename = e.currentTarget.dataset.typename
+        let url = e.currentTarget.dataset.url
+        this.$navigate(`/pages/indexSonList?typeid=${id}&typename=${typename}&url=${url}`)
       }
     }
 
@@ -263,6 +239,65 @@
       this.userInfo = this.$parent.globalData.userInfo
       this.openId = this.$parent.globalData.openId
       this.$apply()
+      this.sellSellList(1)
+      this.popularityList(1)
+    }
+    // 热销榜
+    sellSellList(id) {
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory/${id}`,
+        method: 'GET',
+        success: data => {
+          if (data.data.success) {
+            let sellSellData = data.data.new_books
+            this.sellSellData1 = []
+            this.sellSellData2 = []
+            if (sellSellData.length >= 3) {
+              this.sellSellData1 = [sellSellData[0], sellSellData[1], sellSellData[2]]
+            }
+            if (sellSellData.length > 3) {
+              for (let i = 3; i < sellSellData.length; i++) {
+                this.sellSellData2.push(sellSellData[i])
+              }
+            }
+            this.$apply()
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
+          }
+        }
+      })
+    }
+    // 人气榜
+    popularityList(id) {
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/popularUncompelete/${id}`,
+        method: 'GET',
+        success: data => {
+          if (data.data.success) {
+            let popularityData = data.data.popular_books
+            this.popularityData1 = []
+            this.popularityData2 = []
+            if (popularityData.length >= 3) {
+              this.popularityData1 = [popularityData[0], popularityData[1], popularityData[2]]
+            }
+            if (popularityData.length > 3) {
+              for (let i = 3; i < popularityData.length; i++) {
+                this.popularityData2.push(popularityData[i])
+              }
+            }
+            this.popularityData1 = popularityData
+            this.$apply()
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
+          }
+        }
+      })
     }
   }
 </script>

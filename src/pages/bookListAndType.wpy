@@ -82,10 +82,15 @@
   <scroll-view scroll-y="hidden">
     <view>
       <view class="containerleft">
-        <repeat for="{{ secondCategoryList }}" item="item">
+        <li class="bookClass {{thissecondCategoryId == 1 ? 'action':'noaction'}}" @tap="changebookClass" data-id='1'>月票榜</li>
+        <li class="bookClass {{thissecondCategoryId == 2 ? 'action':'noaction'}}" @tap="changebookClass" data-id='2'>畅销榜</li>
+        <li class="bookClass {{thissecondCategoryId == 3 ? 'action':'noaction'}}" @tap="changebookClass" data-id='3'>点击榜</li>
+        <li class="bookClass {{thissecondCategoryId == 4 ? 'action':'noaction'}}" @tap="changebookClass" data-id='4'>推荐榜</li>
+
+        <!-- <repeat for="{{ secondCategoryList }}" item="item">
           <li class="bookClass {{thissecondCategoryId == item.id ? 'action':'noaction'}}" @tap="changebookClass" data-id='{{ item.id }}'>{{ item.name }}</li>
         </repeat>
-        <view wx:if="{{secondCategoryList.length == 0}}" class="dataNullShow">暂无子类型</view>
+        <view wx:if="{{secondCategoryList.length == 0}}" class="dataNullShow">暂无子类型</view> -->
       </view>
       <view class="listCon">
         <view class="con" @tap="goBookDetails" data-id="111">

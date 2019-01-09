@@ -72,24 +72,45 @@
       </view>
     </view>
     <view class="list">
-      <view class="item">
+      <view class="item" @tap="goTypeList">
         <image src="/img/1.png" />
         <view class="info">
-          <view class="name">书名书名书名书名书名书名</view>
+          <view class="name">玄幻</view>
           <view class="description">附带信息</view>
         </view>
       </view>
-      <view class="item">
+      <view class="item" @tap="goTypeList">
         <image src="/img/1.png" />
         <view class="info">
-          <view class="name">书名书名书名</view>
+          <view class="name">仙侠</view>
           <view class="description">附带信息</view>
         </view>
       </view>
-      <view class="item">
+      <view class="item" @tap="goTypeList">
         <image src="/img/1.png" />
         <view class="info">
-          <view class="name">书名书名书名</view>
+          <view class="name">武侠</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">都市</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">架空历史</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">惊悚悬疑</view>
           <view class="description">附带信息</view>
         </view>
       </view>
@@ -102,25 +123,32 @@
       </view>
     </view>
     <view class="list">
-      <view class="item">
+      <view class="item" @tap="goTypeList">
         <image src="/img/1.png" />
         <view class="info">
-          <view class="name">书名书名书名书名书名书名</view>
+          <view class="name">都市言情</view>
           <view class="description">附带信息</view>
         </view>
       </view>
-      <view class="item">
+      <view class="item" @tap="goTypeList">
         <image src="/img/1.png" />
         <view class="info">
-          <view class="name">书名书名书名</view>
+          <view class="name">穿越重生</view>
           <view class="description">附带信息</view>
         </view>
       </view>
-      <view class="item">
+      <view class="item" @tap="goTypeList">
         <image src="/img/1.png" />
         <view class="info">
-          <view class="name">书名书名书名</view>
+          <view class="name">仙侠情缘</view>
           <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">仙侠情缘</view>
+          <view class="description">惊悚悬疑</view>
         </view>
       </view>
     </view>
@@ -156,6 +184,11 @@ export default class User extends wepy.page {
     goPage (url, evt) {
       // 销毁当前页{跳转}
       this.$redirect(url)
+    },
+    goTypeList(e) {
+      let typeName = e.currentTarget.dataset.title
+      let id = this.thisfirstCategoryId
+      this.$navigate(`/pages/bookListAndType?typename=${typeName}&typeid=${id}`)
     }
   }
 

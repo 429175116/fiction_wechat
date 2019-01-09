@@ -730,6 +730,8 @@ export default class Lookfiction extends wepy.page {
           this.novelChapter = data.data[0]
           // 碰到空格换行
           console.log(this.novelChapter.content.content)
+          
+          this.novelChapter.content.content.replace(/chaptererror();/g, '')
           this.novelChapter.content.content.replace(/ /g, '/n')
           console.log(this.novelChapter.content.content)
           // 回到页面顶部
