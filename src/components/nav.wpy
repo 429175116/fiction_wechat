@@ -5,11 +5,11 @@
   bottom: 0;
   background: #fff;
   border-top: 1rpx solid #f3f1f1;
-  z-index: 5;
+  // z-index: 5;
 }
 
 .footer .ft_item {
-  width: 33.33%;
+  width: 25%;
   height: 100%;
   text-align: center;
   float: left;
@@ -91,25 +91,29 @@
 }
 </style>
 <template>
-  <view>
-    <view class="footer">
-      <view class="ft_item {{navAction[0]}}">
-        <view @tap="goIndex">
-          <view class="iconfont icon-chazhao"></view>
-          <text class="text">书城</text>
-        </view>
+  <view class="footer">
+    <view class="ft_item {{navAction[0]}}">
+      <view @tap="goIndex">
+        <view class="iconfont icon-chazhao"></view>
+        <text class="text">书城</text>
       </view>
-      <view class="ft_item {{navAction[1]}}">
-        <view @tap="goBookshelf">
-          <view class="iconfont icon-shujia"></view>
-          <text class="text">书架</text>
-        </view>
+    </view>
+    <view class="ft_item {{navAction[1]}}">
+      <view @tap="goBookshelf">
+        <view class="iconfont icon-shujia"></view>
+        <text class="text">书架</text>
       </view>
-      <view class="ft_item {{navAction[2]}}">
-        <view @tap="goUser">
-          <view class="iconfont icon-shusheng"></view>
-          <text class="text">我的</text>
-        </view>
+    </view>
+    <view class="ft_item {{navAction[2]}}">
+      <view @tap="goSearch">
+        <view class="iconfont icon-sousuo"></view>
+        <text class="text">搜索</text>
+      </view>
+    </view>
+    <view class="ft_item {{navAction[3]}}">
+      <view @tap="goUser">
+        <view class="iconfont icon-shusheng"></view>
+        <text class="text">我的</text>
       </view>
     </view>
   </view>
@@ -131,15 +135,19 @@ export default class Nav extends wepy.component {
   props = {};
   methods = {
     goIndex() {
-      this.$parent.$parent.globalData.navAction = ['action', 'noAction', 'noAction']
+      this.$parent.$parent.globalData.navAction = ['action', 'noAction', 'noAction', 'noAction']
       this.$emit('childFn', '/pages/index')
     },
     goBookshelf() {
-      this.$parent.$parent.globalData.navAction = ['noAction', 'action', 'noAction']
+      this.$parent.$parent.globalData.navAction = ['noAction', 'action', 'noAction', 'noAction']
       this.$emit('childFn', '/pages/bookshelf')
     },
+    goSearch() {
+      this.$parent.$parent.globalData.navAction = ['noAction', 'noAction', 'action', 'noAction']
+      this.$emit('childFn', '/pages/search')
+    },
     goUser() {
-      this.$parent.$parent.globalData.navAction = ['noAction', 'noAction', 'action']
+      this.$parent.$parent.globalData.navAction = ['noAction', 'noAction', 'noAction', 'action']
       this.$emit('childFn', '/pages/user')
     }
   };

@@ -213,16 +213,19 @@
         </view>
       </block>
     </view>
+    <nav @childFn.user="goPage" />
   </view>
 </template>
 <script>
 import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
 export default class Search extends wepy.page {
   config = {
     navigationBarTitleText: '搜索'
   }
   components = {
-
+    // 底部导航
+    nav: nav
   }
 
   mixins = []
@@ -238,6 +241,11 @@ export default class Search extends wepy.page {
   computed = {}
 
   methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
     // 清空搜索框中的值
     inputReset() {
       // 使用this.searchKey = ''无用
