@@ -1,51 +1,171 @@
 <style lang="less">
-
+.listTitle{
+  padding: 0 20rpx;
+  width: 710rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.listTitle view:nth-child(1){
+  font-size: 35rpx;
+  color: #333;
+}
+.listTitle view:nth-child(2),
+.icon-jiantouyou{
+  font-size: 25rpx;
+  color: #999;
+}
+.listTitle image{
+  width: 30rpx;
+  height: 30rpx;
+}
+.list{
+  width: 710rpx;
+  padding: 20rpx;
+  display: block;
+}
+.item{
+  width: 355rpx;
+  height: 130rpx;
+  display: inline-flex;
+  margin: 10rpx 0;
+}
+.info{
+  margin: 0;
+  padding: 0;
+}
+.item image{
+  width: 100rpx;
+  height: 130rpx;
+}
+.item image, .item .info{
+  display: inline-block;
+}
+.name, .description{
+  padding-left: 20rpx;
+  width: 235rpx;
+  height: 65rpx;
+  line-height: 65rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.name{
+  font-size: 35rpx;
+  color: #333;
+}
+.description{
+  font-size: 25rpx;
+  color: #999;
+}
 </style>
 <template>
   <view>
     <navTop @childFn.user="goPage" />
+    <view class="listTitle">
+      <view>完本精品</view>
+      <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="完本精品" data-url="compeleteBoutique">
+        更多
+        <icon class="iconfont icon-jiantouyou" />
+      </view>
+    </view>
+    <view class="list">
+      <view class="item">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">书名书名书名书名书名书名</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">书名书名书名</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">书名书名书名</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+    </view>
+    <view class="listTitle">
+      <view>完本精品</view>
+      <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="完本精品" data-url="compeleteBoutique">
+        更多
+        <icon class="iconfont icon-jiantouyou" />
+      </view>
+    </view>
+    <view class="list">
+      <view class="item">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">书名书名书名书名书名书名</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">书名书名书名</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">书名书名书名</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+    </view>
     <nav @childFn.user="goPage" />
   </view>
 </template>
 <script>
-  import wepy from 'wepy'
-  import navTop from '../components/navTop' // 顶部导航
-  import nav from '../components/nav' // 底部导航
-  export default class User extends wepy.page {
-    config = {
-      navigationBarTitleText: '分类'
-    }
-    // 生命组件ID
-    components = {
-      // 底部导航
-      nav: nav,
-      navTop: navTop
-    }
+import wepy from 'wepy'
+import navTop from '../components/navTop' // 顶部导航
+import nav from '../components/nav' // 底部导航
+export default class User extends wepy.page {
+  config = {
+    navigationBarTitleText: '分类'
+  }
+  // 生命组件ID
+  components = {
+    // 底部导航
+    nav: nav,
+    navTop: navTop
+  }
 
-    mixins = []
+  mixins = []
 
-    data = {
-      userInfo: null,
-      openId: ''
-    }
+  data = {
+    userInfo: null,
+    openId: ''
+  }
 
-    computed = {}
+  computed = {}
 
-    methods = {
-      // 底部导航跳转
-      goPage (url, evt) {
-        // 销毁当前页{跳转}
-        this.$redirect(url)
-      }
-    }
-
-    events = {}
-
-    onLoad() {
-      // 个人信息初始化
-      this.userInfo = this.$parent.globalData.userInfo
-      this.openId = this.$parent.globalData.openId
-      this.$apply()
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
     }
   }
+
+  events = {}
+
+  onLoad() {
+    // 个人信息初始化
+    this.userInfo = this.$parent.globalData.userInfo
+    this.openId = this.$parent.globalData.openId
+    this.$apply()
+  }
+}
 </script>
