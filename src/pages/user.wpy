@@ -135,7 +135,7 @@
     <view class="list">
       <view>
         <icon class="iconfont icon-piaowu" />
-        月票
+        推荐票
       </view>
       <view>
         <icon class="iconfont icon-jiantouyou" />

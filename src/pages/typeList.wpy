@@ -186,8 +186,10 @@ export default class User extends wepy.page {
       this.$redirect(url)
     },
     goTypeList(e) {
-      let typeName = e.currentTarget.dataset.title
-      let id = this.thisfirstCategoryId
+      // let typeName = e.currentTarget.dataset.title
+      // let id = this.thisfirstCategoryId
+      let typeName = '男生·玄幻'
+      let id = 1
       this.$navigate(`/pages/bookListAndType?typename=${typeName}&typeid=${id}`)
     }
   }

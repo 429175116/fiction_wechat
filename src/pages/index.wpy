@@ -111,6 +111,25 @@
     font-size: 38rpx;
     font-size: 600;
   }
+  .conSidelong{
+    width: 210rpx;
+    height: 350rpx;
+    padding: 10rpx;
+    display: inline-block;
+  }
+  .conSidelong image{
+    width: 210rpx;
+    height: 300rpx;
+  }
+  .conSidelong .name{
+    width: 210rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    text-align: center;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
 </style>
 <template>
   <view>
@@ -166,14 +185,14 @@
       <!-- xx新书 -->
       <view class="list" wx:if="{{newBooks.length > 0}}">
         <view class="listTitle">
-          <view>xx新书</view>
+          <view>新书推荐</view>
           <view data-id="{{thisfirstCategoryId}}" wx:if="{{newBooks.length >= 3}}" @tap="clickMore" data-typename="xx新书" data-url="newBooksOfFirstCategory">
             更多
             <icon class="iconfont icon-jiantouyou" />
           </view>
         </view>
         <view class="listCon">
-          <block wx:for="{{newBooks}}" key="index" index="index" item="item">
+          <!-- <block wx:for="{{newBooks}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
                 <image src="{{item.img}}" />
@@ -187,6 +206,12 @@
                 <view>上架时间{{item.updated_at}}</view>
               </view>
             </view>
+          </block> -->
+          <block wx:for="{{newBooks}}" key="index" index="index" item="item">
+            <view class="conSidelong" @tap="goBookDetails" data-id="{{item.id}}">
+              <image src="{{item.img}}" />
+              <view class="name">{{item.name}}</view>
+            </view>
           </block>
         </view>
       </view>
@@ -194,7 +219,7 @@
       <!-- 人气连载 -->
       <view class="list" wx:if="{{popularBooks.length > 0}}">
         <view class="listTitle">
-          <view>人气连载</view>
+          <view>畅销精选</view>
           <view data-id="{{thisfirstCategoryId}}" wx:if="{{popularBooks.length >= 3}}" @tap="clickMore" data-typename="人气连载" data-url="popularUncompelete">
             更多
             <icon class="iconfont icon-jiantouyou" />
@@ -222,7 +247,7 @@
       <!-- 人气分类 -->
       <view class="list" wx:if="{{popularCategoryBooks.length > 0}}">
         <view class="listTitle">
-          <view>人气分类</view>
+          <view>主编力荐</view>
           <view data-id="{{thisfirstCategoryId}}" wx:if="{{popularCategoryBooks.length >= 3}}" @tap="clickMore" data-typename="人气分类" data-url="popularCateGory">
             更多
             <icon class="iconfont icon-jiantouyou" />
@@ -250,7 +275,7 @@
       <!-- 24小时热销榜 -->
       <view class="list" wx:if="{{twentyfourhourHotSale.length > 0}}">
         <view class="listTitle">
-          <view>24小时热销榜</view>
+          <view>精品佳作</view>
           <view data-id="{{thisfirstCategoryId}}" wx:if="{{twentyfourhourHotSale.length >= 3}}" @tap="clickMore" data-typename="24小时热销榜" data-url="twentyFourHourHotSale">
             更多
             <icon class="iconfont icon-jiantouyou" />
@@ -275,7 +300,7 @@
       <!-- 点击周榜 -->
       <view class="list" wx:if="{{clickWeekBang.length > 0}}">
         <view class="listTitle">
-          <view>点击周榜</view>
+          <view>猜你喜欢</view>
           <view data-id="{{thisfirstCategoryId}}" wx:if="{{clickWeekBang.length >= 3}}" @tap="clickMore" data-typename="点击周榜" data-url="clickWeekBang">
             更多
             <icon class="iconfont icon-jiantouyou" />
@@ -300,7 +325,7 @@
       <!-- 完本精品 -->
       <view class="list" wx:if="{{compeleteBoutique.length > 0}}">
         <view class="listTitle">
-          <view>完本精品</view>
+          <view>经典完本</view>
           <view data-id="{{thisfirstCategoryId}}" wx:if="{{compeleteBoutique.length >= 3}}" @tap="clickMore" data-typename="完本精品" data-url="compeleteBoutique">
             更多
             <icon class="iconfont icon-jiantouyou" />
@@ -547,7 +572,7 @@ export default class Index extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.newBooks = data.data.new_books
-          this.newBooks = this.getListShowData(this.newBooks)
+          // this.newBooks = this.getListShowData(this.newBooks)
           // this.newBooks = this.$parent.getImgUrlList(this.newBooks)
           this.$apply()
         } else {
@@ -567,7 +592,7 @@ export default class Index extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.popularBooks = data.data.popular_books
-          this.popularBooks = this.getListShowData(this.popularBooks)
+          // this.popularBooks = this.getListShowData(this.popularBooks)
           // this.popularBooks = this.$parent.getImgUrlList(this.popularBooks)
           this.$apply()
         } else {
@@ -590,7 +615,7 @@ export default class Index extends wepy.page {
           this.poplarCategory = data.data.poplar_category
           // 人气分类书
           this.popularCategoryBooks = data.data.popular_category_books
-          this.popularCategoryBooks = this.getListShowData(this.popularCategoryBooks)
+          // this.popularCategoryBooks = this.getListShowData(this.popularCategoryBooks)
           // this.popularCategoryBooks = this.$parent.getImgUrlList(this.popularCategoryBooks)
           this.$apply()
         } else {
@@ -610,7 +635,7 @@ export default class Index extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.twentyfourhourHotSale = data.data.twentyfourhour_hot_sale
-          this.twentyfourhourHotSale = this.getListShowData(this.twentyfourhourHotSale)
+          // this.twentyfourhourHotSale = this.getListShowData(this.twentyfourhourHotSale)
           // this.twentyfourhourHotSale = this.$parent.getImgUrlNovelList(this.twentyfourhourHotSale)
           this.$apply()
         } else {
@@ -630,7 +655,7 @@ export default class Index extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.clickWeekBang = data.data.click_week_bang
-          this.clickWeekBang = this.getListShowData(this.clickWeekBang)
+          // this.clickWeekBang = this.getListShowData(this.clickWeekBang)
           // this.clickWeekBang = this.$parent.getImgUrlNovelList(this.clickWeekBang)
           this.$apply()
         } else {
@@ -650,7 +675,7 @@ export default class Index extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.compeleteBoutique = data.data.compelete_boutique
-          this.compeleteBoutique = this.getListShowData(this.compeleteBoutique)
+          // this.compeleteBoutique = this.getListShowData(this.compeleteBoutique)
           // this.compeleteBoutique = this.$parent.getImgUrlList(this.compeleteBoutique)
           this.$apply()
         } else {
