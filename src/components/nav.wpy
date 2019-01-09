@@ -135,6 +135,8 @@ export default class Nav extends wepy.component {
   props = {};
   methods = {
     goIndex() {
+      // 顶部导航状态初始化
+      this.$parent.$parent.globalData.navActionTop = ['action', 'noAction', 'noAction']
       this.$parent.$parent.globalData.navAction = ['action', 'noAction', 'noAction', 'noAction']
       this.$emit('childFn', '/pages/index')
     },

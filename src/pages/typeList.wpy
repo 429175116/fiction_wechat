@@ -65,10 +65,10 @@
   <view>
     <navTop @childFn.user="goPage" />
     <view class="listTitle">
-      <view>完本精品</view>
+      <view>男生</view>
       <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="完本精品" data-url="compeleteBoutique">
-        更多
-        <icon class="iconfont icon-jiantouyou" />
+        新增：110
+        <!-- <icon class="iconfont icon-jiantouyou" /> -->
       </view>
     </view>
     <view class="list">
@@ -95,10 +95,10 @@
       </view>
     </view>
     <view class="listTitle">
-      <view>完本精品</view>
+      <view>女生</view>
       <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="完本精品" data-url="compeleteBoutique">
-        更多
-        <icon class="iconfont icon-jiantouyou" />
+        新增：110
+        <!-- <icon class="iconfont icon-jiantouyou" /> -->
       </view>
     </view>
     <view class="list">
