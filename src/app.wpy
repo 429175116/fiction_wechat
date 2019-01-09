@@ -107,6 +107,8 @@ export default class extends wepy.app {
       'pages/browseRecord', // 浏览历史
       'pages/indexSonList', // 书城分类列表
       'pages/details', // 详情
+      'pages/typeList', // 分类列表
+      'pages/ranking', // 排行
       'pages/bookListAndType', // 分类，包含列表
       'pages/search', // 搜索
       'pages/bookContents', // 目录
@@ -126,8 +128,8 @@ export default class extends wepy.app {
     // requestUrl: 'http://140.143.203.12:8095',
     // imgUrl: 'http://140.143.203.12:8095'
     requestUrl: 'https://fiction.beaconway.cn',
-    imgUrl: 'https://fiction.beaconway.cn'
-    
+    imgUrl: 'https://fiction.beaconway.cn',
+    navActionTop:['action', 'noAction', 'noAction']
   }
 
   constructor () {

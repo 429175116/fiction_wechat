@@ -12,47 +12,6 @@
     background-color:rgba(255, 255, 255, 0);
     color:#fff;
   }
-  .topNav{
-    background-color: #fff;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between
-  }
-  .topNav scroll-view{
-    width: 650rpx;
-    height: 90rpx;
-    white-space: nowrap;
-  }
-  .topNav scroll-view view{
-    display: inline-block;
-    width: 150rpx;
-    height: 90rpx;
-    line-height: 90rpx;
-    font-size: 30rpx;
-    text-align: center;
-    color: #333;
-  }
-  .search{
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100rpx;
-    height: 90rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    // border-left: 1rpx solid #ccc;
-    color: #00c0a4;
-  }
-  
-  .topNav .action{
-    height: 88rpx !important;
-    text-align: center !important;
-    color: #00c0a4 !important;
-    border-bottom: 1rpx solid #00c0a4;
-  }
   .swiper{
     background-color: #fff;
     width: 750rpx;
@@ -155,18 +114,25 @@
 </style>
 <template>
   <view>
-    <view class="topNav">
+    <!-- <view class="topNav">
       <scroll-view scroll-x>
+        <view class="{{navTopId == 1 ? 'action':'noaction'}}" data-name="首页" data-id="1" @tap="navTopClick">
+          <span>首页</span>
+        </view>
+        <view class="{{navTopId == 2 ? 'action':'noaction'}}" data-name="排行" data-id="2" @tap="navTopClick">
+          <span>排行</span>
+        </view>
+        <view class="{{navTopId == 3 ? 'action':'noaction'}}" data-name="分类" data-id="3" @tap="navTopClick">
+          <span>分类</span>
+        </view>
         <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item">
           <view class="{{thisfirstCategoryId == item.id ? 'action':'noaction'}}" data-name="{{item.name}}" data-id="{{item.id}}" @tap="clickFirstCategory">
             <span>{{item.name}}</span>
           </view>
         </block>
       </scroll-view>
-      <view class="search" @tap="goSearch">
-        <icon class="iconfont icon-sousuo" />
-      </view>
-    </view>
+    </view> -->
+    <navTop @childFn.user="goPage" />
     <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{swiperData}}" key="index" index="index" item="item">
         <swiper-item>
@@ -391,6 +357,7 @@
 <script>
 
 import wepy from 'wepy'
+import navTop from '../components/navTop' // 顶部导航
 import nav from '../components/nav' // 底部导航
 export default class Index extends wepy.page {
   config = {
@@ -399,7 +366,8 @@ export default class Index extends wepy.page {
   // 生命组件ID
   components = {
   // 底部导航
-    nav: nav
+    nav: nav,
+    navTop: navTop
   }
 
   mixins = []
@@ -411,7 +379,7 @@ export default class Index extends wepy.page {
     interval: 5000,
     duration: 1000,
     firstCategoryData: [], // 一级分类列表数据
-    thisfirstCategoryId: '', // 一级分类对应的选中项
+    navTopId: 1, // 一级分类对应的选中项
     newBooksOfFirstCategory: [], // xx新书
     popularUncompelete: [], // 人气连载
     popularCateGory: [], // 人气分类
@@ -443,10 +411,6 @@ export default class Index extends wepy.page {
       // 销毁当前页{跳转}
       this.$redirect(url)
     },
-    // 进入搜索
-    goSearch() {
-      this.$navigate('/pages/search')
-    },
     // 进入书本详情
     goBookDetails(e) {
       let id = e.currentTarget.dataset.id
@@ -464,6 +428,23 @@ export default class Index extends wepy.page {
       let typename = e.currentTarget.dataset.typename
       let url = e.currentTarget.dataset.url
       this.$navigate(`/pages/indexSonList?typeid=${id}&typename=${typename}&url=${url}`)
+    },
+    // 顶部导航点击
+    navTopClick(e) {
+      let id = e.currentTarget.dataset.id
+      this.navTopId = id
+      switch (id) {
+        case 1:
+          break
+        case 2:
+          this.$navigate(`/pages/indexSonList`)
+          break
+        case 3:
+          this.$navigate(`/pages/typeList`)
+          break
+        default:
+          break
+      }
     },
     // 点击一级分类
     clickFirstCategory(e) {

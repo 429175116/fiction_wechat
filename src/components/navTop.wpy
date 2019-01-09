@@ -1,0 +1,89 @@
+<style lang="less">
+  .topNav{
+    background-color: #fff;
+    position: relative;
+    width: 750rpx;
+    height: 90rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // justify-content: space-between;
+  }
+  // .topNav scroll-view{
+  //   width: 750rpx;
+  //   height: 90rpx;
+  //   white-space: nowrap;
+  // }
+  // .topNav scroll-view view{
+  //   display: inline-block;
+  //   width: 150rpx;
+  //   height: 90rpx;
+  //   line-height: 90rpx;
+  //   font-size: 30rpx;
+  //   text-align: center;
+  //   color: #333;
+  // }
+  .topNav view{
+    display: inline-block;
+    width: 250rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    font-size: 30rpx;
+    text-align: center;
+    color: #333;
+  }
+  .topNav .action{
+    height: 88rpx !important;
+    text-align: center !important;
+    color: #00c0a4 !important;
+    border-bottom: 1rpx solid #00c0a4;
+  }
+</style>
+<template>
+    <view class="topNav">
+      <view class="{{navActionTop[0]}}" data-name="首页" data-id="1" @tap="goIndex">
+        <span>首页</span>
+      </view>
+      <view class="{{navActionTop[1]}}" data-name="排行" data-id="2" @tap="goRanking">
+        <span>排行</span>
+      </view>
+      <view class="{{navActionTop[2]}}" data-name="分类" data-id="3" @tap="goType">
+        <span>分类</span>
+      </view>
+    </view>
+</template>
+<script>
+import wepy from 'wepy'
+// 校验封装
+// import check from '../mixins/check'
+export default class Nav extends wepy.component {
+  // mixins = [check]
+  data = {
+    userInfo: {},
+    guangGaoNode: null,
+    name: '',
+    phone: '',
+    id: '',
+    navActionTop: ['action', 'noAction', 'noAction']
+  };
+  props = {};
+  methods = {
+    goIndex() {
+      this.$parent.$parent.globalData.navActionTop = ['action', 'noAction', 'noAction']
+      this.$emit('childFn', '/pages/index')
+    },
+    goRanking() {
+      this.$parent.$parent.globalData.navActionTop = ['noAction', 'action', 'noAction']
+      this.$emit('childFn', '/pages/ranking')
+    },
+    goType() {
+      this.$parent.$parent.globalData.navActionTop = ['noAction', 'noAction', 'action']
+      this.$emit('childFn', '/pages/typeList')
+    }
+  };
+  onLoad() {
+    this.navActionTop = this.$parent.$parent.globalData.navActionTop
+    this.$apply()
+  };
+}
+</script>

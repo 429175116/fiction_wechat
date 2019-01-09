@@ -1,0 +1,51 @@
+<style lang="less">
+
+</style>
+<template>
+  <view>
+    <navTop @childFn.user="goPage" />
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import navTop from '../components/navTop' // 顶部导航
+  import nav from '../components/nav' // 底部导航
+  export default class User extends wepy.page {
+    config = {
+      navigationBarTitleText: '分类'
+    }
+    // 生命组件ID
+    components = {
+      // 底部导航
+      nav: nav,
+      navTop: navTop
+    }
+
+    mixins = []
+
+    data = {
+      userInfo: null,
+      openId: ''
+    }
+
+    computed = {}
+
+    methods = {
+      // 底部导航跳转
+      goPage (url, evt) {
+        // 销毁当前页{跳转}
+        this.$redirect(url)
+      }
+    }
+
+    events = {}
+
+    onLoad() {
+      // 个人信息初始化
+      this.userInfo = this.$parent.globalData.userInfo
+      this.openId = this.$parent.globalData.openId
+      this.$apply()
+    }
+  }
+</script>
