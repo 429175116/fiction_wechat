@@ -201,6 +201,8 @@ export default class User extends wepy.page {
     this.userInfo = this.$parent.globalData.userInfo
     this.openId = this.$parent.globalData.openId
     this.$apply()
+    // 获取一级分类
+    // 获取二级分类
   }
 }
 </script>

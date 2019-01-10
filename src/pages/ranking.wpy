@@ -243,6 +243,9 @@
       this.userInfo = this.$parent.globalData.userInfo
       this.openId = this.$parent.globalData.openId
       this.$apply()
+      // 获取一级分类
+      // 获取二级分类
+      // 通过上一页获取的类型ID获取列表
       this.sellSellList(1)
       this.popularityList(1)
     }

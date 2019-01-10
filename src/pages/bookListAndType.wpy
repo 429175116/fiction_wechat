@@ -82,18 +82,13 @@
   <scroll-view scroll-y="hidden">
     <view>
       <view class="containerleft">
-        <li class="bookClass {{thissecondCategoryId == 1 ? 'action':'noaction'}}" @tap="changebookClass" data-id='1'>月票榜</li>
-        <li class="bookClass {{thissecondCategoryId == 2 ? 'action':'noaction'}}" @tap="changebookClass" data-id='2'>畅销榜</li>
-        <li class="bookClass {{thissecondCategoryId == 3 ? 'action':'noaction'}}" @tap="changebookClass" data-id='3'>点击榜</li>
-        <li class="bookClass {{thissecondCategoryId == 4 ? 'action':'noaction'}}" @tap="changebookClass" data-id='4'>推荐榜</li>
-
-        <!-- <repeat for="{{ secondCategoryList }}" item="item">
+        <repeat for="{{ typeList }}" item="item">
           <li class="bookClass {{thissecondCategoryId == item.id ? 'action':'noaction'}}" @tap="changebookClass" data-id='{{ item.id }}'>{{ item.name }}</li>
         </repeat>
-        <view wx:if="{{secondCategoryList.length == 0}}" class="dataNullShow">暂无子类型</view> -->
+        <view wx:if="{{secondCategoryList.length == 0}}" class="dataNullShow">暂无子类型</view>
       </view>
       <view class="listCon">
-        <view class="con" @tap="goBookDetails" data-id="111">
+        <view class="con" @tap="goBookDetails" data-id="1">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -103,7 +98,7 @@
             <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
           </view>
         </view>
-        <view class="con" @tap="goBookDetails" data-id="111">
+        <view class="con" @tap="goBookDetails" data-id="2">
           <view class="cover">
             <image src="/img/1.png" />
           </view>
@@ -131,8 +126,13 @@ export default class Booklistandtype extends wepy.page {
   mixins = []
 
   data = {
-    secondCategoryList: null, // 分类列表
-    thissecondCategoryId: ''
+    typeList: [
+      {'name': '月票榜', 'id': '1'},
+      {'name': '畅销榜', 'id': '2'},
+      {'name': '点击榜', 'id': '3'},
+      {'name': '推荐榜', 'id': '4'}
+    ],
+    thissecondCategoryId: '1'
   }
 
   computed = {}
@@ -165,31 +165,7 @@ export default class Booklistandtype extends wepy.page {
       title: options.typename
     })
     // 列表加载
-    // 获取二级分类
-    this.secondCategory(options.typeid)
-    // 获取更多
-  }
-  // 获取书类型
-  secondCategory(id) {
-    wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/secondCategory/${id}`,
-      method: 'GET',
-      success: data => {
-        if (data.data.success) {
-          this.secondCategoryList = data.data.second_categories
-          if (this.secondCategoryList.length > 0) {
-            this.thissecondCategoryId = this.secondCategoryList[0].id
-            this.getBookList(this.thissecondCategoryId)
-          }
-          this.$apply()
-        } else {
-          wx.showModal({
-            title: '',
-            content: data.data.errmsg
-          })
-        }
-      }
-    })
+    this.getBookList(this.typeList[0].id)
   }
   // 获取书列表-根据类型
   getBookList(id) {
