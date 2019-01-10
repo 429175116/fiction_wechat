@@ -88,26 +88,20 @@
         <view wx:if="{{secondCategoryList.length == 0}}" class="dataNullShow">暂无子类型</view>
       </view>
       <view class="listCon">
-        <view class="con" @tap="goBookDetails" data-id="1">
-          <view class="cover">
-            <image src="/img/1.png" />
+        <!-- bookList -->
+        <block wx:for="{{bookList}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{ item.id }}">
+            <view class="cover">
+              <image src="{{ item.img }}" />
+            </view>
+            <view class="info">
+              <view class="title">{{ item.name }}</view>
+              <view>{{ item.name }}·{{ item.name }}</view>
+              <view>{{ item.updated_at }}</view>
+            </view>
           </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
-        <view class="con" @tap="goBookDetails" data-id="2">
-          <view class="cover">
-            <image src="/img/1.png" />
-          </view>
-          <view class="info">
-            <view class="title">书名书名书名书名书名书名</view>
-            <view>描述描述描述描述描述描述描述描述描述</view>
-            <view>描述描述描述描述描述描述描述描述描述描述描述描述</view>
-          </view>
-        </view>
+        </block>
+        <view class="dataNullShow" wx:if="{{bookList.length == 0}}">暂无数据</view>
       </view>
     </view>
   </scroll-view>
@@ -126,6 +120,8 @@ export default class Booklistandtype extends wepy.page {
   mixins = []
 
   data = {
+    bookList: null,
+    type: '',
     typeList: [
       {'name': '月票榜', 'id': '1'},
       {'name': '畅销榜', 'id': '2'},
@@ -147,7 +143,7 @@ export default class Booklistandtype extends wepy.page {
       let id = e.currentTarget.dataset.id
       this.thissecondCategoryId = id
       // 获取书列表-根据类型
-      this.getBookList(id)
+      this.getBookList(this.type, id)
     },
     // 进入书本详情
     goBookDetails(e) {
@@ -161,21 +157,24 @@ export default class Booklistandtype extends wepy.page {
   onLoad(options) {
     // 动态修改页面标题信息
     // 根据获取到的参数修改页面标题
+    this.type = options.typeid
     wx.setNavigationBarTitle({
       title: options.typename
     })
     // 列表加载
-    this.getBookList(this.typeList[0].id)
+    this.getBookList(this.type, this.typeList[0].id)
   }
   // 获取书列表-根据类型
-  getBookList(id) {
+  getBookList(typeId, typeListId) {
     // 判断多个链接，请求不同类型书的列表
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory/${id}`,
+      url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory/${typeListId}`,
       method: 'GET',
       success: data => {
         if (data.data.success) {
-
+          this.bookList = null
+          this.bookList = data.data.new_books
+          this.$apply()
         } else {
           wx.showModal({
             title: '',

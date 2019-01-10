@@ -152,6 +152,26 @@
         </view>
       </view>
     </view>
+    <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item">
+      <view class="listTitle" wx:if="{{secondCategoryData[index].length > 0}}">
+        <view>{{item.name}}</view>
+        <view data-id="{{item.id}}" @tap="clickMore" data-typename="{{item.name}}">
+          新增：110
+          <!-- <icon class="iconfont icon-jiantouyou" /> -->
+        </view>
+      </view>
+      <view class="list">
+        <block wx:for="{{secondCategoryData[index]}}" key="index-son" index="index-son" item="item">
+          <view class="item" data-id="{{item.id}}" data-title="{{firstCategoryData[index].name + item.name}}" @tap="goTypeList">
+            <image src="/img/1.png" />
+            <view class="info">
+              <view class="name">{{item.name}}</view>
+              <view class="description">{{item.updated_at}}</view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </block>
     <nav @childFn.user="goPage" />
   </view>
 </template>
@@ -174,7 +194,9 @@ export default class User extends wepy.page {
 
   data = {
     userInfo: null,
-    openId: ''
+    openId: '',
+    firstCategoryData: null,
+    secondCategoryData: []
   }
 
   computed = {}
@@ -186,10 +208,8 @@ export default class User extends wepy.page {
       this.$redirect(url)
     },
     goTypeList(e) {
-      // let typeName = e.currentTarget.dataset.title
-      // let id = this.thisfirstCategoryId
-      let typeName = '男生·玄幻'
-      let id = 1
+      let typeName = e.currentTarget.dataset.title
+      let id = e.currentTarget.dataset.title
       this.$navigate(`/pages/bookListAndType?typename=${typeName}&typeid=${id}`)
     }
   }
@@ -202,7 +222,52 @@ export default class User extends wepy.page {
     this.openId = this.$parent.globalData.openId
     this.$apply()
     // 获取一级分类
+    this.firstCategory()
     // 获取二级分类
+  }
+  // 获取一级分类
+  firstCategory() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/firstCategory`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          this.firstCategoryData = data.data.first_categories
+          this.thisfirstCategoryId = this.firstCategoryData[0].id
+          let id = this.thisfirstCategoryId
+          this.$apply()
+          // 获取二级分类
+          let i = 0
+          for (i in this.firstCategoryData) {
+            this.secondCategory(this.firstCategoryData[i].id, i)
+          }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取二级分类
+  secondCategory(id, i) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/secondCategory/${id}`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          this.secondCategoryData[i] = data.data.second_categories
+          console.log(data)
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
   }
 }
 </script>

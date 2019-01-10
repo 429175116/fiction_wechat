@@ -64,6 +64,7 @@
             </view>
           </view>
         </block>
+        <view class="dataNullShow" wx:if="{{books.length == 0}}">暂无数据</view>
       </view>
     </view>
   </view>
