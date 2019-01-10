@@ -209,7 +209,7 @@ export default class User extends wepy.page {
     },
     goTypeList(e) {
       let typeName = e.currentTarget.dataset.title
-      let id = e.currentTarget.dataset.title
+      let id = e.currentTarget.dataset.id
       this.$navigate(`/pages/bookListAndType?typename=${typeName}&typeid=${id}`)
     }
   }

@@ -730,8 +730,8 @@ export default class Lookfiction extends wepy.page {
           this.novelChapter = data.data[0]
           // 碰到空格换行
           console.log(this.novelChapter.content.content)
-          
-          this.novelChapter.content.content.replace(/chaptererror();/g, '')
+          this.novelChapter.content.content = this.novelChapter.content.content.split('chaptererror')[0]
+          // this.novelChapter.content.content = this.novelChapter.content.content.split('')
           this.novelChapter.content.content.replace(/ /g, '/n')
           console.log(this.novelChapter.content.content)
           // 回到页面顶部
@@ -775,7 +775,8 @@ export default class Lookfiction extends wepy.page {
           data = data.data.novel_chapter
           this.novelChapter = data.data[0]
           // 碰到空格换行
-          this.novelChapter.content.content.replace(/ /g, '/n')
+          this.novelChapter.content.content = this.novelChapter.content.content.split('chaptererror')[0]
+          this.novelChapter.content.content.replace(/↵/g, '/n')
           // 根据获取到的参数修改页面标题
           wx.setNavigationBarTitle({
             title: this.novelChapter.title
