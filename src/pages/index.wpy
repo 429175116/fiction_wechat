@@ -104,6 +104,9 @@
     text-overflow:ellipsis;
     white-space:nowrap;
   }
+  .con .info text{
+    font-size: 25rpx;
+  }
   .con .info .title{
     color: #333;
     height: 60rpx;

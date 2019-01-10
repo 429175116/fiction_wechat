@@ -195,8 +195,10 @@
       typeClass: 'female',
       thisTypeName: '男生',
       typeName: '女生',
+      sellSellData: [],
       sellSellData1: [],
       sellSellData2: [],
+      popularityData: [],
       popularityData1: [],
       popularityData2: []
     }
@@ -238,64 +240,121 @@
 
     events = {}
 
-    onLoad() {
+    async onLoad() {
       // 个人信息初始化
       this.userInfo = this.$parent.globalData.userInfo
       this.openId = this.$parent.globalData.openId
       this.$apply()
       // 获取一级分类
-      // 获取二级分类
-      // 通过上一页获取的类型ID获取列表
-      this.sellSellList(1)
-      this.popularityList(1)
+      this.firstCategory()
+    }
+    // 获取一级分类
+    async firstCategory() {
+      await wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/firstCategory`,
+        method: 'GET',
+        success: data => {
+          if (data.data.success) {
+            this.firstCategoryData = data.data.first_categories
+            this.thisfirstCategoryId = this.firstCategoryData[0].id
+            let id = this.thisfirstCategoryId
+            this.secondCategory(this.firstCategoryData)
+            // this.sellSellList(this.firstCategoryData)
+            // this.popularityList(this.firstCategoryData)
+            this.$apply()
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
+          }
+        }
+      })
+    }
+    // 获取二级分类
+    async secondCategory(listNode) {
+      let i = 0
+      var typeSon
+      for (i in listNode) {
+        await wx.request({
+          url: `${this.$parent.globalData.requestUrl}/api/secondCategory/${listNode[i].id}`,
+          method: 'GET',
+          success: data => {
+            if (data.data.success) {
+              typeSon = data.data.second_categories
+              this.sellSellList(typeSon)
+              this.popularityList(typeSon)
+              this.$apply()
+            } else {
+              wx.showModal({
+                title: '',
+                content: data.data.errmsg
+              })
+            }
+          }
+        })
+      }
     }
     // 热销榜
-    sellSellList(id) {
-      wx.request({
-        url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory/${id}`,
-        method: 'GET',
-        success: data => {
-          if (data.data.success) {
-            let sellSellData = data.data.new_books
-            this.sellSellData1 = []
-            this.sellSellData2 = []
-            if (sellSellData.length >= 3) {
-              this.sellSellData1 = [sellSellData[0], sellSellData[1], sellSellData[2]]
-            }
-            if (sellSellData.length > 3) {
-              for (let i = 3; i < sellSellData.length; i++) {
-                this.sellSellData2.push(sellSellData[i])
+    sellSellList(typeSonNode) {
+      let i = 0
+      for (i in typeSonNode) {
+        console.log('======')
+        wx.request({
+          url: `${this.$parent.globalData.requestUrl}/api/bestSeller/${typeSonNode[i].id}`,
+          method: 'GET',
+          success: data => {
+            if (data.data.success) {
+              let listData = data.data.new_books
+              for (let i in listData) {
+                this.sellSellData.push(listData[i])
               }
+              this.sellSellData1 = []
+              this.sellSellData2 = []
+              if (this.sellSellData.length >= 3) {
+                this.sellSellData1 = [this.sellSellData[0], this.sellSellData[1], this.sellSellData[2]]
+              }
+              if (this.sellSellData.length > 3) {
+                for (let i = 3; i < this.sellSellData.length; i++) {
+                  this.sellSellData2.push(this.sellSellData[i])
+                }
+              }
+              this.$apply()
+            } else {
+              wx.showModal({
+                title: '',
+                content: data.data.errmsg
+              })
             }
-            this.$apply()
-          } else {
-            wx.showModal({
-              title: '',
-              content: data.data.errmsg
-            })
           }
-        }
-      })
+        })
+      }
+      
     }
     // 人气榜
-    popularityList(id) {
+    popularityList(typeSonNode) {
+      let i = 0
+      for (i in typeSonNode) {
+      console.log('------')
       wx.request({
-        url: `${this.$parent.globalData.requestUrl}/api/popularUncompelete/${id}`,
+        url: `${this.$parent.globalData.requestUrl}/api/popularUncompelete/${typeSonNode[i].id}`,
         method: 'GET',
         success: data => {
           if (data.data.success) {
-            let popularityData = data.data.popular_books
+            let listData = data.data.popular_books
+            for (let i in listData) {
+              this.popularityData.push(listData[i])
+            }
             this.popularityData1 = []
             this.popularityData2 = []
-            if (popularityData.length >= 3) {
-              this.popularityData1 = [popularityData[0], popularityData[1], popularityData[2]]
+            if (this.popularityData.length >= 3) {
+              this.popularityData1 = [this.popularityData[0], this.popularityData[1], this.popularityData[2]]
             }
-            if (popularityData.length > 3) {
-              for (let i = 3; i < popularityData.length; i++) {
-                this.popularityData2.push(popularityData[i])
+            if (this.popularityData.length > 3) {
+              for (let i = 3; i < this.popularityData.length; i++) {
+                this.popularityData2.push(this.popularityData[i])
               }
             }
-            this.popularityData1 = popularityData
             this.$apply()
           } else {
             wx.showModal({
@@ -305,6 +364,7 @@
           }
         }
       })
+      }
     }
   }
 </script>
