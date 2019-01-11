@@ -389,13 +389,18 @@
     color: #fff;
   }
   .icon-dianzan,.icon-piaowu{
-    width: 160rpx !important;
-    height: 160rpx !important;
-    border-radius: 80rpx !important;
-    font-size: 100rpx;
+    width: 80rpx !important;
+    height: 80rpx !important;
+    border-radius: 40rpx !important;
+    font-size: 50rpx;
     background-color: #ed424b !important;
     border-color:  #ed424b !important;
   }
+  // .icon-piaowu{
+  //   width: 80rpx !important;
+  //   height: 80rpx !important;
+  //   border-radius: 40rpx !important;
+  // }
 </style>
 <template>
   <view>

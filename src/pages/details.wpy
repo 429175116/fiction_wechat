@@ -476,7 +476,8 @@
     <view class="commentList">
       <view class="title">
         <view>
-          书圈<text>68.9万粉丝，18.3万条发言</text>
+          书圈
+          <!-- <text>68.9万粉丝，18.3万条发言</text> -->
         </view>
         <view @tap="setcommentShow">写书评</view>
       </view>
@@ -571,7 +572,7 @@
       <view>图书更多信息</view>
       <view>字数:{{bookInfo.words_count}}万</view>
       <view>上架时间: 2019-04-26</view>
-      <view>免责声明: 本书数字版权有"贝肯伟"提供，并由其设计费技术创新须具有成功找不出缠着你书友并承诺在想不出名字吃饱没你这错别字</view>
+      <!-- <view>免责声明: 本书数字版权有"贝肯伟"提供，并由其设计费技术创新须具有成功找不出缠着你书友并承诺在想不出名字吃饱没你这错别字</view> -->
     </view>
     <view class="navSta">
       <view class="sel" @tap="clickStoreBook">

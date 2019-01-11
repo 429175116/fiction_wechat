@@ -280,11 +280,11 @@ export default class Bookshelf extends wepy.page {
   }
   // 提交用户信息
   setUserInfo(userInfo) {
-    if (this.$parent.globalData.openId) {
-      // 用户收藏的书籍
-      this.myStore()
-      return
-    }
+    // if (this.$parent.globalData.openId) {
+    //   // 用户收藏的书籍
+    //   this.myStore()
+    //   return
+    // }
     wepy.login({
       success: res => {
         if (res.code) {

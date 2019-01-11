@@ -98,20 +98,20 @@
             </view>
             <view class="info">
               <view class="title">{{ item.name }}</view>
-              <view>{{ item.name }}·{{ item.name }}</view>
+              <view>{{ item.name }}·{{ item.words_count }}万字</view>
               <view>{{ item.updated_at }}</view>
             </view>
           </view>
         </block>
-        <block wx:for="{{bookList}}" key="index" index="index" item="item">
+        <block wx:for="{{bookListNovel}}" key="index" index="index" item="item">
           <view class="con" @tap="goBookDetails" data-id="{{ item.id }}">
             <view class="cover">
-              <image src="{{ item.img }}" />
+              <image src="{{ item.novel.img }}" />
             </view>
             <view class="info">
-              <view class="title">{{ item.name }}</view>
-              <view>{{ item.name }}·{{ item.name }}</view>
-              <view>{{ item.updated_at }}</view>
+              <view class="title">{{ item.novel.name }}</view>
+              <view>{{ item.novel.name }}·{{ item.novel.words_count }}万字</view>
+              <view>{{ item.novel.updated_at }}</view>
             </view>
           </view>
         </block>
@@ -136,6 +136,7 @@ export default class Booklistandtype extends wepy.page {
 
   data = {
     bookList: null,
+    bookListNovel: null,
     type: '',
     typeList: [
       {'name': '月票榜', 'id': '1', 'url': 'monthTicketBang'},
@@ -191,6 +192,7 @@ export default class Booklistandtype extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.bookList = null
+          this.bookListNovel = null
           // this.bookList = data.data.new_books
       //     {'name': '月票榜', 'id': '1', 'url': 'monthTicketBang'},
       // {'name': '畅销榜', 'id': '2', 'url': 'bestSaleWithSecondCategory'},
@@ -199,7 +201,7 @@ export default class Booklistandtype extends wepy.page {
           switch (url) {
             case 'monthTicketBang':
               // 月票榜
-              this.bookList = data.data.novel_month_tickets
+              this.bookListNovel = data.data.novel_month_tickets
               break
             case 'bestSaleWithSecondCategory':
               // 畅销榜
@@ -207,7 +209,7 @@ export default class Booklistandtype extends wepy.page {
               break
             case 'clickWeekBang':
               // 点击榜
-              this.bookList = data.data.popular_category_books
+              this.bookListNovel = data.data.click_week_bang
               break
             case 'editorRecommend':
               // 推荐榜

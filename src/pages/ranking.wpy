@@ -119,7 +119,7 @@
     </view>
     <view class="list-sidelong">
       <block wx:for="{{sellSellData1}}" key="index" index="index" item="item">
-        <view class="item">
+        <view class="item" @tap="goBookDetails" data-id="{{item.id}}">
           <image src="{{item.img}}" />
           <view class="name">{{item.name}}</view>
         </view>
@@ -148,7 +148,7 @@
     </view>
     <view class="list-sidelong">
       <block wx:for="{{popularityData1}}" key="index" index="index" item="item">
-        <view class="item">
+        <view class="item" @tap="goBookDetails" data-id="{{item.id}}">
           <image src="{{item.img}}" />
           <view class="name">{{item.name}}</view>
         </view>
@@ -210,6 +210,11 @@
       goPage (url, evt) {
         // 销毁当前页{跳转}
         this.$redirect(url)
+      },
+      // 进入书本详情
+      goBookDetails(e) {
+        let id = e.currentTarget.dataset.id
+        this.$navigate(`/pages/details?bookid=${id}`)
       },
       selType() {
         if (this.typeClass === 'male') {
