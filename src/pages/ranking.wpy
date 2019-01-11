@@ -139,7 +139,7 @@
         </view>
       </block>
     </view>
-    <view class="goList" @tap="goList">查看人气榜</view>
+    <view class="goList" data-id="{{thisfirstCategoryId}}" data-typename="{{thisTypeName}}人气榜" data-url="popularUncompelete" @tap="goList">查看人气榜</view>
     <view class="listTitle">
       <view>{{thisTypeName}}热销榜</view>
       <view @tap="selType" class="{{typeClass}}" data-typename="热销榜">
@@ -168,7 +168,7 @@
         </view>
       </block>
     </view>
-    <view class="goList" data-id="" data-typename="" data-url=""  @tap="goList">查看热销榜</view>
+    <view class="goList" data-id="{{thisfirstCategoryId}}" data-typename="{{thisTypeName}}热销榜" data-url="bestSeller" @tap="goList">查看热销榜</view>
     <nav @childFn.user="goPage" />
   </view>
 </template>
@@ -228,12 +228,12 @@
         this.$apply()
       },
       goList(e) {
-        // let id = e.currentTarget.dataset.id
-        // let typename = e.currentTarget.dataset.typename
-        // let url = e.currentTarget.dataset.url
-        let id = '1'
-        let typename = '人气榜'
-        let url = 'newBooksOfFirstCategory'
+        let id = e.currentTarget.dataset.id
+        let typename = e.currentTarget.dataset.typename
+        let url = e.currentTarget.dataset.url
+        // let id = '1'
+        // let typename = '人气榜'
+        // let url = 'newBooksOfFirstCategory'
         this.$navigate(`/pages/indexSonList?typeid=${id}&typename=${typename}&url=${url}`)
       }
     }
