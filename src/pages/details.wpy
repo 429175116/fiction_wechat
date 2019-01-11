@@ -308,17 +308,22 @@
     background-color: #fff;
   }
   .navSta .sel{
-    width: 249rpx;
+    // width: 249rpx;
+    width: 373rpx;
     height: 110rpx;
     text-align: center;
     border-radius: 1rpx solid #f0f0f0;
     font-size: 30rpx;
     color: #666;
   }
-  .navSta .sel:nth-child(3){
+  .navSta .sel:nth-child(2){
     background-color: #00c0a4;
     color: #fff;
   }
+  // .navSta .sel:nth-child(3){
+  //   background-color: #00c0a4;
+  //   color: #fff;
+  // }
   .navSta image{
     width: 40rpx;
     height: 40rpx;
@@ -573,10 +578,10 @@
         <icon class="iconfont icon-shujia" />
         <view>加入书架</view>
       </view>
-      <view class="sel">
+      <!-- <view class="sel">
         <icon class="iconfont icon-dingyue" />
         <view>批量订阅</view>
-      </view>
+      </view> -->
       <view class="sel" @tap="lookBook">
         <icon class="iconfont icon-shu1" />
         <view>立即阅读</view>
@@ -631,6 +636,8 @@ export default class Details extends wepy.page {
         success: res => {
           if (res.data) {
             this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapterid=${res.data}&firsttime=${true}`)
+            // 订阅执行
+            this.subscriptionNovel(this.bookid, res.data)
           }
         },
         fail: res => {
@@ -642,6 +649,8 @@ export default class Details extends wepy.page {
             return
           }
           this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapterid=${this.bookInfo.chapters[0].id}&firsttime=${true}`)
+          // 订阅执行
+          this.subscriptionNovel(this.bookid, this.bookInfo.chapters[0].id)
         }
       })
     },
@@ -722,6 +731,34 @@ export default class Details extends wepy.page {
     this.userLikeThisBookLikeOthers()
     // 获取评论
     this.chapterCommentLists()
+  }
+  // 订阅小说
+  subscriptionNovel(bookid, chapterId) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/subscriptionNovel`,
+      method: 'GET',
+      data: {
+        novel_id: bookid,
+        novel_chapter_id: chapterId
+      },
+      success: data => {
+        if (data.data.success) {
+          // data = data.data.novel_chapter
+          
+          // if (data.data.length !== 0) {
+          //   let novelChapter = data.data[0]
+          //   let chapterId = novelChapter.id
+          //   // 订阅执行
+          //   this.subscriptionNovel(this.bookid, chapterId)
+          // }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
   }
   // 执行评论点赞
   upCommentLike(id) {

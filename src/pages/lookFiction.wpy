@@ -729,11 +729,11 @@ export default class Lookfiction extends wepy.page {
           data = data.data.novel_chapter
           this.novelChapter = data.data[0]
           // 碰到空格换行
-          console.log(this.novelChapter.content.content)
+          // console.log(this.novelChapter.content.content)
           this.novelChapter.content.content = this.novelChapter.content.content.split('chaptererror')[0]
           // this.novelChapter.content.content = this.novelChapter.content.content.split('')
           this.novelChapter.content.content.replace(/ /g, '/n')
-          console.log(this.novelChapter.content.content)
+          // console.log(this.novelChapter.content.content)
           // 回到页面顶部
           wx.pageScrollTo({
             scrollTop: 0
@@ -745,9 +745,16 @@ export default class Lookfiction extends wepy.page {
           // this.novelChapter
           // 上一章请求地址
           this.previousUrl = ''
+          this.nextUrl = ''
           if (data.meta.pagination.links.length !== 0) {
             // 下一章请求地址
             this.nextUrl = data.meta.pagination.links.next
+            // 上一章请求地址
+            this.previousUrl = data.meta.pagination.links.previous
+          }
+          if (this.nextUrl) {
+            // 用于订阅下一章
+            this.getNextInfo(this.nextUrl)
           }
           this.$apply()
         } else {
@@ -787,8 +794,72 @@ export default class Lookfiction extends wepy.page {
           if (data.meta.pagination.links.length !== 0) {
             // 下一章请求地址
             this.nextUrl = data.meta.pagination.links.next
+            // 上一章请求地址
+            this.previousUrl = data.meta.pagination.links.previous
+          }
+          if (this.nextUrl) {
+            // 用于订阅下一章
+            this.getNextInfo(this.nextUrl)
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取下一掌的信息，用于订阅下一章
+  getNextInfo(nextUrl) {
+    console.log(nextUrl)
+    wx.request({
+      url: nextUrl,
+      method: 'GET',
+      data: {
+        novel_id: this.bookid,
+        chapter_id: this.chapterId
+        // chapter_id: 1
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.novel_chapter
+          
+          if (data.data.length !== 0) {
+            let novelChapter = data.data[0]
+            let chapterId = novelChapter.id
+            // 订阅执行
+            this.subscriptionNovel(this.bookid, chapterId)
+          }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 订阅小说
+  subscriptionNovel(bookid, chapterId) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/subscriptionNovel`,
+      method: 'GET',
+      data: {
+        novel_id: bookid,
+        novel_chapter_id: chapterId
+      },
+      success: data => {
+        if (data.data.success) {
+          // data = data.data.novel_chapter
+          
+          // if (data.data.length !== 0) {
+          //   let novelChapter = data.data[0]
+          //   let chapterId = novelChapter.id
+          //   // 订阅执行
+          //   this.subscriptionNovel(this.bookid, chapterId)
+          // }
         } else {
           wx.showModal({
             title: '',
