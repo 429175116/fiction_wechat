@@ -107,6 +107,10 @@ export default class Indexsonlist extends wepy.page {
       title: typename
     })
     // 获取列表数据
+    if (url === 'freeNewNovel') {
+      this.getListDataNoId(url)
+      return
+    }
     let i = 0
     for (i in typeidlist) {
       this.getListData(typeidlist[i], url)
@@ -143,9 +147,44 @@ export default class Indexsonlist extends wepy.page {
               this.pushData(data.data.compelete_boutique)
               // this.books = this.$parent.getImgUrlList(this.books)
               break
+            case 'bestSeller':
+              this.pushData(data.data.compelete_boutique)
+              // this.books = this.$parent.getImgUrlList(this.books)
+              break
+            case 'editorRecommend':
+              this.pushData(data.data.novels)
+              // this.books = this.$parent.getImgUrlList(this.books)
+              break
+              
             default:
               break
           }
+          
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  getListDataNoId(url) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/${url}`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          switch (url) {
+            case 'freeNewNovel':
+              this.pushData(data.data.novels)
+              // this.books = this.$parent.getImgUrlList(this.books)
+              break
+            default:
+              break
+          }
+          
           this.$apply()
         } else {
           wx.showModal({

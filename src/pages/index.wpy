@@ -187,8 +187,10 @@
     <view class="booklist">
       <!-- xx新书 -->
       <view class="list" wx:if="{{newBooks.length > 0}}">
+      <!-- <view class="list"> -->
         <view class="listTitle">
           <view>新书推荐</view>
+          <!-- <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="新书推荐" data-url="newBooksOfFirstCategory"> -->
           <view data-id="{{thisfirstCategoryId}}" wx:if="{{newBooks.length >= 3}}" @tap="clickMore" data-typename="新书推荐" data-url="newBooksOfFirstCategory">
             更多
             <icon class="iconfont icon-jiantouyou" />
@@ -221,8 +223,10 @@
 
       <!-- 畅销精选 -->
       <view class="list" wx:if="{{bestSellerData.length > 0}}">
+      <!-- <view class="list"> -->
         <view class="listTitle">
           <view>畅销精选</view>
+          <!-- <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="畅销精选" data-url="bestSeller"> -->
           <view data-id="{{thisfirstCategoryId}}" wx:if="{{bestSellerData.length >= 3}}" @tap="clickMore" data-typename="畅销精选" data-url="bestSeller">
             更多
             <icon class="iconfont icon-jiantouyou" />
@@ -249,8 +253,10 @@
 
       <!-- 主编力荐 -->
       <view class="list" wx:if="{{editorRecommendData.length > 0}}">
+      <!-- <view class="list"> -->
         <view class="listTitle">
           <view>主编力荐</view>
+          <!-- <view data-id="{{editorRecommendData}}" @tap="clickMore" data-typename="主编力荐" data-url="editorRecommend"> -->
           <view data-id="{{thisfirstCategoryId}}" wx:if="{{editorRecommendData.length >= 3}}" @tap="clickMore" data-typename="主编力荐" data-url="editorRecommend">
             更多
             <icon class="iconfont icon-jiantouyou" />
@@ -277,9 +283,11 @@
 
       <!-- 精品佳作 -->
       <view class="list" wx:if="{{bestSellerData.length > 0}}">
+      <!-- <view class="list"> -->
         <view class="listTitle">
           <view>精品佳作</view>
-          <view data-id="{{bestSellerData}}" wx:if="{{bestSellerData.length >= 3}}" @tap="精品佳作" data-typename="精品佳作" data-url="bestSeller">
+          <!-- <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="精品佳作" data-url="bestSeller"> -->
+          <view data-id="{{bestSellerData}}" wx:if="{{bestSellerData.length >= 3}}" @tap="clickMore" data-typename="精品佳作" data-url="bestSeller">
             更多
             <icon class="iconfont icon-jiantouyou" />
           </view>
@@ -288,12 +296,12 @@
           <block wx:for="{{bestSellerData}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
-                <image src="{{item.novel.img}}" />
+                <image src="{{item.img}}" />
               </view>
               <view class="info">
-                <view class="title">{{item.novel.name}}</view>
-                <view>{{item.novel.name}} · {{item.novel.name}}</view>
-                <view>{{item.novel.intro}}</view>
+                <view class="title">{{item.name}}</view>
+                <view>{{item.name}} · {{item.name}}</view>
+                <view>{{item.intro}}</view>
               </view>
             </view>
           </block>
@@ -302,8 +310,10 @@
 
       <!-- 猜你喜欢 -->
       <view class="list" wx:if="{{freeNewNovel.length > 0}}">
+      <!-- <view class="list"> -->
         <view class="listTitle">
           <view>猜你喜欢</view>
+          <!-- <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="猜你喜欢" data-url="freeNewNovel"> -->
           <view data-id="{{thisfirstCategoryId}}" wx:if="{{freeNewNovel.length >= 3}}" @tap="clickMore" data-typename="猜你喜欢" data-url="freeNewNovel">
             更多
             <icon class="iconfont icon-jiantouyou" />
@@ -327,8 +337,10 @@
 
       <!-- 完本精品 -->
       <view class="list" wx:if="{{compeleteBoutique.length > 0}}">
+      <!-- <view class="list"> -->
         <view class="listTitle">
           <view>经典完本</view>
+          <!-- <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="完本精品" data-url="compeleteBoutique"> -->
           <view data-id="{{thisfirstCategoryId}}" wx:if="{{compeleteBoutique.length >= 3}}" @tap="clickMore" data-typename="完本精品" data-url="compeleteBoutique">
             更多
             <icon class="iconfont icon-jiantouyou" />
@@ -406,6 +418,7 @@ export default class Index extends wepy.page {
     autoplay: true,
     interval: 5000,
     duration: 1000,
+    typeListData: [],
     firstCategoryData: [], // 一级分类列表数据
     navTopId: 1, // 一级分类对应的选中项
     newBooksOfFirstCategory: [], // xx新书
@@ -454,7 +467,7 @@ export default class Index extends wepy.page {
       let id = e.currentTarget.dataset.id
       let typename = e.currentTarget.dataset.typename
       let url = e.currentTarget.dataset.url
-      this.$navigate(`/pages/indexSonList?typeid=${id}&typename=${typename}&url=${url}`)
+      this.$navigate(`/pages/indexSonList?typeidlist=${this.typeListData}&typename=${typename}&url=${url}`)
     },
     // 顶部导航点击
     navTopClick(e) {
@@ -545,7 +558,13 @@ export default class Index extends wepy.page {
       success: data => {
         if (data.data.success) {
           console.log(data)
-          let id = data.data.second_categories[0].id
+          let typeSon = data.data.second_categories
+          this.typeListData = []
+          let i = 0
+          for (i in typeSon) {
+            this.typeListData.push(typeSon[i].id)
+          }
+          let id = typeSon[0].id
           // xx新书
           this.newBooksOfFirstCategory(id)
           // 人气连载
@@ -594,7 +613,7 @@ export default class Index extends wepy.page {
       method: 'GET',
       success: data => {
         if (data.data.success) {
-          this.bestSellerData = data.data.popular_books
+          this.bestSellerData = data.data.compelete_boutique
           // this.popularBooks = this.getListShowData(this.popularBooks)
           // this.popularBooks = this.$parent.getImgUrlList(this.popularBooks)
           this.$apply()
