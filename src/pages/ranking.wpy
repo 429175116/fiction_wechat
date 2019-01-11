@@ -216,14 +216,14 @@
           this.thisTypeName = '男生'
           this.typeName = '女生'
           this.typeClass = 'female'
-          this.sellSellList(1)
-          this.popularityList(1)
+          this.thisfirstCategoryId = this.firstCategoryData[0].id
+          this.secondCategory(this.thisfirstCategoryId)
         } else {
           this.thisTypeName = '女生'
           this.typeName = '男生'
           this.typeClass = 'male'
-          this.sellSellList(2)
-          this.popularityList(2)
+          this.thisfirstCategoryId = this.firstCategoryData[1].id
+          this.secondCategory(this.thisfirstCategoryId)
         }
         this.$apply()
       },
@@ -257,10 +257,7 @@
           if (data.data.success) {
             this.firstCategoryData = data.data.first_categories
             this.thisfirstCategoryId = this.firstCategoryData[0].id
-            let id = this.thisfirstCategoryId
-            this.secondCategory(this.firstCategoryData)
-            // this.sellSellList(this.firstCategoryData)
-            // this.popularityList(this.firstCategoryData)
+            this.secondCategory(this.thisfirstCategoryId)
             this.$apply()
           } else {
             wx.showModal({
@@ -272,16 +269,24 @@
       })
     }
     // 获取二级分类
-    async secondCategory(listNode) {
+    async secondCategory(id) {
       let i = 0
       var typeSon
-      for (i in listNode) {
+      // for (i in listNode) {
         await wx.request({
-          url: `${this.$parent.globalData.requestUrl}/api/secondCategory/${listNode[i].id}`,
+          url: `${this.$parent.globalData.requestUrl}/api/secondCategory/${id}`,
           method: 'GET',
           success: data => {
             if (data.data.success) {
               typeSon = data.data.second_categories
+              // 清空人气榜和热销榜的数据
+              this.sellSellData = []
+              this.sellSellData1 = []
+              this.sellSellData2 = []
+              this.popularityData = []
+              this.popularityData1 = []
+              this.popularityData2 = []
+              this.$apply()
               this.sellSellList(typeSon)
               this.popularityList(typeSon)
               this.$apply()
@@ -293,13 +298,12 @@
             }
           }
         })
-      }
+      // }
     }
     // 热销榜
     sellSellList(typeSonNode) {
       let i = 0
       for (i in typeSonNode) {
-        console.log('======')
         wx.request({
           url: `${this.$parent.globalData.requestUrl}/api/bestSeller/${typeSonNode[i].id}`,
           method: 'GET',
@@ -335,7 +339,6 @@
     popularityList(typeSonNode) {
       let i = 0
       for (i in typeSonNode) {
-      console.log('------')
       wx.request({
         url: `${this.$parent.globalData.requestUrl}/api/popularUncompelete/${typeSonNode[i].id}`,
         method: 'GET',
