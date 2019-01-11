@@ -99,7 +99,7 @@ export default class Indexsonlist extends wepy.page {
   events = {}
 
   onLoad(options) {
-    let typeid = options.typeid
+    let typeidlist = options.typeidlist
     let typename = options.typename
     let url = options.url
     // 修改页面标题
@@ -107,7 +107,10 @@ export default class Indexsonlist extends wepy.page {
       title: typename
     })
     // 获取列表数据
-    this.getListData(typeid, url)
+    let i = 0
+    for (i in typeidlist) {
+      this.getListData(typeidlist[i], url)
+    }
   }
   getListData(typeid, url) {
     wx.request({
@@ -117,27 +120,27 @@ export default class Indexsonlist extends wepy.page {
         if (data.data.success) {
           switch (url) {
             case 'newBooksOfFirstCategory':
-              this.books = data.data.new_books
+              this.pushData(data.data.new_books)
               // this.books = this.$parent.getImgUrlList(this.books)
               break
             case 'popularUncompelete':
-              this.books = data.data.popular_books
+              this.pushData(data.data.popular_books)
               // this.books = this.$parent.getImgUrlList(this.books)
               break
             case 'popularCateGory':
-              this.books = data.data.popular_category_books
+              this.pushData(data.data.popular_category_books)
               // this.books = this.$parent.getImgUrlList(this.books)
               break
             case 'twentyFourHourHotSale':
-              this.books = data.data.twentyfourhour_hot_sale
+              this.pushData(data.data.twentyfourhour_hot_sale)
               // this.books = this.$parent.getImgUrlNovelList(this.books)
               break
             case 'clickWeekBang':
-              this.books = data.data.click_week_bang
+              this.pushData(data.data.click_week_bang)
               // this.books = this.$parent.getImgUrlNovelList(this.books)
               break
             case 'compeleteBoutique':
-              this.books = data.data.compelete_boutique
+              this.pushData(data.data.compelete_boutique)
               // this.books = this.$parent.getImgUrlList(this.books)
               break
             default:
@@ -152,6 +155,13 @@ export default class Indexsonlist extends wepy.page {
         }
       }
     })
+  }
+  pushData(listData) {
+    let i = 0
+    for (i in listData) {
+      this.books.push(listData[i])
+    }
+    this.$apply()
   }
 }
 </script>
