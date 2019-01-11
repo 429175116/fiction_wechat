@@ -120,7 +120,7 @@
         <view class="icon">￥</view>
         <text>1点</text>
       </view>
-      <view class="rechargeButton">充值</view>
+      <view class="rechargeButton" @tap="goPay">充值</view>
     </view>
     <view class="list">
       <view>
@@ -189,6 +189,9 @@
       goPage (url, evt) {
         // 销毁当前页{跳转}
         this.$redirect(url)
+      },
+      goPay () {
+        this.$navigate(`/pages/pay`)
       }
     }
 
@@ -198,9 +201,9 @@
       // 个人信息初始化
       this.userInfo = this.$parent.globalData.userInfo
       this.openId = this.$parent.globalData.openId
+      this.$apply()
       console.log(this.userInfo)
       console.log(this.openId)
-      this.$apply()
     }
     // 添加小说
     // login() {
