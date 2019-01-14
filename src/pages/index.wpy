@@ -156,11 +156,17 @@
     </view> -->
     <navTop @childFn.user="goPage" />
     <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{swiperData}}" key="index" index="index" item="item">
+      <!-- <block wx:for="{{swiperData}}" key="index" index="index" item="item">
         <swiper-item>
           <image src="{{item.img}}" data-id="{{item.id}}" @tap="goBookDetails" class="slide-image" />
         </swiper-item>
-      </block>
+      </block> -->
+      <swiper-item>
+        <image src="https://fiction.beaconway.cn/uploads/images/author1.jpg" @tap="getAuthor" class="slide-image" />
+      </swiper-item>
+      <swiper-item>
+        <image src="https://fiction.beaconway.cn/uploads/images/author2.jpg" @tap="getAuthor" class="slide-image" />
+      </swiper-item>
     </swiper>
     <!-- <view class="conNav">
       <view class="sel" @tap="goBookListAndType" data-title="分类">
@@ -493,6 +499,9 @@ export default class Index extends wepy.page {
       this.thisfirstCategoryId = id
       // 获取二级分类
       this.secondCategory(id)
+    },
+    getAuthor() {
+      this.$navigate(`/pages/getAuthorCon`)
     }
   }
 

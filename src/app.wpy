@@ -112,6 +112,7 @@ export default class extends wepy.app {
       'pages/ranking', // 排行
       'pages/bookListAndType', // 分类，包含列表
       'pages/search', // 搜索
+      'pages/getAuthorCon', // 作家招募
       'pages/bookContents', // 目录
       'pages/lookFiction' // 看书页
     ],
