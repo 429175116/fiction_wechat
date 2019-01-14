@@ -440,7 +440,11 @@
     </view>
     <view class="setBookshelf" wx:if="{{showSetting}}" @tap="storeBook">加入书架</view>
     <view class="nav" wx:if="{{showSetting}}">
-      <view class="sel action" @tap="tableOfContentsShow">
+      <!-- <view class="sel action" @tap="tableOfContentsShow">
+        <icon class="iconfont icon-mulu" />
+        <view>目录</view>
+      </view> -->
+      <view class="sel" @tap="tableOfContentsShow">
         <icon class="iconfont icon-mulu" />
         <view>目录</view>
       </view>

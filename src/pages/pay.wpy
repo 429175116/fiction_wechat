@@ -123,7 +123,7 @@ page{
     <view class="list">
       <block wx:for="{{payList}}" key="index" index="index" item="item">
         <view class="item {{pgySelId == item.id ? 'action':'noaction'}}" @tap="selPay" data-id="{{item.id}}" data-index="{{index}}">
-          <view>{{item.set}}</view>
+          <view>{{item.set}}元</view>
           <view>{{item.get}} + 送<text>{{item.send}}</text>阅币</view>
         </view>
       </block>
