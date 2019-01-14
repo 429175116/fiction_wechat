@@ -107,68 +107,73 @@
   align-items: center;
   justify-content: center;
 }
+.nav_padding{
+  padding-bottom: 130rpx;
+}
 </style>
 <template>
   <view>
-    <navTop @childFn.user="goPage" />
-    <view class="listTitle">
-      <view>{{thisTypeName}}人气榜</view>
-      <view @tap="selType" class="{{typeClass}}" data-typename="人气榜">
-        {{typeName}}
+    <view class="nav_padding">
+      <navTop @childFn.user="goPage" />
+      <view class="listTitle">
+        <view>{{thisTypeName}}人气榜</view>
+        <view @tap="selType" class="{{typeClass}}" data-typename="人气榜">
+          {{typeName}}
+        </view>
       </view>
-    </view>
-    <view class="list-sidelong">
-      <block wx:for="{{sellSellData1}}" key="index" index="index" item="item">
-        <view class="item" @tap="goBookDetails" data-id="{{item.id}}">
-          <image src="{{item.img}}" />
-          <view class="name">{{item.name}}</view>
-        </view>
-      </block>
-    </view>
-    <view class="list-vertical">
-      <block wx:for="{{sellSellData2}}" key="index" index="index" item="item">
-        <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
-          <view class="cover">
+      <view class="list-sidelong">
+        <block wx:for="{{sellSellData1}}" key="index" index="index" item="item">
+          <view class="item" @tap="goBookDetails" data-id="{{item.id}}">
             <image src="{{item.img}}" />
+            <view class="name">{{item.name}}</view>
           </view>
-          <view class="info">
-            <view class="title">{{item.name}}</view>
-            <view>{{item.name}} · {{item.name}}</view>
-            <view>{{item.name}}</view>
-          </view>
-        </view>
-      </block>
-    </view>
-    <view class="goList" data-id="{{thisfirstCategoryId}}" data-typename="{{thisTypeName}}人气榜" data-url="bestSeller" @tap="goList">查看人气榜</view>
-    <view class="listTitle">
-      <view>{{thisTypeName}}热销榜</view>
-      <view @tap="selType" class="{{typeClass}}" data-typename="热销榜">
-        {{typeName}}
+        </block>
       </view>
-    </view>
-    <view class="list-sidelong">
-      <block wx:for="{{popularityData1}}" key="index" index="index" item="item">
-        <view class="item" @tap="goBookDetails" data-id="{{item.id}}">
-          <image src="{{item.img}}" />
-          <view class="name">{{item.name}}</view>
+      <view class="list-vertical">
+        <block wx:for="{{sellSellData2}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="cover">
+              <image src="{{item.img}}" />
+            </view>
+            <view class="info">
+              <view class="title">{{item.name}}</view>
+              <view>{{item.name}} · {{item.name}}</view>
+              <view>{{item.name}}</view>
+            </view>
+          </view>
+        </block>
+      </view>
+      <view class="goList" data-id="{{thisfirstCategoryId}}" data-typename="{{thisTypeName}}人气榜" data-url="bestSeller" @tap="goList">查看人气榜</view>
+      <view class="listTitle">
+        <view>{{thisTypeName}}热销榜</view>
+        <view @tap="selType" class="{{typeClass}}" data-typename="热销榜">
+          {{typeName}}
         </view>
-      </block>
-    </view>
-    <view class="list-vertical">
-      <block wx:for="{{popularityData2}}" key="index" index="index" item="item">
-        <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
-          <view class="cover">
+      </view>
+      <view class="list-sidelong">
+        <block wx:for="{{popularityData1}}" key="index" index="index" item="item">
+          <view class="item" @tap="goBookDetails" data-id="{{item.id}}">
             <image src="{{item.img}}" />
+            <view class="name">{{item.name}}</view>
           </view>
-          <view class="info">
-            <view class="title">{{item.name}}</view>
-            <view>{{item.name}} · {{item.name}}</view>
-            <view>{{item.name}}</view>
+        </block>
+      </view>
+      <view class="list-vertical">
+        <block wx:for="{{popularityData2}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="cover">
+              <image src="{{item.img}}" />
+            </view>
+            <view class="info">
+              <view class="title">{{item.name}}</view>
+              <view>{{item.name}} · {{item.name}}</view>
+              <view>{{item.name}}</view>
+            </view>
           </view>
-        </view>
-      </block>
+        </block>
+      </view>
+      <view class="goList" data-id="{{thisfirstCategoryId}}" data-typename="{{thisTypeName}}热销榜" data-url="popularUncompelete" @tap="goList">查看热销榜</view>
     </view>
-    <view class="goList" data-id="{{thisfirstCategoryId}}" data-typename="{{thisTypeName}}热销榜" data-url="popularUncompelete" @tap="goList">查看热销榜</view>
     <nav @childFn.user="goPage" />
   </view>
 </template>
