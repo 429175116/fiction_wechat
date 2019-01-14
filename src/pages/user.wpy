@@ -118,7 +118,7 @@
     <view class="recharge">
       <view>
         <view class="icon">￥</view>
-        <text>1点</text>
+        <text>{{userInfo.bi_count}}点</text>
       </view>
       <view class="rechargeButton" @tap="goPay">充值</view>
     </view>

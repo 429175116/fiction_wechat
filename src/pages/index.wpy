@@ -648,7 +648,7 @@ export default class Index extends wepy.page {
   // 24小时热销榜
   twentyFourHourHotSale(id) {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/twentyFourHourHotSale/${id}`,
+      url: `${this.$parent.globalData.requestUrl}/api/twentyFourHourHotSale/${this.thisfirstCategoryId}`,
       method: 'GET',
       success: data => {
         if (data.data.success) {
@@ -688,7 +688,7 @@ export default class Index extends wepy.page {
   // 完本精品
   compeleteBoutiques(id) {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/compeleteBoutique/${id}`,
+      url: `${this.$parent.globalData.requestUrl}/api/compeleteBoutique/${this.thisfirstCategoryId}`,
       method: 'GET',
       success: data => {
         if (data.data.success) {
@@ -745,4 +745,15 @@ export default class Index extends wepy.page {
 // }
 // onGetUserInfo.prototype.setUserInfo = function() {
 // }
+
+
+// WECHAT_MINI_PROGRAM_APPID=wx31173647591cdb8c
+// WECHAT_MINI_PROGRAM_SECRET=f4164a26a94752f93293c27f514301f2
+
+// WECHAT_PAYMENT_APPID=wx31173647591cdb8c
+// WECHAT_PAYMENT_MCH_ID=1499393562
+// WECHAT_PAYMENT_KEY=5iiU9qQon8vDZUYDhYBSXL3gA049nM8r
+// WECHAT_PAYMENT_CERT_PATH=/home/wwwroot/hengrun.beaconway.cn/hengrun_credentials/                  apiclient_cert.pem
+// WECHAT_PAYMENT_KEY_PATH=/home/wwwroot/hengrun.beaconway.cn/hengrun_credentials/a                  piclient_key.pem
+
 </script>

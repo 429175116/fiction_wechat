@@ -5,6 +5,7 @@
   bottom: 0;
   background: #fff;
   border-top: 1rpx solid #f3f1f1;
+  // padding-bottom:
   // z-index: 5;
 }
 

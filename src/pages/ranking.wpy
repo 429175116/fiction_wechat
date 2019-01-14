@@ -53,7 +53,7 @@
 }
 .name{
   text-align: center;
-  font-size: 35rpx;
+  font-size: 30rpx;
   color: #333;
 }
 .con{

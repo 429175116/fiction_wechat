@@ -157,7 +157,10 @@ export default class Bookcontents extends wepy.page {
   subscriptionNovel(bookid, chapterId) {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/subscriptionNovel`,
-      method: 'GET',
+      method: 'PUST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
       data: {
         novel_id: bookid,
         novel_chapter_id: chapterId
@@ -173,10 +176,10 @@ export default class Bookcontents extends wepy.page {
           //   this.subscriptionNovel(this.bookid, chapterId)
           // }
         } else {
-          wx.showModal({
-            title: '',
-            content: data.data.errmsg
-          })
+          // wx.showModal({
+          //   title: '',
+          //   content: data.data.errmsg
+          // })
         }
       }
     })

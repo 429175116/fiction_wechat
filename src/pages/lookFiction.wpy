@@ -603,11 +603,13 @@ export default class Lookfiction extends wepy.page {
     },
     // 点击上一页
     goPreviousPage(e) {
-      this.goPage(this.previousUrl)
+      console.log(this.previousUrl+'+++++++')
+      this.goPage(this.nextUrl)
     },
     // 点击下一页
     goNextPage(e) {
-      this.goPage(this.nextUrl)
+      console.log(this.previousUrl+'-------')
+      this.goPage(this.previousUrl)
     },
     // 章节点赞
     chapterLikes() {
@@ -853,7 +855,10 @@ export default class Lookfiction extends wepy.page {
   subscriptionNovel(bookid, chapterId) {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/subscriptionNovel`,
-      method: 'GET',
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
       data: {
         novel_id: bookid,
         novel_chapter_id: chapterId
@@ -869,10 +874,10 @@ export default class Lookfiction extends wepy.page {
           //   this.subscriptionNovel(this.bookid, chapterId)
           // }
         } else {
-          wx.showModal({
-            title: '',
-            content: data.data.errmsg
-          })
+          // wx.showModal({
+          //   title: '',
+          //   content: data.data.errmsg
+          // })
         }
       }
     })
