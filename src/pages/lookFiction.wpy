@@ -596,6 +596,8 @@ export default class Lookfiction extends wepy.page {
       this.showSetting = false
       this.tableOfContentsDomShow = false
       this.chapterId = e.currentTarget.dataset.id
+      // 订阅执行
+      this.subscriptionNovel(this.bookid, this.chapterId)
       // 获取本章小说详情
       this.chapterDetail()
     },

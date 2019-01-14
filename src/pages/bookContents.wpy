@@ -126,6 +126,8 @@ export default class Bookcontents extends wepy.page {
     // 立即阅读
     lookBook(e) {
       let id = e.currentTarget.dataset.id
+      // 订阅执行
+      this.subscriptionNovel(this.id, id)
       // index目录下标,确定是那一章
       this.$navigate(`/pages/lookFiction?bookid=${this.id}&chapterid=${id}&firsttime=${false}`)
     }
@@ -150,6 +152,34 @@ export default class Bookcontents extends wepy.page {
   chaptersReverse() {
     this.chapters = this.chapters.reverse()
     this.$apply()
+  }
+  // 订阅小说
+  subscriptionNovel(bookid, chapterId) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/subscriptionNovel`,
+      method: 'GET',
+      data: {
+        novel_id: bookid,
+        novel_chapter_id: chapterId
+      },
+      success: data => {
+        if (data.data.success) {
+          // data = data.data.novel_chapter
+          
+          // if (data.data.length !== 0) {
+          //   let novelChapter = data.data[0]
+          //   let chapterId = novelChapter.id
+          //   // 订阅执行
+          //   this.subscriptionNovel(this.bookid, chapterId)
+          // }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
   }
 }
 </script>
