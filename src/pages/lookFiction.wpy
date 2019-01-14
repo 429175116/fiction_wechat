@@ -434,8 +434,8 @@
         <view @tap="addMontTicket" class="iconfont icon-piaowu"></view>
       </view>
       <view class="nextAndPrevious"  wx:if="{{nextAndPrevious}}">
-        <view data-page="previous" @tap="goNextAndPrevious">上一章</view>
-        <view data-page="next" @tap="goNextAndPrevious">下一章</view>
+        <view data-page="previous" @tap="goPreviousPage">上一章</view>
+        <view data-page="next" @tap="goNextPage">下一章</view>
       </view>
     </view>
     <view class="setBookshelf" wx:if="{{showSetting}}" @tap="storeBook">加入书架</view>
@@ -495,11 +495,11 @@
     <!-- 进度对应 -->
     <view class="readBtnProg" wx:if="{{readBtnProgDomShow}}">
       <view class="read-prog-info">
-        <view class="read-prog-prev" data-page="previous" @tap="goNextAndPrevious">
+        <view class="read-prog-prev" data-page="previous" @tap="goPreviousPage">
           <icon class="iconfont icon-jiantouzuo" />
           上一章
         </view>
-        <view class="read-prog-next" data-page="next" @tap="goNextAndPrevious">
+        <view class="read-prog-next" data-page="next" @tap="goNextPage">
           下一章
           <icon class="iconfont icon-jiantouyou" />
         </view>
@@ -601,24 +601,13 @@ export default class Lookfiction extends wepy.page {
       // 获取本章小说详情
       this.chapterDetail()
     },
-    // 点击上一页或者下一页
-    goNextAndPrevious(e) {
-      let pageType = e.currentTarget.dataset.page
-      let url = this.nextUrl
-      if (pageType === 'next') {
-        url = this.nextUrl
-      } else {
-        url = this.previousUrl
-      }
-      if (!url) {
-        return
-      }
-      this.novelChapter.content.content = ''
-      // 回到页面顶部
-      wx.pageScrollTo({
-        scrollTop: 0
-      })
-      this.getNextAndPreviousData(url)
+    // 点击上一页
+    goPreviousPage(e) {
+      this.goPage(this.previousUrl)
+    },
+    // 点击下一页
+    goNextPage(e) {
+      this.goPage(this.nextUrl)
     },
     // 章节点赞
     chapterLikes() {
@@ -650,6 +639,14 @@ export default class Lookfiction extends wepy.page {
     this.getBookDetails()
     // 获取本章小说详情
     this.chapterDetail(this.bookid, this.chapter)
+  }
+  goPage(url) {
+    this.novelChapter.content.content = ''
+    // 回到页面顶部
+    wx.pageScrollTo({
+      scrollTop: 0
+    })
+    this.getNextAndPreviousData(url)
   }
   // 投月票执行
   runAddMontTickets() {
