@@ -229,6 +229,7 @@ export default class Bookshelf extends wepy.page {
   }
   // 用户收藏的书籍
   myStore() {
+    // 获取收藏的书
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/myStore`,
       method: 'GET',

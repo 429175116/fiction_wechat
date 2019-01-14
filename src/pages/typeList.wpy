@@ -64,11 +64,10 @@
 <template>
   <view>
     <navTop @childFn.user="goPage" />
-    <view class="listTitle">
+    <!-- <view class="listTitle">
       <view>男生</view>
       <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="完本精品" data-url="compeleteBoutique">
         新增：110
-        <!-- <icon class="iconfont icon-jiantouyou" /> -->
       </view>
     </view>
     <view class="list">
@@ -119,7 +118,6 @@
       <view>女生</view>
       <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="完本精品" data-url="compeleteBoutique">
         新增：110
-        <!-- <icon class="iconfont icon-jiantouyou" /> -->
       </view>
     </view>
     <view class="list">
@@ -147,23 +145,24 @@
       <view class="item" @tap="goTypeList">
         <image src="/img/1.png" />
         <view class="info">
-          <view class="name">仙侠情缘</view>
+          <view class="name">惊悚悬疑</view>
           <view class="description">惊悚悬疑</view>
         </view>
       </view>
-    </view>
-    <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item">
-      <view class="listTitle" wx:if="{{secondCategoryData[index].length > 0}}">
+    </view> -->
+    <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item" wx:key="index">
+      <view class="listTitle">
+      <!-- <view class="listTitle" wx:if="{{secondCategoryData[index].length > 0}}"> -->
         <view>{{item.name}}</view>
         <view data-id="{{item.id}}" @tap="clickMore" data-typename="{{item.name}}">
-          新增：110
+          <!-- 新增：110 -->
           <!-- <icon class="iconfont icon-jiantouyou" /> -->
         </view>
       </view>
       <view class="list">
-        <block wx:for="{{secondCategoryData[index]}}" key="index-son" index="index-son" item="item">
+        <block wx:for="{{secondCategoryData[index]}}" key="index-son" wx:for-index="index-son" wx:for-item="item">
           <view class="item" data-id="{{item.id}}" data-title="{{firstCategoryData[index].name + item.name}}" @tap="goTypeList">
-            <image src="/img/1.png" />
+            <image src="{{item.img}}" />
             <view class="info">
               <view class="name">{{item.name}}</view>
               <view class="description">{{item.updated_at}}</view>
