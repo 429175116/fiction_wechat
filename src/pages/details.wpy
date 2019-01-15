@@ -747,14 +747,7 @@ export default class Details extends wepy.page {
       },
       success: data => {
         if (data.data.success) {
-          // data = data.data.novel_chapter
           
-          // if (data.data.length !== 0) {
-          //   let novelChapter = data.data[0]
-          //   let chapterId = novelChapter.id
-          //   // 订阅执行
-          //   this.subscriptionNovel(this.bookid, chapterId)
-          // }
         } else {
           // wx.showModal({
           //   title: '',

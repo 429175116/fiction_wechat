@@ -257,7 +257,6 @@ export default class User extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.secondCategoryData[i] = data.data.second_categories
-          console.log(data)
           this.$apply()
         } else {
           wx.showModal({

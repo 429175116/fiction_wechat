@@ -238,12 +238,8 @@
         this.$apply()
       },
       goList(e) {
-        // let id = e.currentTarget.dataset.id
         let typename = e.currentTarget.dataset.typename
         let url = e.currentTarget.dataset.url
-        // let id = '1'
-        // let typename = '人气榜'
-        // let url = 'newBooksOfFirstCategory'
         this.$navigate(`/pages/indexSonList?typeidlist=${this.typeList}&typename=${typename}&url=${url}`)
       }
     }

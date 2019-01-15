@@ -184,7 +184,6 @@ export default class Booklistandtype extends wepy.page {
   // 获取书列表-根据类型
   getBookList(typeId, typeListId, url) {
     // 判断多个链接，请求不同类型书的列表
-    console.log(typeId)
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/${url}/${typeId}`,
       method: 'GET',
@@ -192,11 +191,6 @@ export default class Booklistandtype extends wepy.page {
         if (data.data.success) {
           this.bookList = null
           this.bookListNovel = null
-          // this.bookList = data.data.new_books
-      //     {'name': '月票榜', 'id': '1', 'url': 'monthTicketBang'},
-      // {'name': '畅销榜', 'id': '2', 'url': 'bestSaleWithSecondCategory'},
-      // {'name': '点击榜', 'id': '3', 'url': 'clickWeekBang'},
-      // {'name': '推荐榜', 'id': '4', 'url': 'editorRecommend'}
           switch (url) {
             case 'monthTicketBang':
               // 月票榜
@@ -217,7 +211,6 @@ export default class Booklistandtype extends wepy.page {
             default:
               break
           }
-          console.log(this.bookList)
           this.$apply()
         } else {
           wx.showModal({

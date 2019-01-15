@@ -823,7 +823,6 @@ export default class Lookfiction extends wepy.page {
   }
   // 获取下一掌的信息，用于订阅下一章
   getNextInfo(nextUrl) {
-    console.log(nextUrl)
     wx.request({
       url: nextUrl,
       method: 'GET',
@@ -1070,7 +1069,6 @@ export default class Lookfiction extends wepy.page {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
           wx.showModal({
             title: '',

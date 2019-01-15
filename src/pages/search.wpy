@@ -256,7 +256,6 @@ export default class Search extends wepy.page {
     // 搜索
     searchBook(e) {
       let searchKey = e.detail.value
-      console.log(searchKey)
       if (searchKey === '') {
         return ''
       }
@@ -266,7 +265,6 @@ export default class Search extends wepy.page {
     // 标签搜索
     clicklabel(e) {
       let searchKey = e.currentTarget.dataset.name
-      console.log(searchKey)
       if (searchKey === '') {
         return ''
       }

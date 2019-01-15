@@ -253,7 +253,6 @@ export default class Pay extends wepy.page {
   }
   // 买单
   async runPayRequest() {
-    // console.log('发起支付')
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/beanPay`,
       // url: `${this.$parent.globalData.requestUrl}/api/testBeanPay`,
