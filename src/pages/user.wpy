@@ -87,14 +87,14 @@
     background: #fff;
   }
   .info view{
-    width: 249rpx;
+    width: 360rpx;
     height: 50rpx;
     border-right: 1rpx solid #dcdcdc;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .info view:nth-child(3){
+  .info view:nth-child(2){
     border-width: 0;
   }
 </style>
@@ -106,14 +106,9 @@
     </view>
     <view class="info">
       <view>
-        0关注
+        连续签到{{signInDay}}天
       </view>
-      <view>
-        0关注
-      </view>
-      <view>
-        0关注
-      </view>
+      <view @tap="signIn">{{signInName}}</view>
     </view>
     <view class="recharge">
       <view>
@@ -179,7 +174,9 @@
 
     data = {
       userInfo: null,
-      openId: ''
+      openId: '',
+      signInName: '签到',
+      signInDay: 0
     }
 
     computed = {}
@@ -202,8 +199,25 @@
       this.userInfo = this.$parent.globalData.userInfo
       this.openId = this.$parent.globalData.openId
       this.$apply()
-      console.log(this.userInfo)
-      console.log(this.openId)
+      // 签到
+      this.signIn()
+    }
+    // 增加支付选项
+    signIn() {
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/userSignInformation`,
+        method: 'PUT',
+        header: {
+          AuthrizeOpenId: this.$parent.globalData.openId
+        },
+        success: data => {
+          if (data.data.success) {
+            this.signInDay = data.data.data.continuous_day.continuous_day
+            this.signInName = '已签到'
+            this.$apply()
+          }
+        }
+      })
     }
     // 添加小说
     // login() {
