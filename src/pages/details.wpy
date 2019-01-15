@@ -747,7 +747,6 @@ export default class Details extends wepy.page {
       },
       success: data => {
         if (data.data.success) {
-          
         } else {
           // wx.showModal({
           //   title: '',
@@ -852,7 +851,6 @@ export default class Details extends wepy.page {
         if (data.data.success) {
           data = data.data.sub_novel_comment_list
           this.ReplyCon = data.data
-          
           this.$apply()
         } else {
           wx.showModal({

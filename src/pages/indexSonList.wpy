@@ -155,11 +155,9 @@ export default class Indexsonlist extends wepy.page {
               this.pushData(data.data.novels)
               // this.books = this.$parent.getImgUrlList(this.books)
               break
-              
             default:
               break
           }
-          
           this.$apply()
         } else {
           wx.showModal({
@@ -184,7 +182,6 @@ export default class Indexsonlist extends wepy.page {
             default:
               break
           }
-          
           this.$apply()
         } else {
           wx.showModal({

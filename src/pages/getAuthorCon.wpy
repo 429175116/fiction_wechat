@@ -35,7 +35,6 @@ export default class GetauthorCon extends wepy.page {
   onLoad(options) {
   }
   autoImage(e) {
-    let index = e.target.dataset.index
     // 获取图片的狂傲
     var imgW = e.detail.width
     var imgH = e.detail.height

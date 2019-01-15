@@ -131,7 +131,7 @@ export default class extends wepy.app {
     // imgUrl: 'http://140.143.203.12:8095'
     requestUrl: 'https://fiction.beaconway.cn',
     imgUrl: 'https://fiction.beaconway.cn',
-    navActionTop:['action', 'noAction', 'noAction']
+    navActionTop: ['action', 'noAction', 'noAction']
   }
 
   constructor () {

@@ -167,7 +167,6 @@ export default class Bookcontents extends wepy.page {
       },
       success: data => {
         if (data.data.success) {
-          
         } else {
           // wx.showModal({
           //   title: '',

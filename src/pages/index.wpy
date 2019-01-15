@@ -470,7 +470,6 @@ export default class Index extends wepy.page {
     },
     // 进入更多
     clickMore(e) {
-      let id = e.currentTarget.dataset.id
       let typename = e.currentTarget.dataset.typename
       let url = e.currentTarget.dataset.url
       this.$navigate(`/pages/indexSonList?typeidlist=${this.typeListData}&typename=${typename}&url=${url}`)
@@ -753,15 +752,11 @@ export default class Index extends wepy.page {
 // }
 // onGetUserInfo.prototype.setUserInfo = function() {
 // }
-
-
 // WECHAT_MINI_PROGRAM_APPID=wx31173647591cdb8c
 // WECHAT_MINI_PROGRAM_SECRET=f4164a26a94752f93293c27f514301f2
-
 // WECHAT_PAYMENT_APPID=wx31173647591cdb8c
 // WECHAT_PAYMENT_MCH_ID=1499393562
 // WECHAT_PAYMENT_KEY=5iiU9qQon8vDZUYDhYBSXL3gA049nM8r
 // WECHAT_PAYMENT_CERT_PATH=/home/wwwroot/hengrun.beaconway.cn/hengrun_credentials/                  apiclient_cert.pem
 // WECHAT_PAYMENT_KEY_PATH=/home/wwwroot/hengrun.beaconway.cn/hengrun_credentials/a                  piclient_key.pem
-
 </script>

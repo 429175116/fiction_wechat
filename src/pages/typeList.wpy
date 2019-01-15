@@ -233,7 +233,6 @@ export default class User extends wepy.page {
         if (data.data.success) {
           this.firstCategoryData = data.data.first_categories
           this.thisfirstCategoryId = this.firstCategoryData[0].id
-          let id = this.thisfirstCategoryId
           this.$apply()
           // 获取二级分类
           let i = 0

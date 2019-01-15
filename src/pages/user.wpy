@@ -233,9 +233,7 @@
     //     },
     //     success: data => {
     //       console.log(data)
-    //       if (data.data.success) {
-            
-    //       } else {
+    //       if (data.data.success) {} else {
     //         wx.showModal({
     //           title: '',
     //           content: data.data.errmsg
@@ -259,7 +257,6 @@
     //     success: data => {
     //       console.log(data)
     //       if (data.data.success) {
-            
     //       } else {
     //         wx.showModal({
     //           title: '',
@@ -298,7 +295,7 @@
     //     },
     //     success: data => {
     //       if (data.data.success) {
-    //         console.log(data)       
+    //         console.log(data)
     //       } else {
     //         wx.showModal({
     //           title: '',
