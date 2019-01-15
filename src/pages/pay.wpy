@@ -133,8 +133,8 @@ page{
       <view class="promptCon">
         <view class="title">温馨提示</view>
         <view>充值兑换比例：1元=100阅币</view>
-        <view>提示信息提示信息提示信息</view>
-        <view>提示信息提示信息提示信息提示信息提示信息提示信息提示信息提示信息提示信息提示信息提示信息提示信息</view>
+        <view>充值遇到问题时，请联系客服</view>
+        <view>客服热线:<text @tap="developerPhone" data-phone="029-84498995">029-84498995</text></view>
       </view>
     </view>
   </view>
@@ -163,16 +163,30 @@ export default class Pay extends wepy.page {
   computed = {}
 
   methods = {
+    // 拨打公司电话
+    developerPhone(e) {
+      let phone = e.target.dataset.phone
+      if (phone) {
+        wx.makePhoneCall({
+          phoneNumber: phone,
+          success: function () {
+            console.log('拨打电话成功！')
+          },
+          fail: function () {
+            console.log('拨打电话失败！')
+          }
+        })
+      }
+    },
     // 选择金额
     selPay(e) {
       this.pgySelId = e.currentTarget.dataset.id
-      this.$apply()
       this.index = e.currentTarget.dataset.index
-      // this.amount = this.payList[index].amount
+      this.$apply()
     },
     // 点击充值
     runPay() {
-      if (this.payList[this.index].amount === 0) {
+      if (!this.index) {
         wx.showModal({
           title: '',
           content: '请选择充值金额'
