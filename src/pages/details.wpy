@@ -754,12 +754,10 @@ export default class Details extends wepy.page {
           }
           i = 0
           let y = 0
-          console.log(this.bookInfo)
           for (y in lookNovelChapter) {
             for (i in this.bookInfo.chapters) {
               if (this.bookInfo.chapters[i].id === lookNovelChapter[y]) {
                 this.bookInfo.chapters[i].wether_vip = 'NotVip'
-                console.log(this.bookInfo.chapters[i])
               }
             }
           }

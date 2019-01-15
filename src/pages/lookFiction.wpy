@@ -745,12 +745,10 @@ export default class Lookfiction extends wepy.page {
           }
           i = 0
           let y = 0
-          console.log(bookInfo)
           for (y in lookNovelChapter) {
             for (i in bookInfo.chapters) {
               if (bookInfo.chapters[i].id === lookNovelChapter[y]) {
                 bookInfo.chapters[i].wether_vip = 'NotVip'
-                console.log(bookInfo.chapters[i])
               }
             }
           }
