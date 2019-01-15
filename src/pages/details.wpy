@@ -733,6 +733,41 @@ export default class Details extends wepy.page {
     // 获取评论
     this.chapterCommentLists()
   }
+  // 获取用户可以看的章节
+  subscription() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userSubscription`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.user_subscriptions
+          let i = 0
+          let bookId = parseInt(this.bookid)
+          let lookNovelChapter = []
+          for (i in data) {
+            if (data[i].novel_id === bookId) {
+              lookNovelChapter.push(data[i].novel_chapter_id)
+            }
+          }
+          i = 0
+          let y = 0
+          console.log(this.bookInfo)
+          for (y in lookNovelChapter) {
+            for (i in this.bookInfo.chapters) {
+              if (this.bookInfo.chapters[i].id === lookNovelChapter[y]) {
+                this.bookInfo.chapters[i].wether_vip = 'NotVip'
+                console.log(this.bookInfo.chapters[i])
+              }
+            }
+          }
+          this.$apply()
+        }
+      }
+    })
+  }
   // 订阅小说
   subscriptionNovel(bookid, chapterId) {
     wx.request({
@@ -876,6 +911,8 @@ export default class Details extends wepy.page {
           this.bookInfo.words_count = Math.floor(this.bookInfo.words_count / 10000)
           this.authorInfoData = data.data.author
           this.$apply()
+          // 获取用户可以看的章节
+          this.subscription()
         } else {
           wx.showModal({
             title: '',

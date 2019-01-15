@@ -711,14 +711,52 @@ export default class Lookfiction extends wepy.page {
       method: 'GET',
       success: data => {
         if (data.data.success) {
-          this.bookInfo = data.data.novel
-          this.chapters = this.bookInfo.chapters
+          // this.bookInfo = data.data.novel
+          // 获取用户可以看的章节
+          this.bookInfo = this.subscription(data.data.novel)
           this.$apply()
         } else {
           wx.showModal({
             title: '',
             content: data.data.errmsg
           })
+        }
+      }
+    })
+  }
+  // 获取用户可以看的章节
+  subscription(bookInfo) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userSubscription`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.user_subscriptions
+          let i = 0
+          let bookId = parseInt(this.bookid)
+          let lookNovelChapter = []
+          for (i in data) {
+            if (data[i].novel_id === bookId) {
+              lookNovelChapter.push(data[i].novel_chapter_id)
+            }
+          }
+          i = 0
+          let y = 0
+          console.log(bookInfo)
+          for (y in lookNovelChapter) {
+            for (i in bookInfo.chapters) {
+              if (bookInfo.chapters[i].id === lookNovelChapter[y]) {
+                bookInfo.chapters[i].wether_vip = 'NotVip'
+                console.log(bookInfo.chapters[i])
+              }
+            }
+          }
+          this.chapters = bookInfo.chapters
+          return bookInfo
+          this.$apply()
         }
       }
     })
@@ -774,6 +812,7 @@ export default class Lookfiction extends wepy.page {
       }
     })
   }
+  
   // 下拉触底执行
   // onReachBottom() {}
   getNextAndPreviousData(url) {
