@@ -137,8 +137,11 @@
             </view>
             <view class="info">
               <view class="title">{{item.name}}</view>
-              <view>{{item.name}} · {{item.name}}</view>
-              <view>{{item.name}}</view>
+              <view>
+                <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+                <text wx:elif>完结</text>
+                  · {{item.words_count}}万字</view>
+              <view>上架时间{{item.updated_at}}</view>
             </view>
           </view>
         </block>
@@ -166,8 +169,11 @@
             </view>
             <view class="info">
               <view class="title">{{item.name}}</view>
-              <view>{{item.name}} · {{item.name}}</view>
-              <view>{{item.name}}</view>
+              <view>
+                <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+                <text wx:elif>完结</text>
+                  · {{item.words_count}}万字</view>
+              <view>上架时间{{item.updated_at}}</view>
             </view>
           </view>
         </block>
