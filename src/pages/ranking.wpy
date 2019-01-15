@@ -246,7 +246,14 @@ export default class User extends wepy.page {
     goList(e) {
       let typename = e.currentTarget.dataset.typename
       let url = e.currentTarget.dataset.url
-      this.$navigate(`/pages/indexSonList?typeidlist=${this.typeList}&typename=${typename}&url=${url}`)
+      let data = null
+      if (url === 'bestSeller') {
+        data = this.sellSellData
+      } else {
+        data = this.popularityData
+      }
+      data = JSON.stringify(data)
+      this.$navigate(`/pages/indexSonList?typeidlist=${this.typeList}&typename=${typename}&url=${url}&listdata=${data}`)
     }
   }
 
