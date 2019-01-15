@@ -15,7 +15,7 @@
   .swiper{
     background-color: #fff;
     width: 750rpx;
-    height: 260rpx;
+    height: 340rpx;
   }
   .swiper image{
     width: 100%;
@@ -613,7 +613,7 @@ export default class Index extends wepy.page {
       }
     })
   }
-  // 畅销精品
+  // 畅销精品(畅销精品)
   bestSeller(id) {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/bestSeller/${id}`,
