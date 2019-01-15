@@ -481,7 +481,31 @@ export default class Index extends wepy.page {
     clickMore(e) {
       let typename = e.currentTarget.dataset.typename
       let url = e.currentTarget.dataset.url
-      this.$navigate(`/pages/indexSonList?typeidlist=${this.typeListData}&typename=${typename}&url=${url}`)
+      let data = null
+      switch (url) {
+        case 'newBooksOfFirstCategory': // 新书推荐
+          data = this.newBooks
+          break
+        case 'bestSeller': // 畅销精选
+          data = this.bestSellerData
+          break
+        case 'editorRecommend': // 主编力荐
+          data = this.editorRecommendData
+          break
+        case 'bestSeller': // 精品佳作
+          data = this.bestSellerData
+          break
+        case 'freeNewNovel': // 猜你喜欢
+          data = this.freeNewNovel
+          break
+        case 'compeleteBoutique': // 完本精品
+          data = this.compeleteBoutique
+          break
+        default:
+          break
+      }
+      data = JSON.stringify(data)
+      this.$navigate(`/pages/indexSonList?typeidlist=${this.typeListData}&typename=${typename}&url=${url}&listdata=${data}`)
     },
     // 顶部导航点击
     navTopClick(e) {
