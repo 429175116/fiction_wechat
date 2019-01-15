@@ -603,11 +603,11 @@ export default class Lookfiction extends wepy.page {
     },
     // 点击上一页
     goPreviousPage(e) {
-      this.goPage(this.nextUrl)
+      this.goPage(this.previousUrl)
     },
     // 点击下一页
     goNextPage(e) {
-      this.goPage(this.previousUrl)
+      this.goPage(this.nextUrl)
     },
     // 章节点赞
     chapterLikes() {
@@ -773,11 +773,7 @@ export default class Lookfiction extends wepy.page {
           data = data.data.novel_chapter
           this.novelChapter = data.data[0]
           // 碰到空格换行
-          // console.log(this.novelChapter.content.content)
-          this.novelChapter.content.content = this.novelChapter.content.content.split('chaptererror')[0]
-          // this.novelChapter.content.content = this.novelChapter.content.content.split('')
-          this.novelChapter.content.content.replace(/ /g, '/n')
-          // console.log(this.novelChapter.content.content)
+          this.novelChapter.content.content = this.contentsplit(this.novelChapter.content.content)
           // 回到页面顶部
           wx.pageScrollTo({
             scrollTop: 0
@@ -827,8 +823,7 @@ export default class Lookfiction extends wepy.page {
           data = data.data.novel_chapter
           this.novelChapter = data.data[0]
           // 碰到空格换行
-          this.novelChapter.content.content = this.novelChapter.content.content.split('chaptererror')[0]
-          this.novelChapter.content.content.replace(/↵/g, '/n')
+          this.novelChapter.content.content = this.contentsplit(this.novelChapter.content.content)
           // 根据获取到的参数修改页面标题
           wx.setNavigationBarTitle({
             title: this.novelChapter.title
@@ -855,6 +850,19 @@ export default class Lookfiction extends wepy.page {
         }
       }
     })
+  }
+  contentsplit(content) {
+    content = content.split('chaptererror')[0]
+    // 文字中间的空格字符{　}复制这里
+    content = content.split('　')
+    let i = 0
+    let con = ''
+    for (i in content) {
+      con += '　　'
+      con += content[i]
+      con += '\n    '
+    }
+    return con
   }
   // 获取下一掌的信息，用于订阅下一章
   getNextInfo(nextUrl) {
@@ -914,7 +922,6 @@ export default class Lookfiction extends wepy.page {
       key: 'fontsoze',
       success: res => {
         if (res.data) {
-          console.log(res.data)
           this.fontSize = res.data
           this.$apply()
         } else {
