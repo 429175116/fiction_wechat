@@ -536,19 +536,12 @@ export default class Index extends wepy.page {
           this.thisfirstCategoryId = this.firstCategoryData[0].id
           let id = this.thisfirstCategoryId
           // 获取二级分类
-          this.secondCategory(id)
-          // // xx新书
-          // this.newBooksOfFirstCategory(id)
-          // // 人气连载
-          // this.bestSeller(id)
-          // // 人气分类
-          // this.editorRecommend(id)
-          // // 24小时热销榜
-          // this.twentyFourHourHotSale(id)
-          // // 点击周榜
-          // this.clickWeekBangs(id)
-          // // 完本精品
-          // this.compeleteBoutiques(id)
+          let i = 0
+          for (i in this.firstCategoryData) {
+            this.secondCategory(this.firstCategoryData[i].id)
+            this.compeleteBoutiques(this.firstCategoryData[i].id)
+            this.twentyFourHourHotSale(this.firstCategoryData[i].id)
+          }
         } else {
           wx.showModal({
             title: '',
@@ -573,17 +566,17 @@ export default class Index extends wepy.page {
           }
           let id = typeSon[0].id
           // xx新书
-          this.newBooksOfFirstCategory(id)
+          this.newBooksOfFirstCategory(typeSon)
           // 人气连载
-          this.bestSeller(id)
+          this.bestSeller(typeSon)
           // 人气分类
-          this.editorRecommend(id)
+          this.editorRecommend(typeSon)
           // 24小时热销榜
-          this.twentyFourHourHotSale(id)
+          // this.twentyFourHourHotSale(typeSon)
           // 点击周榜
-          this.clickWeekBangs(id)
+          this.clickWeekBangs(typeSon)
           // 完本精品
-          this.compeleteBoutiques(id)
+          // this.compeleteBoutiques(typeSon)
         } else {
           wx.showModal({
             title: '',
@@ -594,72 +587,99 @@ export default class Index extends wepy.page {
     })
   }
   // xx新书
-  newBooksOfFirstCategory(id) {
-    wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory/${id}`,
-      method: 'GET',
-      success: data => {
-        if (data.data.success) {
-          this.newBooks = data.data.new_books
-          // this.newBooks = this.getListShowData(this.newBooks)
-          // this.newBooks = this.$parent.getImgUrlList(this.newBooks)
-          this.$apply()
-        } else {
-          wx.showModal({
-            title: '',
-            content: data.data.errmsg
-          })
+  newBooksOfFirstCategory(typeSon) {
+    let i = 0
+    for (i in typeSon) {
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/newBooksOfFirstCategory/${typeSon[i].id}`,
+        method: 'GET',
+        success: data => {
+          if (data.data.success) {
+            data = data.data.new_books
+            let y = 0
+            for (y in data) {
+              this.newBooks.push(data[y])
+            }
+            // this.newBooks = this.getListShowData(this.newBooks)
+            // this.newBooks = this.$parent.getImgUrlList(this.newBooks)
+            this.$apply()
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
+          }
         }
-      }
-    })
+      })
+    }
+    
   }
   // 畅销精品(畅销精品)
-  bestSeller(id) {
-    wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/bestSeller/${id}`,
-      method: 'GET',
-      success: data => {
-        if (data.data.success) {
-          this.bestSellerData = data.data.compelete_boutique
-          // this.popularBooks = this.getListShowData(this.popularBooks)
-          // this.popularBooks = this.$parent.getImgUrlList(this.popularBooks)
-          this.$apply()
-        } else {
-          wx.showModal({
-            title: '',
-            content: data.data.errmsg
-          })
+  bestSeller(typeSon) {
+    let i = 0
+    for (i in typeSon) {
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/bestSeller/${typeSon[i].id}`,
+        method: 'GET',
+        success: data => {
+          if (data.data.success) {
+            data = data.data.compelete_boutique
+            let y = 0
+            for (y in data) {
+              this.bestSellerData.push(data[y])
+            }
+            // this.popularBooks = this.getListShowData(this.popularBooks)
+            // this.popularBooks = this.$parent.getImgUrlList(this.popularBooks)
+            this.$apply()
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
+          }
         }
-      }
-    })
+      })
+    }
   }
   // 主编力荐
-  editorRecommend(id) {
-    wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/editorRecommend/${id}`,
-      method: 'GET',
-      success: data => {
-        if (data.data.success) {
-          // 主编力荐
-          this.editorRecommendData = data.data.novels
-          this.$apply()
-        } else {
-          wx.showModal({
-            title: '',
-            content: data.data.errmsg
-          })
+  editorRecommend(typeSon) {
+    let i = 0
+    for (i in typeSon) {
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/editorRecommend/${typeSon[i].id}`,
+        method: 'GET',
+        success: data => {
+          if (data.data.success) {
+            // 主编力荐
+            data = data.data.novels
+            let y = 0
+            for (y in data) {
+              this.editorRecommendData.push(data[y])
+            }
+            this.$apply()
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
+          }
         }
-      }
-    })
+      })
+    }
   }
   // 24小时热销榜
   twentyFourHourHotSale(id) {
+    // 调用一级分类
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/twentyFourHourHotSale/${this.thisfirstCategoryId}`,
+      url: `${this.$parent.globalData.requestUrl}/api/twentyFourHourHotSale/${id}`,
       method: 'GET',
       success: data => {
         if (data.data.success) {
-          this.twentyfourhourHotSale = data.data.twentyfourhour_hot_sale
+          data = data.data.twentyfourhour_hot_sale
+          let y = 0
+          for (y in data) {
+            this.twentyfourhourHotSale.push(data[y])
+          }
           // this.twentyfourhourHotSale = this.getListShowData(this.twentyfourhourHotSale)
           // this.twentyfourhourHotSale = this.$parent.getImgUrlNovelList(this.twentyfourhourHotSale)
           this.$apply()
@@ -694,8 +714,9 @@ export default class Index extends wepy.page {
   }
   // 完本精品
   compeleteBoutiques(id) {
+    // 调用一级分类
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/compeleteBoutique/${this.thisfirstCategoryId}`,
+      url: `${this.$parent.globalData.requestUrl}/api/compeleteBoutique/${id}`,
       method: 'GET',
       success: data => {
         if (data.data.success) {
