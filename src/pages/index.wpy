@@ -203,21 +203,6 @@
           </view>
         </view>
         <view class="listCon">
-          <!-- <block wx:for="{{newBooks}}" key="index" index="index" item="item">
-            <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
-              <view class="cover">
-                <image src="{{item.img}}" />
-              </view>
-              <view class="info">
-                <view class="title">{{item.name}}</view>
-                <view>
-                  <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
-                  <text wx:elif>完结</text>
-                   · {{item.words_count}}字</view>
-                <view>上架时间{{item.updated_at}}</view>
-              </view>
-            </view>
-          </block> -->
           <block wx:for="{{newBooks}}" key="index" index="index" item="item">
             <view class="conSidelong" @tap="goBookDetails" data-id="{{item.id}}">
               <image src="{{item.img}}" />
@@ -269,7 +254,7 @@
           </view>
         </view>
         <view class="listCon">
-          <block wx:for="{{editorRecommendData}}" key="index" index="index" item="item">
+          <!-- <block wx:for="{{editorRecommendData}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
                 <image src="{{item.img}}" />
@@ -282,6 +267,12 @@
                    · {{item.words_count}}万字</view>
                 <view>上架时间{{item.updated_at}}</view>
               </view>
+            </view>
+          </block> -->
+          <block wx:for="{{editorRecommendData}}" key="index" index="index" item="item">
+            <view class="conSidelong" @tap="goBookDetails" data-id="{{item.id}}">
+              <image src="{{item.img}}" />
+              <view class="name">{{item.name}}</view>
             </view>
           </block>
         </view>
@@ -329,7 +320,7 @@
           </view>
         </view>
         <view class="listCon">
-          <block wx:for="{{freeNewNovel}}" key="index" index="index" item="item">
+          <!-- <block wx:for="{{freeNewNovel}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
                 <image src="{{item.img}}" />
@@ -342,6 +333,12 @@
                    · {{item.words_count}}万字</view>
                 <view>上架时间{{item.updated_at}}</view>
               </view>
+            </view>
+          </block> -->
+          <block wx:for="{{freeNewNovel}}" key="index" index="index" item="item">
+            <view class="conSidelong" @tap="goBookDetails" data-id="{{item.id}}">
+              <image src="{{item.img}}" />
+              <view class="name">{{item.name}}</view>
             </view>
           </block>
         </view>
