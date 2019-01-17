@@ -4,7 +4,8 @@
     background-color: #000 !important;
   }
   .cover, .con{
-    width: 750rpx;
+    width: 710rpx;
+    padding: 0 20rpx;
     min-height: 100vh;
     height: auto;
     color: #333;
