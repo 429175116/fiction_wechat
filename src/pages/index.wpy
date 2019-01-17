@@ -203,7 +203,7 @@
           </view>
         </view>
         <view class="listCon">
-          <block wx:for="{{newBooks}}" key="index" index="index" item="item">
+          <block wx:for="{{newBooksShow}}" key="index" index="index" item="item">
             <view class="conSidelong" @tap="goBookDetails" data-id="{{item.id}}">
               <image src="{{item.img}}" />
               <view class="name">{{item.name}}</view>
@@ -224,7 +224,7 @@
           </view>
         </view>
         <view class="listCon">
-          <block wx:for="{{bestSellerData}}" key="index" index="index" item="item">
+          <block wx:for="{{bestSellerDataShow}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
                 <image src="{{item.img}}" />
@@ -269,7 +269,7 @@
               </view>
             </view>
           </block> -->
-          <block wx:for="{{editorRecommendData}}" key="index" index="index" item="item">
+          <block wx:for="{{editorRecommendDataShow}}" key="index" index="index" item="item">
             <view class="conSidelong" @tap="goBookDetails" data-id="{{item.id}}">
               <image src="{{item.img}}" />
               <view class="name">{{item.name}}</view>
@@ -290,7 +290,7 @@
           </view>
         </view>
         <view class="listCon">
-          <block wx:for="{{bestSellerData}}" key="index" index="index" item="item">
+          <block wx:for="{{bestSellerDataShow}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
                 <image src="{{item.img}}" />
@@ -335,7 +335,7 @@
               </view>
             </view>
           </block> -->
-          <block wx:for="{{freeNewNovel}}" key="index" index="index" item="item">
+          <block wx:for="{{freeNewNovelShow}}" key="index" index="index" item="item">
             <view class="conSidelong" @tap="goBookDetails" data-id="{{item.id}}">
               <image src="{{item.img}}" />
               <view class="name">{{item.name}}</view>
@@ -356,7 +356,7 @@
           </view>
         </view>
         <view class="listCon">
-          <block wx:for="{{compeleteBoutique}}" key="index" index="index" item="item">
+          <block wx:for="{{compeleteBoutiqueShow}}" key="index" index="index" item="item">
             <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
               <view class="cover">
                 <image src="{{item.img}}" />
@@ -433,16 +433,20 @@ export default class Index extends wepy.page {
     typeListData: [],
     firstCategoryData: [], // 一级分类列表数据
     navTopId: 1, // 一级分类对应的选中项
-    newBooksOfFirstCategory: [], // xx新书
     // popularUncompelete: [], // 人气连载
-    popularCateGory: [], // 人气分类
     twentyFourHourHotSale: [], // 24小时热销榜
+    twentyFourHourHotSaleShow: [], // 24小时热销榜
     freeNewNovel: [], // 点击周榜
+    freeNewNovelShow: [], // 点击周榜
     compeleteBoutique: [], // 完本精品
+    compeleteBoutiqueShow: [], // 完本精品
     newBooks: [], // 新书
+    newBooksShow: [], // 新书
     bestSellerData: [], // 人气连载
+    bestSellerDataShow: [], // 人气连载
     poplarCategory: [], // 人气分类
     editorRecommendData: [], // 人气分类书
+    editorRecommendDataShow: [], // 人气分类书
     swiperData: [] // 轮播图
   }
 
@@ -630,6 +634,11 @@ export default class Index extends wepy.page {
             for (y in data) {
               this.newBooks.push(data[y])
             }
+            if (this.newBooks.length > 6) {
+              this.newBooksShow = this.newBooks.slice(0, 6)
+            } else {
+              this.newBooksShow = this.newBooks
+            }
             // this.newBooks = this.getListShowData(this.newBooks)
             // this.newBooks = this.$parent.getImgUrlList(this.newBooks)
             this.$apply()
@@ -657,6 +666,11 @@ export default class Index extends wepy.page {
             let y = 0
             for (y in data) {
               this.bestSellerData.push(data[y])
+            }
+            if (this.bestSellerData.length > 6) {
+              this.bestSellerDataShow = this.bestSellerData.slice(0, 6)
+            } else {
+              this.bestSellerDataShow = this.bestSellerData
             }
             // this.popularBooks = this.getListShowData(this.popularBooks)
             // this.popularBooks = this.$parent.getImgUrlList(this.popularBooks)
@@ -686,6 +700,11 @@ export default class Index extends wepy.page {
             for (y in data) {
               this.editorRecommendData.push(data[y])
             }
+            if (this.editorRecommendData.length > 6) {
+              this.editorRecommendDataShow = this.editorRecommendData.slice(0, 6)
+            } else {
+              this.editorRecommendDataShow = this.editorRecommendData
+            }
             this.$apply()
           } else {
             wx.showModal({
@@ -709,6 +728,11 @@ export default class Index extends wepy.page {
           let y = 0
           for (y in data) {
             this.twentyfourhourHotSale.push(data[y])
+          }
+          if (this.twentyfourhourHotSale.length > 6) {
+            this.twentyfourhourHotSaleShow = this.twentyfourhourHotSale.slice(0, 6)
+          } else {
+            this.twentyfourhourHotSaleShow = this.twentyfourhourHotSale
           }
           // this.twentyfourhourHotSale = this.getListShowData(this.twentyfourhourHotSale)
           // this.twentyfourhourHotSale = this.$parent.getImgUrlNovelList(this.twentyfourhourHotSale)
@@ -734,6 +758,11 @@ export default class Index extends wepy.page {
           for (y in data) {
             this.freeNewNovel.push(data[y])
           }
+          if (this.freeNewNovel.length > 6) {
+            this.freeNewNovelShow = this.freeNewNovel.slice(0, 6)
+          } else {
+            this.freeNewNovelShow = this.freeNewNovel
+          }
           // this.clickWeekBang = this.getListShowData(this.clickWeekBang)
           // this.clickWeekBang = this.$parent.getImgUrlNovelList(this.clickWeekBang)
           this.$apply()
@@ -758,6 +787,11 @@ export default class Index extends wepy.page {
           let y = 0
           for (y in data) {
             this.compeleteBoutique.push(data[y])
+          }
+          if (this.compeleteBoutique.length > 6) {
+            this.compeleteBoutiqueShow = this.compeleteBoutique.slice(0, 6)
+          } else {
+            this.compeleteBoutiqueShow = this.compeleteBoutique
           }
           // this.compeleteBoutique = this.getListShowData(this.compeleteBoutique)
           // this.compeleteBoutique = this.$parent.getImgUrlList(this.compeleteBoutique)
