@@ -657,7 +657,8 @@ export default class Details extends wepy.page {
     },
     // 查看目录
     goContents() {
-      this.$navigate(`/pages/bookContents?bookInfo=${JSON.stringify(this.bookInfo)}`)
+      // this.$navigate(`/pages/bookContents?bookinfo=${JSON.stringify(this.bookInfo)}`)
+      this.$navigate(`/pages/bookContents?id=${this.bookInfo.id}`)
     },
     // 点击推荐的书
     recommendBook(e) {

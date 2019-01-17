@@ -136,17 +136,81 @@ export default class Bookcontents extends wepy.page {
   events = {}
 
   onLoad(options) {
-    let bookInfo = JSON.parse(options.bookInfo)
-    this.id = bookInfo.id
-    this.chapters = bookInfo.chapters
-    let i = 0
-    for (i in this.chapters) {
-      this.chapters[i]['id'] = i
-    }
+    // console.log(options.bookInfo)
+    // let bookInfo = JSON.parse(options.bookinfo)
+    // this.id = bookInfo.id
+    // this.chapters = bookInfo.chapters
+    // let i = 0
+    // for (i in this.chapters) {
+    //   this.chapters[i]['id'] = i
+    // }
+
+    // 获取小说详情
+    this.getBookDetails(options.id)
     this.$apply()
     // 根据获取到的参数修改页面标题
     // 列表加载
     // 获取更多
+  }
+  // 获取小说详情
+  getBookDetails(id) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/novelDetail/${id}`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          let bookInfo = data.data.novel
+          this.chapters = bookInfo.chapters
+          this.id = bookInfo.id
+          // this.bookInfo.img = this.$parent.getImgUrl(this.bookInfo.img)
+          // this.bookInfo.score = parseFloat(this.bookInfo.score)
+          // this.bookid = this.bookInfo.id
+          // this.bookInfo.words_count = Math.floor(this.bookInfo.words_count / 10000)
+          // this.authorInfoData = data.data.author
+          this.$apply()
+          // 获取用户可以看的章节
+          this.subscription()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取用户可以看的章节
+  subscription() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userSubscription`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.user_subscriptions
+          let i = 0
+          let bookId = parseInt(this.bookid)
+          let lookNovelChapter = []
+          for (i in data) {
+            if (data[i].novel_id === bookId) {
+              lookNovelChapter.push(data[i].novel_chapter_id)
+            }
+          }
+          i = 0
+          let y = 0
+          for (y in lookNovelChapter) {
+            for (i in this.bookInfo.chapters) {
+              if (this.bookInfo.chapters[i].id === lookNovelChapter[y]) {
+                this.bookInfo.chapters[i].wether_vip = 'NotVip'
+              }
+            }
+          }
+          this.$apply()
+        }
+      }
+    })
   }
   // 目录数组颠倒
   chaptersReverse() {
