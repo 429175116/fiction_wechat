@@ -174,7 +174,7 @@
     <!-- 搜索结果 -->
     <view class="bookList">
       <block wx:for="{{searchBook}}" key="index" index="index" item="item">
-        <view class="list" data-id="{{item.id}}">
+        <view class="list" data-id="{{item.id}}"  @tap="goBookDetails">
           <view class="cover">
             <image src="{{item.img}}" />
           </view>
@@ -196,7 +196,7 @@
     </view>
     <view class="bookList">
       <block wx:for="{{recommendNovels}}" key="index" index="index" item="item">
-        <view class="list" data-id="{{item.id}}">
+        <view class="list" data-id="{{item.id}}"  @tap="goBookDetails">
           <view class="cover">
             <image src="{{item.img}}" />
           </view>
@@ -270,6 +270,11 @@ export default class Search extends wepy.page {
       }
       // 执行搜索
       this.runSearch(searchKey)
+    },
+    // 进入书本详情
+    goBookDetails(e) {
+      let id = e.currentTarget.dataset.id
+      this.$navigate(`/pages/details?bookid=${id}`)
     }
   }
 

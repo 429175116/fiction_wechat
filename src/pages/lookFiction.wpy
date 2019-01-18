@@ -853,16 +853,22 @@ export default class Lookfiction extends wepy.page {
     })
   }
   contentsplit(content) {
-    content = content.split('chaptererror')[0]
-    // 文字中间的空格字符{　}复制这里
-    content = content.split('　')
+    // 文字中间的空格字符{　}复制这里{ }
+    let space = null
+    if (content.indexOf('　') != -1) {
+      space = '　　'
+    } else if (content.indexOf(' ') != -1) {
+      space = '  '
+    }
+    content = content.split(space)
     let i = 0
     let con = ''
     for (i in content) {
-      con += '　　'
+      con += '  '
       con += content[i]
-      con += '\n    '
+      con += '\n  '
     }
+    
     // con.replace(/ /g,"\n")
     return con
   }

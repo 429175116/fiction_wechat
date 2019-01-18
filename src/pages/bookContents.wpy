@@ -30,12 +30,29 @@
   }
   .module-header-r{
     float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .module-header-l span,
   .module-header-r span{
     line-height: 28px;
     font-size: .875rem;
     font-weight: 500;
+  }
+  .module-header-r .action{
+    background-color: #00aa91;
+    color: #fff;
+  }
+  .module-header-r view{
+    border: 1rpx solid #00aa91;
+    padding: 0 10rpx;
+  }
+  .module-header-r view:nth-child(1){
+    border-radius: 10rpx 0 0 10rpx;
+  }
+  .module-header-r view:nth-child(2){
+    border-radius: 0 10rpx 10rpx 0;
   }
   .module-header-l span{
     font-weight: 600;
@@ -74,6 +91,7 @@
   .volumes .action{
     color: #ed424b;
   }
+  
 </style>
 <template>
   <view>
@@ -87,7 +105,8 @@
         </span>
       </view>
       <view class="module-header-r" @tap="chaptersReverse">
-        <span>倒序</span>
+        <view class="{{order == 'noorder' ? 'action':'noaction'}}">倒序</view>
+        <view class="{{order == 'order' ? 'action':'noaction'}}">正序</view>
       </view>
     </view>
     <view class="tableOfContents">
@@ -117,7 +136,8 @@ export default class Bookcontents extends wepy.page {
 
   data = {
     chapters: null,
-    id: ''
+    id: '',
+    order: 'order'
   }
 
   computed = {}
@@ -215,6 +235,11 @@ export default class Bookcontents extends wepy.page {
   // 目录数组颠倒
   chaptersReverse() {
     this.chapters = this.chapters.reverse()
+    if (this.order === 'order') {
+      this.order = 'noorder'
+    } else {
+      this.order = 'order'
+    }
     this.$apply()
   }
   // 订阅小说

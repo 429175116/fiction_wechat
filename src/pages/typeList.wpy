@@ -165,7 +165,7 @@
             <image src="{{item.img}}" />
             <view class="info">
               <view class="name">{{item.name}}</view>
-              <view class="description">{{item.updated_at}}</view>
+              <!-- <view class="description">{{item.updated_at}}</view> -->
             </view>
           </view>
         </block>
