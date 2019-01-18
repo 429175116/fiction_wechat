@@ -145,12 +145,29 @@
   }
   .module-header-r{
     float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .module-header-l span,
   .module-header-r span{
     line-height: 28px;
     font-size: .875rem;
     font-weight: 500;
+  }
+  .module-header-r .action{
+    background-color: #00aa91;
+    color: #fff;
+  }
+  .module-header-r view{
+    border: 1rpx solid #00aa91;
+    padding: 0 10rpx;
+  }
+  .module-header-r view:nth-child(1){
+    border-radius: 10rpx 0 0 10rpx;
+  }
+  .module-header-r view:nth-child(2){
+    border-radius: 0 10rpx 10rpx 0;
   }
   .module-header-l span{
     font-weight: 600;
@@ -481,7 +498,8 @@
               </span>
             </view>
             <view class="module-header-r" @tap="chaptersReverse">
-              <span>倒序</span>
+              <view class="{{order == 'noorder' ? 'action':'noaction'}}">倒序</view>
+              <view class="{{order == 'order' ? 'action':'noaction'}}">正序</view>
             </view>
           </view>
           <ul class="volumes">
@@ -566,7 +584,8 @@ export default class Lookfiction extends wepy.page {
     chapters: null, // 目录
     nextUrl: '', // 下一页
     previousUrl: '', // 上一页
-    nextAndPrevious: true // 显示上一页下一页按钮
+    nextAndPrevious: true, // 显示上一页下一页按钮
+    order: 'order'
   }
 
   computed = {}
@@ -584,7 +603,12 @@ export default class Lookfiction extends wepy.page {
     },
     // 目录倒序/顺序切换
     chaptersReverse() {
-      this.chapters = this.chapters.reverse()
+      this.bookInfo.chapters = this.bookInfo.chapters.reverse()
+      if (this.order === 'order') {
+        this.order = 'noorder'
+      } else {
+        this.order = 'order'
+      }
       this.$apply()
     },
     // 封面隐藏
