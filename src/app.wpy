@@ -1,12 +1,12 @@
 <style lang="less">
 @font-face {
   font-family: 'iconfont';  /* project id 983084 */
-  src: url('//at.alicdn.com/t/font_983084_k86zoetyx8.eot');
-  src: url('//at.alicdn.com/t/font_983084_k86zoetyx8.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_983084_k86zoetyx8.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_983084_k86zoetyx8.woff') format('woff'),
-  url('//at.alicdn.com/t/font_983084_k86zoetyx8.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_983084_k86zoetyx8.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_983084_3p3kmqgi4ve.eot');
+  src: url('//at.alicdn.com/t/font_983084_3p3kmqgi4ve.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_983084_3p3kmqgi4ve.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_983084_3p3kmqgi4ve.woff') format('woff'),
+  url('//at.alicdn.com/t/font_983084_3p3kmqgi4ve.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_983084_3p3kmqgi4ve.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family:"iconfont" !important;
@@ -55,6 +55,10 @@
 .icon-taiyang:before { content: "\e635"; }
 .icon-jindu:before { content: "\e607"; }
 .icon-setting:before { content: "\e784"; }
+.icon-piao:before { content: "\e744"; }
+.icon-xiaoxi:before { content: "\e67e"; }
+.icon-shenqingchengweiVIP:before { content: "\e608"; }
+.icon-bangzhu:before { content: "\e77c"; }
 
 
 
@@ -114,6 +118,7 @@ export default class extends wepy.app {
       'pages/search', // 搜索
       'pages/getAuthorCon', // 作家招募
       'pages/bookContents', // 目录
+      'pages/help', // 目录
       'pages/lookFiction' // 看书页
     ],
     window: {

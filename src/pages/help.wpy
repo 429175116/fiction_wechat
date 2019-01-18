@@ -1,0 +1,123 @@
+<style lang="less">
+page{
+  background-color: #efefef;
+}
+.list{
+  min-height: 700rpx;
+  margin-bottom: 110rpx;
+}
+
+.list, .con{
+  width: 750rpx;
+  height: auto;
+  background-color: #fff;
+}.con image{
+  transform:rotate(90deg);
+}
+
+.listShow{
+  width: 750rpx;
+  min-height: 80rpx;
+  line-height: 80rpx;
+  color: #333;
+  font-size: 30rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.listShow image{
+  width: 20rpx;
+  height: 30rpx;
+  margin-left: 20rpx;
+}
+.listShow view{
+  width: 650rpx;
+  font-weight: 700;
+}
+.listShowSon{
+  height: auto;
+  padding: 20rpx 50rpx;
+  color: #333;
+  font-size: 25rpx;
+}
+
+.listHide .listShowSon{
+  display: none;
+}
+.listHide image{
+  transform:rotate(0deg) !important;
+}
+</style>
+
+<template>
+  <view>
+    <view class="list">
+      <view class="listCon">
+        <!-- ===================列表中加入listHide  描述信息隐藏====================== -->
+        <block wx:for="{{helpData}}" key="index" index="index" item="item">
+          <view class="con {{selId === item.id?'':'listHide'}}" data-id="{{item.id}}" @tap="selShow">
+            <view class="listShow">
+              <view>{{index + '.' + item.name}}</view>
+              <image src="/img/go.png" />
+            </view>
+            <view class="listShowSon">{{item.articleCon}}</view>
+          </view>
+        </block>
+      </view>
+    </view>
+    <!-- <nav @childFn.user="goPage" /> -->
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Help extends wepy.page {
+  config = {
+    'navigationBarTitleText': '帮助中心'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    helpData: [
+      {
+        'id': 1,
+        'name': '什么是步行的力量？',
+        'articleCon': '步行的力量是以微信运动步数为基础的运动奖励计划，通过微信运动步数可免费兑换活力豆，活力豆可以在游戏标签内的所有娱乐游戏中进行消耗获得，累计获得的活力豆可以在商城内兑换各种超值奖品。步行的力量抓住大众这个缺乏有效运动驱动力的痛点，用物质激励为用户提供了锻炼的理由，以一个顺从人性的“支点”撬动了这件反人性的事。同时，将运动和公益相结合，可以将微信运动步数进行捐赠，我们将向公益组织或公益活动捐赠相对应的公益资金。'
+      },
+      {
+        'id': 2,
+        'name': '什么是活力豆？',
+        'articleCon': '活力豆在步行的力量小程序中这可以通过运动步数按照兑换比例兑换、点击充值按钮充值和小程序内的其他方式方法获得，它可以在步行的力量小程序中兑换商城中商品兑换消耗。'
+      },
+      {
+        'id': 3,
+        'name': '我的步数增加了，为什么不能兑换活力豆？',
+        'articleCon': '有可能是以下情况：A、增加的步数换算为活力豆不足0.1，所以没有不能兑换；B、每日步数兑换活力豆的次数超过三次C、当天的兑换总步数超过3万步，目前系统步数兑换的上限为3万步，超过3万步以3万步计算。'
+      }
+      
+    ],
+    selId: null,
+    imgUrl: ''
+  };
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
+  };
+  async onLoad(options) {
+    this.imgUrl = this.$parent.globalData.imgUrl
+  };
+  selShow(e) {
+    this.selId = e.currentTarget.dataset.id
+    this.$apply()
+  }
+}
+</script>

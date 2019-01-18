@@ -413,7 +413,7 @@ import navTop from '../components/navTop' // 顶部导航
 import nav from '../components/nav' // 底部导航
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '首页名称'
+    navigationBarTitleText: '书城'
   }
   // 生命组件ID
   components = {

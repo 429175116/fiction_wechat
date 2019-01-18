@@ -61,7 +61,7 @@
     align-items: center;
     justify-content: center;
     width: 750rpx;
-    height: 175rpx;
+    height: 152rpx;
     border-bottom: 1rpx solid #f0f0f0;
     background-color: #fafafa;
     padding: 20rpx 20rpx;
@@ -80,11 +80,11 @@
     height: 146rpx;
   }
   .list .del{
-    width: 100rpx;
+    width: 120rpx;
     height: 146rpx;
-    color: #ed424b;
+    color: #999;
     display: flex;
-    align-items: center;
+    // align-items: center;
     justify-content: center;
   }
   .list .info view{
@@ -97,12 +97,55 @@
     text-overflow:ellipsis;
     white-space:nowrap;
   }
+  .list .info view:nth-child(2){
+    margin-top: 10rpx;
+  }
   .list .info .title{
     color: #333;
     height: 60rpx;
     line-height: 70rpx;
     font-size: 38rpx;
     font-size: 600;
+  }
+  .listTitle {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:80rpx;
+    line-height:80rpx;
+    padding: 0 30rpx;
+  }
+  .listTitle view:nth-child(1) {
+    font-size:35rpx;
+    color:#333;
+  }
+  .addbook{
+    width: 700rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    border-radius: 45rpx;
+    margin: auto;
+    background: linear-gradient(to left, #69B8CF 0%,#40E2BD 100%);
+    text-align: center;
+    color: #fff;
+    margin-top: 20rpx;
+  }
+  .noMore{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width: 750rpx;
+    height: 100rpx;
+  }
+  .noMore view:nth-child(1),
+  .noMore view:nth-child(3) {
+    border-top: 1rpx solid #eaeaea;
+    width: 100rpx;
+    height: 0rpx;
+  }
+  .noMore view:nth-child(2){
+    color: #666;
+    padding: 20rpx;
   }
 </style>
 <template>
@@ -138,6 +181,32 @@
         </view>
       </block>
       <view wx:if="{{bookshelfList.length == 0}}" class="dataNullShow">暂无收藏</view>
+      <view class="addbook" @tap="addBookshelf">添加</view>
+      <view class="noMore">
+        <view></view>
+        <view>没有更多了</view>
+        <view></view>
+      </view>
+    </view>
+    <view class="bookList" wx:if="{{bookshelfList.length == 0}}">
+      <view class="listTitle">
+        <view>猜你喜欢</view>
+      </view>
+      <block wx:for="{{freeNewNovel}}" key="index" index="index" item="item">
+        <view class="list">
+          <view class="cover" @tap="goBookDetails" data-id="{{item.id}}">
+            <image src="{{item.img}}" />
+          </view>
+          <view class="info" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="title">{{item.name}}</view>
+            <view>{{item.name}} · {{item.name}}</view>
+            <view>{{item.intro}}</view>
+          </view>
+          <view class="del" @tap="deleteShelf" data-id="{{item.id}}">
+            <!-- <icon class="iconfont icon-shanchu" /> -->
+          </view>
+        </view>
+      </block>
     </view>
     <view>
       <button open-type="getUserInfo" wx:if="{{authorizationButton}}" id='getUserInfo' lang="zh_CN" @getuserinfo="onGetUserInfo"></button>
@@ -162,7 +231,8 @@ export default class Bookshelf extends wepy.page {
 
   data = {
     authorizationButton: true, // 控制授权按钮是否显示
-    bookshelfList: [] // 书架列表数据
+    bookshelfList: [], // 书架列表数据
+    freeNewNovel: []
   }
 
   computed = {}
@@ -172,6 +242,11 @@ export default class Bookshelf extends wepy.page {
     goPage (url, evt) {
       // 销毁当前页{跳转}
       this.$redirect(url)
+    },
+    // 底部导航跳转
+    addBookshelf () {
+      // 销毁当前页{跳转}
+      this.$redirect('/pages/index')
     },
     // 进入书本详情
     goBookDetails(e) {
@@ -198,6 +273,7 @@ export default class Bookshelf extends wepy.page {
   onShow(options) {
     // 获取图片路径前缀
     this.imgUrl = this.$parent.globalData.imgUrl
+    this.clickWeekBangs()
     // 获取用户信息
     this.onGetUserInfo()
   }
@@ -240,6 +316,31 @@ export default class Bookshelf extends wepy.page {
         if (data.data.success) {
           this.bookshelfList = data.data.user_stores
           // this.bookshelfList = this.$parent.getImgUrlNovelList(this.bookshelfList)
+          // this.bookshelfList = []
+          if (this.bookshelfList.length <= 0) {
+            this.clickWeekBangs()
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 猜你喜欢
+  clickWeekBangs() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/freeNewNovel`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          this.freeNewNovel = data.data.novels
+          if (this.freeNewNovel.length > 6) {
+            this.freeNewNovel = this.freeNewNovel.slice(0, 6)
+          }
           this.$apply()
         } else {
           wx.showModal({

@@ -712,9 +712,9 @@ export default class Lookfiction extends wepy.page {
       method: 'GET',
       success: data => {
         if (data.data.success) {
-          // this.bookInfo = data.data.novel
+          this.bookInfo = data.data.novel
           // 获取用户可以看的章节
-          this.bookInfo = this.subscription(data.data.novel)
+          // this.bookInfo = this.subscription(data.data.novel)
           this.$apply()
         } else {
           wx.showModal({
@@ -863,6 +863,7 @@ export default class Lookfiction extends wepy.page {
       con += content[i]
       con += '\n    '
     }
+    // con.replace(/ /g,"\n")
     return con
   }
   // 获取下一掌的信息，用于订阅下一章

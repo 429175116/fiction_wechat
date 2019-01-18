@@ -284,7 +284,7 @@
   }
   .bookMoreInfo{
     height: auto;
-    margin-bottom: 200rpx;
+    margin-bottom: 110rpx;
   }
   .bookMoreInfo view{
     font-size: 30rpx;

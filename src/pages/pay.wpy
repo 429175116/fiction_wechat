@@ -186,7 +186,7 @@ export default class Pay extends wepy.page {
     },
     // 点击充值
     runPay() {
-      if (!this.index) {
+      if (!this.pgySelId) {
         wx.showModal({
           title: '',
           content: '请选择充值金额'

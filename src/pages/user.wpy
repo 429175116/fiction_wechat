@@ -13,21 +13,31 @@
   }
   .userinfo{
     background-color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    background-image: url('https://fiction.beaconway.cn/uploads/images/userBG.png');
+    background-size: 100% 100%;
+    height: 382rpx;
     padding: 20rpx 35rpx;
     border-bottom: 1rpx solid #dcdcdc;
   }
   .userinfo image {
-    width: 140rpx;
-    height: 140rpx;
-    border-radius: 70rpx;
+    width: 172rpx;
+    height: 172rpx;
+    border-radius: 86rpx;
   }
   .userinfo view {
-    padding-left: 30rpx;
+    width: 680rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32rpx;
+    color: rgb(42, 42, 42)
   }
-
+  .userinfo view:nth-child(1) {
+    margin-top: 74rpx;
+  }
+  .userinfo view:nth-child(2) {
+    margin-top: 32rpx;
+  }
   .recharge{
     display: flex;
     align-items: center;
@@ -73,10 +83,21 @@
     border-bottom: 1rpx solid #dcdcdc;
     color: #333;
     vertical-align:middle;
+    box-sizing:content-box;
+  }
+  button::after{
+    border: none;
   }
   .list{
-    height: 50rpx;
-    line-height: 50rpx;
+    height: 99rpx;
+    line-height: 99rpx;
+  }
+  .list view:nth-child(1) icon{
+    color: #00aa91;
+    margin-right: 26rpx;
+  }
+  .list view:nth-child(2) icon{
+    color: #999;
   }
   .info{
     display: flex;
@@ -97,29 +118,64 @@
   .info view:nth-child(2){
     border-width: 0;
   }
+  .signIn{
+    width: 170rpx !important;
+    height: 46rpx;
+    border-radius: 23rpx;
+    font-size: 25rpx !important;
+    background-color: #c9af9c;
+    color: #fff !important;
+    position: absolute;
+    top: 76rpx;
+    right: 5rpx;
+  }
+  .signIn2{
+    width: 170rpx !important;
+    height: 46rpx;
+    border-radius: 23rpx;
+    font-size: 25rpx !important;
+    background-color: #b4b4b4;
+    color: #fff !important;
+    position: absolute;
+    top: 76rpx;
+    right: 5rpx;
+  }
+  .signIn icon{
+    font-size: 44rpx !important;
+  }
 </style>
 <template>
   <view>
     <view class="userinfo">
-      <image src="{{userInfo.profile}}" />
+      <view>
+        <image src="{{userInfo.profile}}" />
+      </view>
       <view>{{userInfo.nick_name}}</view>
+      <view class="signIn" @tap="signIn" wx:if="{{signInDay === 0}}">
+        每日签到
+        <!-- <icon class="iconfont icon-shenqingchengweiVIP" /> -->
+      </view>
+      <view class="signIn2" wx:if="{{signInDay > 0}}">
+        已签到{{signInDay}}天
+        <!-- <icon class="iconfont icon-shenqingchengweiVIP" /> -->
+      </view>
     </view>
-    <view class="info">
+    <!-- <view class="info">
       <view>
         连续签到{{signInDay}}天
       </view>
       <view @tap="signIn">{{signInName}}</view>
-    </view>
-    <view class="recharge">
+    </view> -->
+    <!-- <view class="recharge">
       <view>
         <view class="icon">￥</view>
         <text>{{userInfo.bi_count}}点</text>
       </view>
       <view class="rechargeButton" @tap="goPay">充值</view>
-    </view>
+    </view> -->
     <view class="list">
       <view>
-        <icon class="iconfont icon-VIP" />
+        <icon class="iconfont icon-shenqingchengweiVIP" />
         等级
       </view>
       <view>
@@ -129,31 +185,31 @@
     </view>
     <view class="list">
       <view>
-        <icon class="iconfont icon-piaowu" />
+        <icon class="iconfont icon-piao" />
         推荐票
       </view>
       <view>
         <icon class="iconfont icon-jiantouyou" />
       </view>
     </view>
-    <!-- <view class="list">
+    <button class="list" open-type="contact" session-from="weapp">
       <view>
-        <icon class="iconfont icon-yanjing" />
-        浏览纪录
+        <icon class="iconfont icon-xiaoxi" />
+        联系我们
+      </view>
+      <view>
+        <icon class="iconfont icon-jiantouyou" />
+      </view>
+    </button>
+    <view class="list" @tap="goHelp">
+      <view>
+        <icon class="iconfont icon-bangzhu" />
+        帮助
       </view>
       <view>
         <icon class="iconfont icon-jiantouyou" />
       </view>
     </view>
-    <view class="list">
-      <view>
-        <icon class="iconfont icon-book" />
-        我的书单
-      </view>
-      <view>
-        <icon class="iconfont icon-jiantouyou" />
-      </view>
-    </view> -->
     <nav @childFn.user="goPage" />
   </view>
 </template>
@@ -189,6 +245,9 @@
       },
       goPay () {
         this.$navigate(`/pages/pay`)
+      },
+      goHelp () {
+        this.$navigate(`/pages/help`)
       }
     }
 
@@ -200,7 +259,7 @@
       this.openId = this.$parent.globalData.openId
       this.$apply()
       // 签到
-      this.signIn()
+      // this.signIn()
     }
     // 增加支付选项
     signIn() {
