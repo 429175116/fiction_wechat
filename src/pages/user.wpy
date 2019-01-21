@@ -15,7 +15,7 @@
     background-color: #fff;
     background-image: url('https://fiction.beaconway.cn/uploads/images/userBG.png');
     background-size: 100% 100%;
-    height: 382rpx;
+    height: 332rpx;
     padding: 20rpx 35rpx;
     border-bottom: 1rpx solid #dcdcdc;
   }
@@ -123,11 +123,11 @@
     height: 46rpx;
     border-radius: 23rpx;
     font-size: 25rpx !important;
-    background-color: #c9af9c;
+    background-color: #b69f8d;
     color: #fff !important;
     position: absolute;
     top: 76rpx;
-    right: 5rpx;
+    right: 20rpx;
   }
   .signIn2{
     width: 170rpx !important;
@@ -138,7 +138,7 @@
     color: #fff !important;
     position: absolute;
     top: 76rpx;
-    right: 5rpx;
+    right: 20rpx;
   }
   .signIn icon{
     font-size: 44rpx !important;

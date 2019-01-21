@@ -493,7 +493,7 @@
             <view class="module-header-l">
               <span>
                 共
-                <span>359</span>
+                <span>{{bookInfo.chapters.length}}</span>
                 章
               </span>
             </view>
