@@ -193,13 +193,13 @@
       </view>
       <view @tap="signIn">{{signInName}}</view>
     </view> -->
-    <!-- <view class="recharge">
+    <view class="list">
       <view>
-        <view class="icon">￥</view>
+        <icon class="iconfont icon-money" />
         <text>{{userInfo.bi_count}}点</text>
       </view>
       <view class="rechargeButton" @tap="goPay">充值</view>
-    </view> -->
+    </view>
     <view class="list">
       <view>
         <icon class="iconfont icon-shenqingchengweiVIP" />
@@ -237,16 +237,15 @@
         <icon class="iconfont icon-jiantouyou" />
       </view>
     </view>
-    <view class="developerInfo">
+    <!-- <view class="developerInfo">
       <view class="developerName">联系我们</view>
       <view>©2019 陕西贝肯伟网络科技有限公司 版权所有</view>
       <view class="developerPhone">
         联系电话：
         <view @tap="developerPhone" data-phone="029-84498995 ">029-84498995(点击拨打) </view>
-        <!-- <view @tap="developerPhone" data-phone="029-68567800">029-68567800</view> -->
       </view>
       <view @tap="developerAddress">陕西省西安市高新区天谷八路软件新城研发基地二期A9栋405室</view>
-    </view>
+    </view> -->
     <nav @childFn.user="goPage" />
   </view>
 </template>

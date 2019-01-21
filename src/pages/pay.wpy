@@ -48,7 +48,7 @@ page{
 .item{
   display: inline-block;
   margin: 10rpx;
-  width: 333rpx;
+  width: 331rpx;
   height: 150rpx;
   border: 1rpx solid #6699FF;
 }
@@ -231,9 +231,9 @@ export default class Pay extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/backend/createExchangeSetting`,
       method: 'POST',
       data: {
-        amount: 0.01,
-        bi_count: 1,
-        bi_gift_count: 1
+        amount: 200,
+        bi_count: 20000,
+        bi_gift_count: 4000
       },
       success: data => {
         if (data.data.success) {

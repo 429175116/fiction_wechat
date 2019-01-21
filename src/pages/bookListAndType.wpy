@@ -138,12 +138,12 @@ export default class Booklistandtype extends wepy.page {
     bookListNovel: null,
     type: '',
     typeList: [
-      {'name': '月票榜', 'id': '1', 'url': 'monthTicketBang'},
+      // {'name': '月票榜', 'id': '1', 'url': 'monthTicketBang'},
       {'name': '畅销榜', 'id': '2', 'url': 'bestSaleWithSecondCategory'},
       {'name': '点击榜', 'id': '3', 'url': 'clickWeekBang'},
       {'name': '推荐榜', 'id': '4', 'url': 'editorRecommend'}
     ],
-    thissecondCategoryId: '1'
+    thissecondCategoryId: '2'
   }
 
   computed = {}
