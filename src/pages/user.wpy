@@ -89,8 +89,8 @@
     border: none;
   }
   .list{
-    height: 99rpx;
-    line-height: 99rpx;
+    height: 60rpx;
+    line-height: 60rpx;
   }
   .list view:nth-child(1) icon{
     color: #00aa91;
@@ -142,6 +142,33 @@
   }
   .signIn icon{
     font-size: 44rpx !important;
+  }
+  .icon-jiantouyou{
+    font-size: 30rpx;
+  }
+  .developerInfo{
+    height: auto;
+    color: #666;
+    margin-top:100rpx;
+    margin-bottom:120rpx;
+    text-align: center;
+  }
+  .developerName{
+    font-weight: 700
+  }
+  .developerInfo view{
+    font-size: 20rpx !important;
+    height: auto;
+    min-height: 40rpx;
+    line-height: 40rpx;
+  }
+  .developerPhone{
+    display: inline-block;
+  }
+  .developerPhone view{
+    font-size: 20rpx !important;
+    // width: 150rpx;
+    display: inline-block;
   }
 </style>
 <template>
@@ -210,6 +237,16 @@
         <icon class="iconfont icon-jiantouyou" />
       </view>
     </view>
+    <view class="developerInfo">
+      <view class="developerName">联系我们</view>
+      <view>©2019 陕西贝肯伟网络科技有限公司 版权所有</view>
+      <view class="developerPhone">
+        联系电话：
+        <view @tap="developerPhone" data-phone="029-84498995 ">029-84498995(点击拨打) </view>
+        <!-- <view @tap="developerPhone" data-phone="029-68567800">029-68567800</view> -->
+      </view>
+      <view @tap="developerAddress">陕西省西安市高新区天谷八路软件新城研发基地二期A9栋405室</view>
+    </view>
     <nav @childFn.user="goPage" />
   </view>
 </template>
@@ -248,6 +285,21 @@
       },
       goHelp () {
         this.$navigate(`/pages/help`)
+      },
+      // 拨打公司电话
+      developerPhone(e) {
+        let phone = e.target.dataset.phone
+        if (phone) {
+          wx.makePhoneCall({
+            phoneNumber: phone,
+            success: function () {
+              console.log('拨打电话成功！')
+            },
+            fail: function () {
+              console.log('拨打电话失败！')
+            }
+          })
+        }
       }
     }
 
