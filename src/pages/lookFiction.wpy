@@ -387,6 +387,13 @@
     left: 25vw;
     width: 50vw;
     height: 40vh;
+    z-index: 15;
+  }
+  .pageTurning{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
   }
   .nextAndPrevious{
     display: flex;
@@ -443,8 +450,10 @@
         </view>
       </view>
     </view>
+    <view class="switch" @tap="showSettingDom"></view>
+    <view class="pageTurning" @tap="pageTurning"></view>
     <view wx:if="{{!coverShow}}" class="con {{showModel}}">
-      <view class="switch" @tap="showSettingDom"></view>
+      
       <!-- 小说内容显示 -->
       <text style="font-size: {{fontSize}}rpx">{{novelChapter.content.content}}</text>
       <view class="nextAndPrevious"  wx:if="{{nextAndPrevious}}">
@@ -961,6 +970,11 @@ export default class Lookfiction extends wepy.page {
           this.$apply()
         }
       }
+    })
+  }
+  pageTurning() {
+    wx.pageScrollTo({
+      scrollTop: 1000
     })
   }
   // 控制设置框体的显示

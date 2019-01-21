@@ -10,6 +10,7 @@
 }
 .listTitle view:nth-child(1){
   font-size: 35rpx;
+  font-weight: 600;
   color: #333;
 }
 .listTitle view:nth-child(2),
@@ -53,7 +54,7 @@
   white-space:nowrap;
 }
 .name{
-  font-size: 35rpx;
+  font-size: 30rpx;
   color: #333;
 }
 .description{

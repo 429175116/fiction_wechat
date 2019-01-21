@@ -76,7 +76,7 @@ page{
   height: 100rpx;
   margin: 20rpx auto;
   color: #CC6600;
-  border: 1rpx solid #CC6600;
+  box-shadow:0px 0px 1px 1px #CC6600;
   border-radius: 10rpx;
   display: flex;
   align-items: center;

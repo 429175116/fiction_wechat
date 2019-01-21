@@ -8,24 +8,29 @@
   height: 80rpx;
   line-height: 80rpx;
 }
+.listTitle view:nth-child(1){
+  font-weight: 600;
+}
 .listTitle view:nth-child(2){
-  width: 60rpx;
-  height: 40rpx;
-  // border: 1rpx solid #333;
-  color: #fff;
-  border-radius: 20rpx;
-  font-size: 20rpx;
-  display: flex;
-  align-items: center;
+  width: 80rpx;
+  height: 45rpx;
+  line-height: 45rpx;
+  text-align: center;
   justify-content: center;
+  color: #fff;
+  border-radius: 50rpx;
+  font-size: 25rpx;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
 }
 // 男
 .male{
-  background-color: #0066CC;
+  background-color: #00c0a4;
 }
 // 女
 .female{
-  background-color: #CC0099;
+  background-color: #f95353;
 }
 .list-sidelong{
   width: 710rpx;
@@ -53,7 +58,7 @@
 }
 .name{
   text-align: center;
-  font-size: 30rpx;
+  font-size: 28rpx;
   color: #333;
 }
 .con{
@@ -95,7 +100,7 @@
   color: #333;
   height: 60rpx;
   line-height: 70rpx;
-  font-size: 38rpx;
+  font-size: 28rpx;
   font-size: 600;
 }
 .goList{

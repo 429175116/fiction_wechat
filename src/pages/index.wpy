@@ -59,6 +59,7 @@
   }
   .listTitle view:nth-child(1){
     font-size: 35rpx;
+    font-weight: 600;
     color: #333;
   }
   .listTitle view:nth-child(2),
@@ -127,6 +128,7 @@
   .conSidelong .name{
     width: 210rpx;
     height: 50rpx;
+    font-size: 28rpx;
     line-height: 50rpx;
     text-align: center;
     overflow:hidden;
