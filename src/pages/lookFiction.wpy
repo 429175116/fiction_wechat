@@ -594,7 +594,8 @@ export default class Lookfiction extends wepy.page {
     nextUrl: '', // 下一页
     previousUrl: '', // 上一页
     nextAndPrevious: true, // 显示上一页下一页按钮
-    order: 'order'
+    order: 'order',
+    goBotten: 0
   }
 
   computed = {}
@@ -973,9 +974,19 @@ export default class Lookfiction extends wepy.page {
     })
   }
   pageTurning() {
-    wx.pageScrollTo({
-      scrollTop: 1000
+    wx.getSystemInfo({
+      success: res => {
+        console.log(res.windowWidth)
+        console.log(res.windowHeight)
+        wx.pageScrollTo({
+          scrollTop: this.goBotten + res.windowHeight
+        })
+        this.goBotten += res.windowHeight
+      }
     })
+    // wx.pageScrollTo({
+    //   scrollTop: 1000
+    // })
   }
   // 控制设置框体的显示
   showSettingDom() {
