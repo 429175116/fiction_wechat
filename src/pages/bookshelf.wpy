@@ -152,6 +152,9 @@
     padding: 20rpx;
     font-size: 25rpx;
   }
+  page .bookList:nth-child(2){
+    margin-top: -100rpx;
+  }
 </style>
 <template>
   <view>
@@ -193,7 +196,7 @@
         <view></view>
       </view>
     </view>
-    <view class="bookList" wx:if="{{bookshelfList.length == 0}}">
+    <view class="bookList" wx:if="{{bookshelfList.length == 0 && freeNewNovel.length > 0}}">
       <view class="listTitle">
         <view>猜你喜欢</view>
       </view>
@@ -278,7 +281,7 @@ export default class Bookshelf extends wepy.page {
   onShow(options) {
     // 获取图片路径前缀
     this.imgUrl = this.$parent.globalData.imgUrl
-    this.clickWeekBangs()
+    // this.clickWeekBangs()
     // 获取用户信息
     this.onGetUserInfo()
   }
@@ -381,6 +384,8 @@ export default class Bookshelf extends wepy.page {
               }
             }
           })
+        } else {
+          this.clickWeekBangs()
         }
       }
     })
