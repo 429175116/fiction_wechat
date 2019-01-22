@@ -396,10 +396,13 @@
     z-index: 10;
   }
   .nextAndPrevious{
+    position: relative;
+    width: 710rpx;
+    height: 150rpx;
     display: flex;
     align-items: center;
     justify-content: center;
-
+    
   }
   .nextAndPrevious view{
     width: 250rpx;
@@ -412,6 +415,7 @@
     align-items: center;
     justify-content: center;
     color: #fff;
+    z-index: 15;
   }
   .icon-dianzan,.icon-piaowu{
     width: 80rpx !important;
@@ -572,7 +576,8 @@
 import wepy from 'wepy'
 export default class Lookfiction extends wepy.page {
   config = {
-    navigationBarTitleText: '章节名称'
+    navigationBarTitleText: '章节名称',
+    disableScroll: true
   }
   components = {
 
@@ -631,6 +636,8 @@ export default class Lookfiction extends wepy.page {
       this.showSetting = false
       this.tableOfContentsDomShow = false
       this.chapterId = e.currentTarget.dataset.id
+      this.goBotten = 0
+      // this.$apply()
       // 订阅执行
       this.subscriptionNovel(this.bookid, this.chapterId)
       // 获取本章小说详情
@@ -638,10 +645,14 @@ export default class Lookfiction extends wepy.page {
     },
     // 点击上一页
     goPreviousPage(e) {
+      this.goBotten = 0
+      // this.$apply()
       this.goPage(this.previousUrl)
     },
     // 点击下一页
     goNextPage(e) {
+      this.goBotten = 0
+      // this.$apply()
       this.goPage(this.nextUrl)
     },
     // 章节点赞
@@ -973,20 +984,29 @@ export default class Lookfiction extends wepy.page {
       }
     })
   }
-  pageTurning() {
+  pageTurning(e) {
+    // console.log(e)
+    let y = 300
+    let botton = 0
+    let thisY = e.detail.y - this.goBotten
     wx.getSystemInfo({
       success: res => {
-        console.log(res.windowWidth)
-        console.log(res.windowHeight)
+        if (thisY >= y) {
+          botton  = this.goBotten + res.windowHeight - 50
+          this.goBotten += res.windowHeight - 50
+        } else {
+          botton  = this.goBotten - res.windowHeight - 50
+          this.goBotten -= res.windowHeight - 50
+        }
+        // console.log(res.windowWidth)
+        // console.log(res.windowHeight)
+        // console.log(botton)
         wx.pageScrollTo({
-          scrollTop: this.goBotten + res.windowHeight
+          scrollTop: botton
         })
-        this.goBotten += res.windowHeight
+        
       }
     })
-    // wx.pageScrollTo({
-    //   scrollTop: 1000
-    // })
   }
   // 控制设置框体的显示
   showSettingDom() {
