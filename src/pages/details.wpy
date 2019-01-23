@@ -104,12 +104,21 @@
     font-size: 39rpx;
   }
   .description{
-    height: auto;
+    position: relative;
+    height: 120rpx;
     border-top: 1rpx solid #ccc;
     color: #999;
     font-size: 28rpx;
     line-height: 45rpx;
     padding: 20rpx 0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .description .iconfont{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
   }
   .bookInfo .label view {
     color: #999;
@@ -437,7 +446,10 @@
           <view>粉丝</view>
         </view>
       </view>
-      <view class="description">{{bookInfo.intro}}</view>
+      <view class="description" style="{{descriptionShow}}">
+        {{bookInfo.intro}}
+        <icon @tap="descriptionShowRun" class="iconfont icon-jiantou-{{descriptionShow == '' ? 'xia':'shang'}}" />
+      </view>
       <view class="label">
         <!-- <view>1111</view>
         <view>1111</view>
@@ -577,12 +589,21 @@ export default class Details extends wepy.page {
     replyId: '',
     ReplyCon: [],
     nextReplyUrl: '',
-    commentReplyValue: ''
+    commentReplyValue: '',
+    descriptionShow: ''
   }
 
   computed = {}
 
   methods = {
+    descriptionShowRun() {
+      if (this.descriptionShow) {
+        this.descriptionShow = ''
+      } else {
+        this.descriptionShow = 'height:auto'
+      }
+      this.$apply()
+    },
     // 获取更多评论
     getMoreReplyCon() {
       this.runMoreReplyCon()
