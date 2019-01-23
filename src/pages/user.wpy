@@ -112,7 +112,12 @@
   }
   .user .list:nth-child(8){
     border-bottom: 0;
+    margin-bottom: 120rpx;
   }
+  // .user .list:last-of-type{
+  //   border-bottom: 0;
+  //   margin-bottom: 120rpx;
+  // }
   .info{
     display: flex;
     align-items: center;

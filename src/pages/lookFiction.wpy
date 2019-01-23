@@ -1,6 +1,6 @@
 <style lang="less">
   .cover, .con{
-    width: 710rpx;
+    width: 720rpx;
     padding: 0 20rpx;
     min-height: 100vh;
     height: auto;
