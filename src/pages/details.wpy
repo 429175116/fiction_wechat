@@ -148,6 +148,7 @@
   }
   .commentList{
     min-height: 130rpx;
+    margin-bottom: 130rpx;
   }
   .commentList .title,
   .commentList .title view{
@@ -511,7 +512,7 @@
           <view class="commentReplyUp">
             <view class="search">
               <view>
-                <input type="text" bindinput="commentReply" placeholder="填写回复" />
+                <input type="text"  value='{{commentReplyValue}}' bindinput="commentReply" placeholder="填写回复" />
               </view>
               <view @tap="updataReply" data-id="{{replyId}}"> 
                 <icon class="iconfont icon-wodetijiao" />
@@ -575,7 +576,8 @@ export default class Details extends wepy.page {
     authorInfoData: null, // 作家信息
     replyId: '',
     ReplyCon: [],
-    nextReplyUrl: ''
+    nextReplyUrl: '',
+    commentReplyValue: ''
   }
 
   computed = {}
@@ -790,6 +792,8 @@ export default class Details extends wepy.page {
       },
       success: data => {
         if (data.data.success) {
+          this.setcomment = false
+          this.$apply()
           wx.showModal({
             title: '',
             content: '评论成功'
@@ -818,6 +822,9 @@ export default class Details extends wepy.page {
       },
       success: data => {
         if (data.data.success) {
+          this.setData({
+            'commentReplyValue': ''
+          })
           wx.showModal({
             title: '',
             content: '评论成功'
