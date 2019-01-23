@@ -85,6 +85,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 10rpx;
   }
   .basicInfo .basicSel{
     width: 236rpx;
@@ -92,12 +93,16 @@
   .basicInfo .basicSel text{
     color: #999;
     font-weight: 500;
+    font-size: 25rpx;
   }
   .basicInfo .basicSel view{
+    font-weight: 600;
+    color: #333;
     text-align: center;
   }
   .basicInfo .basicSel view:nth-child(2){
-    color: #999;
+    color: #333;
+    font-weight: 600;
   }
   .booktitleInfo .iconfont{
     color: #ffcc01;
@@ -106,7 +111,7 @@
   .description{
     position: relative;
     height: 120rpx;
-    border-top: 1rpx solid #ccc;
+    border-top: 1rpx solid #eaeaea;
     color: #999;
     font-size: 28rpx;
     line-height: 45rpx;
@@ -119,6 +124,7 @@
     bottom: 0;
     right: 0;
     background-color: #fff;
+    font-size: 30rpx;
   }
   .bookInfo .label view {
     color: #999;
@@ -158,6 +164,7 @@
   .commentList{
     min-height: 130rpx;
     margin-bottom: 130rpx;
+    padding-top: 15rpx;
   }
   .commentList .title,
   .commentList .title view{
@@ -186,6 +193,7 @@
   .user{
     display: flex;
     align-items: center;
+    font-size: 28rpx;
   }
   .user image{
     width: 50rpx;
@@ -215,6 +223,9 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+  }
+ .commentInfo .operating .iconfont{
+    margin-top: -20rpx;
   }
   .commentInfo .operating view:nth-child(1){
     margin-right: 10rpx;

@@ -28,7 +28,7 @@
     width: 250rpx;
     height: 90rpx;
     line-height: 90rpx;
-    font-size: 30rpx;
+    font-size: 32rpx;
     text-align: center;
     color: #333;
   }

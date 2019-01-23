@@ -97,7 +97,7 @@
   }
   .list view,
   .list text{
-    font-size: 28rpx;
+    font-size: 30rpx;
   }
   .list view:nth-child(1) icon{
     color: #00aa91;
@@ -110,7 +110,7 @@
   .user .list:nth-child(1){
     border-top: 0;
   }
-  .user .list:nth-child(6){
+  .user .list:nth-child(8){
     border-bottom: 0;
   }
   .info{
@@ -247,6 +247,15 @@
         <icon class="iconfont icon-jiantou" />
       </view>
     </view>
+    <view class="list" @tap="description">
+      <view>
+        <icon class="iconfont icon-yanjing" />
+        阅读说明
+      </view>
+      <view>
+        <icon class="iconfont icon-jiantou" />
+      </view>
+    </view>
     <view class="list" @tap="goHelp">
       <view>
         <icon class="iconfont icon-bangzhu" />
@@ -307,6 +316,9 @@
       },
       joinAuthor () {
         this.$navigate(`/pages/getAuthorCon`)
+      },
+      description() {
+        this.$navigate(`/pages/readDescription`)
       },
       // 拨打公司电话
       developerPhone(e) {

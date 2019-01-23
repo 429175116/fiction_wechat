@@ -59,9 +59,15 @@
     justify-content: center;
   }
   .nav .sel{
-    width: 150rpx;
+    width: 187rpx;
     font-size: 30rpx;
     text-align: center;
+  }
+  .nav .sel view{
+    font-size: 28rpx;
+  }
+  .nav .sel .iconfont{
+    font-size: 40rpx;
   }
   .nav .action{
     color: #ed424b;
@@ -92,6 +98,7 @@
     fill: currentColor;
     font-family: sans-serif;
     line-height: 1.5;
+    z-index: 16;
   }
   .tableOfCon{
     width: 100rpx;
@@ -100,6 +107,7 @@
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.6);
+    z-index: 16;
   }
   .chapterNav{
     width: 650rpx;
@@ -164,10 +172,10 @@
     font-size: 20rpx;
   }
   .module-header-r view:nth-child(1){
-    border-radius: 10rpx 0 0 10rpx;
+    border-radius: 18rpx 0 0 18rpx;
   }
   .module-header-r view:nth-child(2){
-    border-radius: 0 10rpx 10rpx 0;
+    border-radius: 0 18rpx 18rpx 0;
   }
   .module-header-l span{
     font-weight: 600;
@@ -185,6 +193,7 @@
     padding-inline-start: 40px;
   }
   .volumes li {
+    position: relative;
     display: list-item;
     text-align: -webkit-match-parent;
     list-style: none;
@@ -203,6 +212,13 @@
     color: #333;
     border-top: 1px solid #f0f1f2;
   }
+  .volumes li .iconfont{
+    position: absolute;
+    top: 11rpx;
+    right: 30rpx;
+    color: #999;
+    font-size: 30rpx;
+  }
   .volumes .action{
     color: #ed424b;
   }
@@ -215,6 +231,7 @@
     border-bottom:1rpx solid #333;
     background-color: rgba(0,0,0,.6);
     height:120rpx;
+    z-index: 15;
   }
   .read-prog-info{
     border-bottom: 1px solid rgba(255,255,255,.1);
@@ -482,7 +499,7 @@
         <view>目录</view>
       </view> -->
       <view class="sel" @tap="tableOfContentsShow">
-        <icon class="iconfont icon-mulu" />
+        <icon class="iconfont icon-mulu1" />
         <view>目录</view>
       </view>
       <view class="sel" @tap="readBtnProgShow">
@@ -490,17 +507,17 @@
         <view>进度</view>
       </view>
       <view class="sel" @tap="readOptSet">
-        <icon class="iconfont icon-setting" />
+        <icon class="iconfont icon-weibiaoti2fuzhi16" />
         <view>设置</view>
       </view>
       <view class="sel" @tap="atNightSet">
         <icon class="iconfont icon-taiyang" />
         <view>夜间</view>
       </view>
-      <view class="sel">
+      <!-- <view class="sel">
         <icon class="iconfont icon-pinglun" />
         <view>评论</view>
-      </view>
+      </view> -->
     </view>
     <!-- 目录对应 -->
     <view wx:if="{{tableOfContentsDomShow}}">
@@ -523,7 +540,10 @@
           </view>
           <ul class="volumes">
             <block wx:for="{{bookInfo.chapters}}" key="index" index="index" item="item">
-              <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}}">{{item.title}}</li>
+              <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}}">
+                {{item.title}}
+                <icon wx:if="{{item.wether_vip === 'NotVip'}}" class="iconfont icon-suo" />
+              </li>
               <!-- <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li> -->
             </block>
           </ul>

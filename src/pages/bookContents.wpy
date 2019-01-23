@@ -53,10 +53,10 @@
     font-size: 20rpx;
   }
   .module-header-r view:nth-child(1){
-    border-radius: 10rpx 0 0 10rpx;
+    border-radius: 18rpx 0 0 18rpx;
   }
   .module-header-r view:nth-child(2){
-    border-radius: 0 10rpx 10rpx 0;
+    border-radius: 0 18rpx 18rpx 0;
   }
   .module-header-l span{
     font-weight: 600;
@@ -74,6 +74,7 @@
     padding-inline-start: 40px;
   }
   .volumes li {
+    position: relative;
     display: list-item;
     text-align: -webkit-match-parent;
     list-style: none;
@@ -91,6 +92,13 @@
     font-weight: 500;
     color: #333;
     border-top: 1px solid #f0f1f2;
+  }
+  .volumes li .iconfont{
+    position: absolute;
+    top: 11rpx;
+    right: 30rpx;
+    color: #999;
+    font-size: 30rpx;
   }
   .volumes .action{
     color: #ed424b;
@@ -117,7 +125,10 @@
       <view class="catelogX">
         <ul class="volumes">
           <block wx:for="{{chapters}}" key="index" index="index" item="item">
-            <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}}">{{item.title}}</li>
+            <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}}">
+              {{item.title}}
+              <icon wx:if="{{item.wether_vip === 'NotVip'}}" class="iconfont icon-suo" />
+            </li>
             <!-- <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li> -->
           </block>
         </ul>
