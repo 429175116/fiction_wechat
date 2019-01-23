@@ -238,6 +238,15 @@
         <icon class="iconfont icon-jiantou" />
       </view>
     </button>
+    <view class="list" @tap="joinAuthor">
+      <view>
+        <icon class="iconfont icon-shusheng" />
+        加入作者
+      </view>
+      <view>
+        <icon class="iconfont icon-jiantou" />
+      </view>
+    </view>
     <view class="list" @tap="goHelp">
       <view>
         <icon class="iconfont icon-bangzhu" />
@@ -295,6 +304,9 @@
       },
       goHelp () {
         this.$navigate(`/pages/help`)
+      },
+      joinAuthor () {
+        this.$navigate(`/pages/getAuthorCon`)
       },
       // 拨打公司电话
       developerPhone(e) {

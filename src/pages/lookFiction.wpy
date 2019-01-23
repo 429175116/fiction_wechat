@@ -1,8 +1,4 @@
 <style lang="less">
-  .nightMode{
-    color: #fff !important;
-    background-color: #000 !important;
-  }
   .cover, .con{
     width: 710rpx;
     padding: 0 20rpx;
@@ -338,36 +334,44 @@
     border: 1rpx solid #ed424b !important;
   }
   .default{
-    background-color: #dfcfab;
-    color: #dfcfab;
-    // border: 1rpx solid #dfcfab;
+    background-color: #dccb9c;
+    color: #dccb9c;
+    // border: 1rpx solid #dccb9c;
   }
   .blue{
-    background-color: #cad9e8;
-    color: #cad9e8;
-    // border: 1rpx solid #cad9e8;
+    background-color: #ccdade;
+    color: #ccdade;
+    // border: 1rpx solid #ccdade;
   }
   .green{
-    background-color: #d1edd1;
-    color: #d1edd1;
-    // border: 1rpx solid #d1edd1;
+    background-color: #cddfcd;
+    color: #cddfcd;
+    // border: 1rpx solid #cddfcd;
   }
   .light{
-    background-color: #e6e6e6;
-    color: #e6e6e6;
-    // border: 1rpx solid #e6e6e6;
+    background-color: #cfcfcf;
+    color: #cfcfcf;
+    // border: 1rpx solid #cfcfcf;
   }
   .defaultGg{
-    background-color: #dfcfab;
+    color: #1b1b1b !important;
+    background-color: #dccb9c;
   }
   .blueGg{
-    background-color: #cad9e8;
+    color: #1b1b1b !important;
+    background-color: #ccdade;
   }
   .greenGg{
-    background-color: #d1edd1;
+    color: #1b1b1b !important;
+    background-color: #cddfcd;
   }
   .lightGg{
-    background-color: #e6e6e6;
+    color: #1b1b1b !important;
+    background-color: #cfcfcf;
+  }
+  .nightMode{
+    color: #858585 !important;
+    background-color: #101112 !important;
   }
   .readSetLayout view{
     width: 400rpx;
@@ -1140,25 +1144,25 @@ export default class Lookfiction extends wepy.page {
   // 获取顶部需要显示的颜色
   change(showModel) {
     let fontColor = '#000000'
-    let bgColor = '#dfcfab'
+    let bgColor = '#dccb9c'
     switch (showModel) {
       case 'nightMode': // 夜间模式
         this.setcolor(fontColor = '#ffffff', bgColor = '#000000')
         break
       case 'defaultGg':
-        this.setcolor(fontColor, bgColor = '#dfcfab')
+        this.setcolor(fontColor, bgColor = '#dccb9c')
         break
       case 'blueGg':
-        this.setcolor(fontColor, bgColor = '#cad9e8')
+        this.setcolor(fontColor, bgColor = '#ccdade')
         break
       case 'greenGg':
-        this.setcolor(fontColor, bgColor = '#d1edd1')
+        this.setcolor(fontColor, bgColor = '#cddfcd')
         break
       case 'lightGg':
-        this.setcolor(fontColor, bgColor = '#e6e6e6')
+        this.setcolor(fontColor, bgColor = '#cfcfcf')
         break
       default:
-        this.setcolor(fontColor, bgColor = '#dfcfab')
+        this.setcolor(fontColor, bgColor = '#dccb9c')
     }
   }
   // 修改顶部标题颜色
