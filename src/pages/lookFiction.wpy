@@ -550,16 +550,16 @@
         <view class="read-font-bar">{{fontSize}}</view>
       </view>
       <view class="readSetSkin">
-        <view class="default action" data-color="defaultGg" @tap="setBgColor">
+        <view class="default {{showModel == 'defaultGg' ? 'action':'noaction'}}" data-color="defaultGg" @tap="setBgColor">
           <span>√</span>
         </view>
-        <view class="blue" data-color="blueGg" @tap="setBgColor">
+        <view class="blue {{showModel == 'blueGg' ? 'action':'noaction'}}" data-color="blueGg" @tap="setBgColor">
           <span>√</span>
         </view>
-        <view class="green" data-color="greenGg" @tap="setBgColor">
+        <view class="green {{showModel == 'greenGg' ? 'action':'noaction'}}" data-color="greenGg" @tap="setBgColor">
           <span>√</span>
         </view>
-        <view class="light" data-color="lightGg" @tap="setBgColor">
+        <view class="light {{showModel == 'lightGg' ? 'action':'noaction'}}" data-color="lightGg" @tap="setBgColor">
           <span>√</span>
         </view>
       </view>
