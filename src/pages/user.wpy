@@ -203,13 +203,13 @@
         已签到{{signInDay}}天
       </view>
     </view>
-    <!-- <view class="list">
+    <view class="list" wx:if="{{payShow}}">
       <view>
         <icon class="iconfont icon-money" />
         <text>{{userInfo.bi_count}}点</text>
       </view>
       <view class="rechargeButton" @tap="goPay">充值</view>
-    </view> -->
+    </view>
     <view class="list">
       <view>
         <icon class="iconfont icon-shenqingchengweiVIP" />
@@ -278,7 +278,8 @@
       userInfo: null,
       openId: '',
       signInName: '签到',
-      signInDay: 0
+      signInDay: 0,
+      payShow: false
     }
 
     computed = {}
@@ -319,8 +320,20 @@
       this.userInfo = this.$parent.globalData.userInfo
       this.openId = this.$parent.globalData.openId
       this.$apply()
-      // 签到
-      // this.signIn()
+      this.getSystemInfoRun()
+    }
+    getSystemInfoRun() {
+      wx.getSystemInfo({
+        success: res => {
+          let systemInfo = res.system
+          if (systemInfo.indexOf('iOS') != -1) {
+            this.payShow = false
+          } else {
+            this.payShow = true
+          }
+          this.$apply()
+        }
+      })
     }
     // 增加支付选项
     signIn() {
