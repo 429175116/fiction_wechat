@@ -163,7 +163,6 @@
   }
   .commentList{
     min-height: 130rpx;
-    margin-bottom: 130rpx;
     padding-top: 15rpx;
   }
   .commentList .title,
@@ -265,6 +264,9 @@
     border-radius: 23rpx;
     text-align: center;
     color: #fff;
+  }
+  .recommend{
+    margin-bottom: 130rpx;
   }
   .recommendList{
     width: 100%;
@@ -436,7 +438,7 @@
         <view class="basicSel">
           <view>
             {{bookInfo.read_person_count}}
-            <text>万</text>
+            <!-- <text>万</text> -->
           </view>
           <view>人气</view>
         </view>
@@ -444,15 +446,15 @@
           <view>
             <!-- 点击量 -->
             {{bookInfo.click_count}}
-            <text>万</text>
+            <!-- <text>万</text> -->
           </view>
           <view>点击</view>
         </view>
         <view class="basicSel">
           <view>
             <!-- // 得分人数 -->
-            {{bookInfo.score_person_count}}
-            <text>万</text>
+            {{bookInfo.stored_count}}
+            <!-- <text>万</text> -->
           </view>
           <view>粉丝</view>
         </view>
@@ -548,7 +550,7 @@
       <view class="dataNullShow seeMore" wx:if="{{nextReplyUrl !== ''}}" @tap="getMoreReplyCon">查看更多</view>
     </view>
     <!-- 若otherNovels中无数据，则该模块不显示 -->
-    <view class="recommend" wx:if="{{otherNovels.length > 0}}">
+    <view class="recommend">
       喜欢这本书的人也喜欢
       <view class="recommendList">
         <block wx:for="{{otherNovels}}" key="index" index="index" item="item">
@@ -557,6 +559,7 @@
             <view>{{item.name}}</view>
           </view>
         </block>
+        <view class="dataNullShow"  wx:if="{{chapterCommentList.length === 0}}">暂无列表</view>
       </view>
     </view>
     <view class="navSta">
@@ -907,7 +910,7 @@ export default class Details extends wepy.page {
           // this.bookInfo.img = this.$parent.getImgUrl(this.bookInfo.img)
           this.bookInfo.score = parseFloat(this.bookInfo.score)
           this.bookid = this.bookInfo.id
-          this.bookInfo.words_count = Math.floor(this.bookInfo.words_count / 10000)
+          // this.bookInfo.words_count = Math.floor(this.bookInfo.words_count / 10000)
           this.authorInfoData = data.data.author
           this.$apply()
           // 获取用户可以看的章节
