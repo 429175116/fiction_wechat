@@ -1,4 +1,7 @@
 <style lang="less">
+page{
+  background-color: #f8f8f8;
+}
 .listTitle{
   padding: 0 20rpx;
   width: 710rpx;
@@ -7,6 +10,8 @@
   justify-content: space-between;
   height: 80rpx;
   line-height: 80rpx;
+  border-bottom: 1rpx solid #eaeaea;
+  background-color: #fff;
 }
 .listTitle view:nth-child(1){
   font-size: 35rpx;
@@ -22,10 +27,14 @@
   width: 30rpx;
   height: 30rpx;
 }
+page .listTitle:nth-child(4){
+  margin-top: 20rpx;
+}
 .list{
   width: 710rpx;
   padding: 20rpx;
   display: block;
+  background-color: #fff;
 }
 .item{
   width: 355rpx;
