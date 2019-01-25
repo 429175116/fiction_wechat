@@ -326,6 +326,10 @@
     font-size: 30rpx;
     color: #666;
   }
+  .navSta .sel:nth-child(1){
+    background-color: #f4f4f4;
+    // color: #fff;
+  }
   .navSta .sel:nth-child(2){
     background-color: #00c0a4;
     color: #fff;
@@ -402,6 +406,27 @@
     color: #333;
     z-index: 999;
   }
+  .fenxiang{
+    position: absolute;
+    right: 40rpx;
+    top: 250rpx;
+    width: 60rpx;
+    height: 60rpx;
+    color: #fff !important;
+    border: 1rpx solid #fff;
+    border-radius: 40rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2d313c !important;
+  }
+  .fenxiang .icon-fenxiang1{
+    color: #fff !important;
+  }
+  .fenxiang::after {
+    border-radius: 98rpx;
+    border: 0; 
+  }
 </style>
 <template>
   <view>
@@ -431,6 +456,9 @@
           <view class="label">
           </view>
         </view>
+        <button class="fenxiang" type="primary" open-type="share" data-name="pageShare" id="share">
+          <icon class="iconfont icon-fenxiang1" />
+        </button>
       </view>
     </view>
     <view class="bookInfo">
@@ -1016,6 +1044,18 @@ export default class Details extends wepy.page {
         }
       }
     })
+  }
+  // 分享页面
+  onShareAppMessage(res) {
+    let url = `pages/details?bookid=${this.bookInfo.id}`
+    console.log(url)
+    return {
+      title: `${this.bookInfo.name}--幻世中文网`,
+      desc: '',
+      // 图片路径
+      imageUrl: this.bookInfo.img,
+      path: url
+    }
   }
 }
 </script>
