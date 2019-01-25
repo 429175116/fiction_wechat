@@ -216,7 +216,8 @@ export default class User extends wepy.page {
     sellSellData2: [],
     popularityData: [],
     popularityData1: [],
-    popularityData2: []
+    popularityData2: [],
+    listLength: 7 // 控制列表显示的长短
   }
 
   computed = {}
@@ -335,7 +336,7 @@ export default class User extends wepy.page {
         method: 'GET',
         success: data => {
           if (data.data.success) {
-            let listData = data.data.new_books
+            let listData = data.data.compelete_boutique
             for (let i in listData) {
               this.sellSellData.push(listData[i])
             }
@@ -345,8 +346,10 @@ export default class User extends wepy.page {
               this.sellSellData1 = [this.sellSellData[0], this.sellSellData[1], this.sellSellData[2]]
             }
             if (this.sellSellData.length > 3) {
-              for (let i = 3; i < this.sellSellData.length; i++) {
-                this.sellSellData2.push(this.sellSellData[i])
+              for (let i = 3; i < this.listLength; i++) {
+                if (this.sellSellData.length > this.listLength) {
+                  this.sellSellData2.push(this.sellSellData[i])
+                }
               }
             }
             this.$apply()
@@ -379,8 +382,10 @@ export default class User extends wepy.page {
               this.popularityData1 = [this.popularityData[0], this.popularityData[1], this.popularityData[2]]
             }
             if (this.popularityData.length > 3) {
-              for (let i = 3; i < this.popularityData.length; i++) {
-                this.popularityData2.push(this.popularityData[i])
+              for (let i = 3; i < this.listLength; i++) {
+                if (this.popularityData.length > this.listLength) {
+                  this.popularityData2.push(this.popularityData[i])
+                }
               }
             }
             this.$apply()
