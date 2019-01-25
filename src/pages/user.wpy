@@ -364,7 +364,7 @@
         }
       })
     }
-    // 增加支付选项
+    // 签到
     signIn() {
       wx.request({
         url: `${this.$parent.globalData.requestUrl}/api/userSignInformation`,
