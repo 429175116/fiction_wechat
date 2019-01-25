@@ -175,15 +175,15 @@
     <view class="bookList">
       <block wx:for="{{bookshelfList}}" key="index" index="index" item="item">
         <view class="list">
-          <view class="cover" @tap="goBookDetails" data-id="{{item.id}}">
+          <view class="cover" @tap="goBookDetails" data-id="{{item.novel.id}}">
             <image src="{{item.novel.img}}" />
           </view>
-          <view class="info" @tap="goBookDetails" data-id="{{item.id}}">
+          <view class="info" @tap="goBookDetails" data-id="{{item.novel.id}}">
             <view class="title">{{item.novel.name}}</view>
             <view>{{item.novel.name}} · {{item.novel.name}}</view>
             <view>{{item.novel.intro}}</view>
           </view>
-          <view class="del" @tap="deleteShelf" data-id="{{item.id}}">
+          <view class="del" @tap="deleteShelf" data-id="{{item.novel.id}}">
             <icon class="iconfont icon-remove-1-copy" />
           </view>
         </view>
