@@ -28,7 +28,7 @@ page{
 }
 .userinfo .details text,.item text{
   font-size: 25rpx;
-  color: #CC6600;
+  color: #00b591;
 }
 .userinfo .details view:nth-child(1){
   font-size: 30rpx;
@@ -50,7 +50,8 @@ page{
   margin: 10rpx;
   width: 331rpx;
   height: 150rpx;
-  border: 1rpx solid #6699FF;
+  background-color: #f4f4f4;
+  // border: 1rpx solid #6699FF;
 }
 .item view{
   width: 100%;
@@ -63,21 +64,22 @@ page{
 }
 .item view:nth-child(1){
   font-size: 30rpx;
-  color: #CC6600;
+  color: #00b591;
 }
 .action{
-  background-color: #6699FF;
+  background-color: #c6c6c6;
 }
 .action view,.action text{
   color: #fff !important;
 }
 .pay{
-  width: 400rpx;
-  height: 100rpx;
+  width: 700rpx;
+  height: 88rpx;
   margin: 20rpx auto;
-  color: #CC6600;
-  box-shadow:0px 0px 1px 1px #CC6600;
-  border-radius: 10rpx;
+  color: #fff;
+  // box-shadow:0px 0px 1px 1px #00b591;
+  background-color: #00b591;
+  border-radius: 44rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,7 +93,7 @@ page{
 .promptCon{
   width: 668rpx;
   padding: 20rpx;
-  border: 1rpx solid #666;
+  // border: 1rpx solid #666;
   border-radius: 20rpx;
   font-size: 25rpx;
   color: #999;

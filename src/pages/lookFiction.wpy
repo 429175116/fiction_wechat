@@ -95,7 +95,7 @@
     text-align: center;
     font-size: 35rpx;
     background-color: rgba(0, 0, 0, 0.6) !important;
-    color: #ccc;
+    color: #ccc !important;
     border-radius: 40rpx 0 0 40rpx;
   }
   .tableOfContents{
@@ -508,7 +508,7 @@
     <view class="setBookshelf" wx:if="{{showSetting}}" @tap="storeBook">加入书架</view>
     <!-- <view class="setBookshelf" wx:if="{{showSetting}}" @tap="storeBook">加入书架</view> -->
     <button class="sharebutton" wx:if="{{showSetting}}" type="primary" open-type="share" data-name="pageShare" id="share">
-      <icon class="iconfont icon-fenxiang1" />
+      <icon class="iconfont icon-fenxiang1" />分享
     </button>
     <view class="nav" wx:if="{{showSetting}}">
       <!-- <view class="sel action" @tap="tableOfContentsShow">
