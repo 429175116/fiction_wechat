@@ -85,6 +85,19 @@
     color: #ccc;
     border-radius: 40rpx 0 0 40rpx;
   }
+  .sharebutton{
+    position: fixed;
+    right: 0;
+    top: 130rpx;
+    width: 200rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    font-size: 35rpx;
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    color: #ccc;
+    border-radius: 40rpx 0 0 40rpx;
+  }
   .tableOfContents{
     width: 650rpx;
     position: fixed;
@@ -450,7 +463,7 @@
     background-color: #ed424b !important;
     border-color:  #ed424b !important;
   }
-  .setBookshelf, .nav, .readOptSet{
+  .setBookshelf, .nav, .readOptSet,.sharebutton{
     z-index: 15;
   }
 </style>
@@ -493,6 +506,10 @@
       </view>
     </view>
     <view class="setBookshelf" wx:if="{{showSetting}}" @tap="storeBook">加入书架</view>
+    <!-- <view class="setBookshelf" wx:if="{{showSetting}}" @tap="storeBook">加入书架</view> -->
+    <button class="sharebutton" wx:if="{{showSetting}}" type="primary" open-type="share" data-name="pageShare" id="share">
+      <icon class="iconfont icon-fenxiang1" />
+    </button>
     <view class="nav" wx:if="{{showSetting}}">
       <!-- <view class="sel action" @tap="tableOfContentsShow">
         <icon class="iconfont icon-mulu" />
@@ -878,7 +895,17 @@ export default class Lookfiction extends wepy.page {
       }
     })
   }
-  
+  // 分享页面
+  onShareAppMessage(res) {
+    let url = `pages/lookFiction?bookid=${this.bookid}&chapterid=${this.chapterId}`
+    return {
+      title: `${this.bookInfo.name}--${this.novelChapter.title}--幻世中文网`,
+      desc: '',
+      // 图片路径
+      imageUrl: this.bookInfo.img,
+      path: url
+    }
+  }
   // 下拉触底执行
   // onReachBottom() {}
   getNextAndPreviousData(url) {
