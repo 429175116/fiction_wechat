@@ -571,9 +571,9 @@
           </view>
           <ul class="volumes">
             <block wx:for="{{bookInfo.chapters}}" key="index" index="index" item="item">
-              <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}}">
+              <li @tap="lookBook" data-id="{{item.id}}" data-vip="{{item.wether_vip}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}}">
                 {{item.title}}
-                <icon wx:if="{{item.wether_vip === 'NotVip'}}" class="iconfont icon-suo" />
+                <icon wx:if="{{item.wether_vip !== 'NotVip'}}" class="iconfont icon-suo" />
               </li>
               <!-- <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li> -->
             </block>
@@ -662,7 +662,8 @@ export default class Lookfiction extends wepy.page {
     order: 'order',
     goBotten: 0,
     authorizationButton: false,
-    goHomeButton: false
+    goHomeButton: false,
+    userInfo: null
   }
 
   // computed = {
@@ -701,15 +702,36 @@ export default class Lookfiction extends wepy.page {
     },
     // 点击目录
     lookBook(e) {
-      this.showSetting = false
-      this.tableOfContentsDomShow = false
-      this.chapterId = e.currentTarget.dataset.id
-      this.goBotten = 0
-      // this.$apply()
-      // 订阅执行
-      this.subscriptionNovel(this.bookid, this.chapterId)
-      // 获取本章小说详情
-      this.chapterDetail()
+      let vip =  e.currentTarget.dataset.vip
+      if (vip === 'Vip') {
+        if (this.userInfo.bi_count !== 0) {
+          this.showSetting = false
+          this.tableOfContentsDomShow = false
+          this.chapterId = e.currentTarget.dataset.id
+          this.goBotten = 0
+          // this.$apply()
+          // 订阅执行
+          this.subscriptionNovel(this.bookid, this.chapterId)
+          // 获取本章小说详情
+          this.chapterDetail()
+        } else {
+          wx.showModal({
+            title: '',
+            content: '此章节为VIP章节,请充值'
+          })
+        }
+      } else {
+        this.showSetting = false
+        this.tableOfContentsDomShow = false
+        this.chapterId = e.currentTarget.dataset.id
+        this.goBotten = 0
+        // this.$apply()
+        // 订阅执行
+        this.subscriptionNovel(this.bookid, this.chapterId)
+        // 获取本章小说详情
+        this.chapterDetail()
+      }
+      
     },
     // 点击上一页
     goPreviousPage(e) {
@@ -740,6 +762,7 @@ export default class Lookfiction extends wepy.page {
   events = {}
 
   onLoad(options) {
+    this.userInfo = this.$parent.globalData.userInfo
     // 书的ID
     this.bookid = options.bookid
     // 章节列表下标,可定位到某一章
@@ -759,15 +782,17 @@ export default class Lookfiction extends wepy.page {
     this.getFontSize()
     // 获取小说详情
     this.getBookDetails()
-    // 获取本章小说详情
+    // 获取用户可以看的章节
+    this.subscription()
+    // // 获取本章小说详情
     this.chapterDetail(this.bookid, this.chapter)
   }
   goPage(url) {
-    this.novelChapter.content.content = ''
-    // 回到页面顶部
-    wx.pageScrollTo({
-      scrollTop: 0
-    })
+    // this.novelChapter.content.content = ''
+    // // 回到页面顶部
+    // wx.pageScrollTo({
+    //   scrollTop: 0
+    // })
     this.getNextAndPreviousData(url)
   }
   // 投月票执行
@@ -857,6 +882,7 @@ export default class Lookfiction extends wepy.page {
       success: data => {
         if (data.data.success) {
           data = data.data.user_subscriptions
+          
           let i = 0
           let bookId = parseInt(this.bookid)
           let lookNovelChapter = []
@@ -953,7 +979,26 @@ export default class Lookfiction extends wepy.page {
       success: data => {
         if (data.data.success) {
           data = data.data.novel_chapter
+          // this.novelChapter.content.content = ''
+          // // 回到页面顶部
+          // wx.pageScrollTo({
+          //   scrollTop: 0
+          // })
           this.novelChapter = data.data[0]
+          if (this.novelChapter.wether_vip === 'Vip') {
+            if (this.userInfo.bi_count === 0) {
+              wx.showModal({
+                title: '',
+                content: '此章节为VIP章节,请充值'
+              })
+              return
+            }
+          }
+          // this.novelChapter.content.content = ''
+          // 回到页面顶部
+          wx.pageScrollTo({
+            scrollTop: 0
+          })
           // 碰到空格换行
           this.novelChapter.content.content = this.contentsplit(this.novelChapter.content.content)
           // 根据获取到的参数修改页面标题

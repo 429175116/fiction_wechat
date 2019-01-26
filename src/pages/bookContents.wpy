@@ -125,9 +125,9 @@
       <view class="catelogX">
         <ul class="volumes">
           <block wx:for="{{chapters}}" key="index" index="index" item="item">
-            <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}}">
+            <li @tap="lookBook" data-id="{{item.id}}" data-vip="{{item.wether_vip}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}}">
               {{item.title}}
-              <icon wx:if="{{item.wether_vip === 'NotVip'}}" class="iconfont icon-suo" />
+              <icon wx:if="{{item.wether_vip !== 'NotVip'}}" class="iconfont icon-suo" />
             </li>
             <!-- <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li> -->
           </block>
@@ -152,7 +152,8 @@ export default class Bookcontents extends wepy.page {
   data = {
     chapters: null,
     id: '',
-    order: 'order'
+    order: 'order',
+    userInfo: null
   }
 
   computed = {}
@@ -161,16 +162,30 @@ export default class Bookcontents extends wepy.page {
     // 立即阅读
     lookBook(e) {
       let id = e.currentTarget.dataset.id
+      let vip = e.currentTarget.dataset.vip
       // 订阅执行
       this.subscriptionNovel(this.id, id)
       // index目录下标,确定是那一章
-      this.$navigate(`/pages/lookFiction?bookid=${this.id}&chapterid=${id}&firsttime=${false}`)
+      if (vip === 'Vip') {
+        if (this.userInfo.bi_count !== 0) {
+          this.$navigate(`/pages/lookFiction?bookid=${this.id}&chapterid=${id}&firsttime=${false}`)
+        } else {
+          wx.showModal({
+            title: '',
+            content: '此章节为VIP章节,请充值'
+          })
+        }
+      } else {
+        this.$navigate(`/pages/lookFiction?bookid=${this.id}&chapterid=${id}&firsttime=${false}`)
+      }
     }
   }
 
   events = {}
 
   onLoad(options) {
+    this.userInfo = this.$parent.globalData.userInfo
+    console.log(this.userInfo)
     // console.log(options.bookInfo)
     // let bookInfo = JSON.parse(options.bookinfo)
     // this.id = bookInfo.id
