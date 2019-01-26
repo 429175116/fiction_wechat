@@ -1121,6 +1121,8 @@ export default class Details extends wepy.page {
                 this.openId = this.userInfo.open_id
                 this.$parent.globalData.userInfo = this.userInfo
                 this.$parent.globalData.openId = this.openId
+                // 获取用户可以看的章节
+                this.subscription()
                 this.$apply()
               } else {
                 wx.showModal({
