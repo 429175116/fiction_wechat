@@ -432,6 +432,7 @@
   }
   .fenxiang .icon-fenxiang1{
     color: #fff !important;
+    font-size: 26rpx;
   }
   .fenxiang::after {
     border-radius: 98rpx;
@@ -772,7 +773,6 @@ export default class Details extends wepy.page {
   onLoad(options) {
     this.userInfo = this.$parent.globalData.userInfo
     this.bookid = options.bookid
-    this.goHomeButton = true
     if (options.firsttime === 'share') {
       // 通过分享进入
       // 获取用户信息

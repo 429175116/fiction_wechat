@@ -73,7 +73,7 @@
     color: #333;
     height: 60rpx;
     line-height: 70rpx;
-    font-size: 38rpx;
+    font-size: 30rpx;
     font-size: 600;
   }
 </style>

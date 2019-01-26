@@ -89,7 +89,7 @@
   .bookList{
     width: 750rpx;
     height: auto;
-    margin-bottom: 120rpx;
+    // margin-bottom: 120rpx;
   }
   .list{
     display: flex;
@@ -151,6 +151,9 @@
     font-size: 36rpx;
     line-height: 75rpx;
   }
+  .recommendNovelsClass{
+    margin-bottom: 120rpx;
+  }
 </style>
 <template>
   <view>
@@ -196,7 +199,7 @@
     <view class="searchHistoryTitle">
       <view>为您推荐</view>
     </view>
-    <view class="bookList">
+    <view class="bookList recommendNovelsClass">
       <block wx:for="{{recommendNovels}}" key="index" index="index" item="item">
         <view class="list" data-id="{{item.id}}"  @tap="goBookDetails">
           <view class="cover">

@@ -108,6 +108,10 @@
     color: #ccc !important;
     border-radius: 40rpx 0 0 40rpx;
   }
+  .sharebutton icon {
+    font-size: 30rpx;
+    margin-right: 20rpx;
+  }
   .tableOfContents{
     width: 650rpx;
     position: fixed;
@@ -740,7 +744,6 @@ export default class Lookfiction extends wepy.page {
     this.bookid = options.bookid
     // 章节列表下标,可定位到某一章
     this.chapterId = options.chapterid
-    this.goHomeButton = true
     if (options.firsttime === 'share') {
       // 通过分享进入
       // 获取用户信息
