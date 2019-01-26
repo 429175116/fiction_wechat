@@ -67,7 +67,7 @@ page{
   color: #00b591;
 }
 .action{
-  background-color: #c6c6c6;
+  background-color: #00b591;
 }
 .action view,.action text{
   color: #fff !important;
@@ -106,9 +106,13 @@ page{
 }
 .promptCon view{
   height: tuto;
-  line-height: 80rpx;
+  line-height: 40rpx;
+  font-size: 25rpx;
   margin-left: 45rpx;
   display: list-item;
+}
+.promptCon text{
+  font-size: 25rpx;
 }
 
 </style>
