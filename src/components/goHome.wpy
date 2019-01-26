@@ -1,0 +1,37 @@
+<style lang="less">
+.gohomebutton {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+  position: fixed;
+  bottom: 130rpx;
+  right: 20rpx;
+  background-color: #00c0a4;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+</style>
+<template>
+  <view class="gohomebutton" @tap="goIndex">书城</view>
+</template>
+<script>
+import wepy from 'wepy'
+// 校验封装
+// import check from '../mixins/check'
+export default class gohome extends wepy.component {
+  // mixins = [check]
+  data = {
+  };
+  props = {};
+  methods = {
+    goIndex() {
+      this.$emit('childFn', '/pages/index')
+    }
+  };
+  onLoad() {
+  };
+}
+</script>

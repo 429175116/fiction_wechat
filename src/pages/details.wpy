@@ -615,16 +615,18 @@
       </view>
     </view>
     <button open-type="getUserInfo" wx:if="{{authorizationButton}}" id='getUserInfo' lang="zh_CN" @getuserinfo="onGetUserInfo"></button>
+    <gohome @childFn.user="goPage" wx:if="{{goHomeButton}}" />
   </view>
 </template>
 <script>
 import wepy from 'wepy'
+import gohome from '../components/goHome' // 进入书城按钮
 export default class Details extends wepy.page {
   config = {
     navigationBarTitleText: '详情'
   }
   components = {
-
+    gohome: gohome
   }
 
   mixins = []
@@ -644,12 +646,17 @@ export default class Details extends wepy.page {
     nextReplyUrl: '',
     commentReplyValue: '',
     descriptionShow: '',
-    authorizationButton: false
+    authorizationButton: false,
+    goHomeButton: false
   }
 
   computed = {}
 
   methods = {
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
     descriptionShowRun() {
       if (this.descriptionShow) {
         this.descriptionShow = ''
@@ -765,9 +772,11 @@ export default class Details extends wepy.page {
   onLoad(options) {
     this.userInfo = this.$parent.globalData.userInfo
     this.bookid = options.bookid
+    this.goHomeButton = true
     if (options.firsttime === 'share') {
       // 通过分享进入
       // 获取用户信息
+      this.goHomeButton = true
       this.authorizationButton = true
       // 获取用户信息
       this.onGetUserInfo()
