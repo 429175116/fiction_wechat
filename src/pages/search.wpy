@@ -82,7 +82,7 @@
     display:inline-block;
     margin: 20rpx;
     background-color: #e5ecf2;
-    color: #333;
+    color: #999;
     border-radius: 10rpx;
     font-size: 30rpx;
   }
@@ -172,7 +172,7 @@
       <view>搜索热词</view>
     </view>
     <view class="searchHistory" wx:if="{{hotWord.length > 0}}">
-      <block wx:for="{{searchBook}}" key="index" index="index" item="item">
+      <block wx:for="{{hotWord}}" key="index" index="index" item="item">
         <view @tap="clicklabel" data-name="{{item.words}}">{{item.words}}</view>
       </block>
     </view>
