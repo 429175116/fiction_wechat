@@ -163,12 +163,19 @@
           <image src="{{item.img}}" data-id="{{item.id}}" @tap="goBookDetails" class="slide-image" />
         </swiper-item>
       </block> -->
-      <swiper-item>
+      <!-- <swiper-item>
         <image src="https://fiction.beaconway.cn/uploads/images/author1.jpg" @tap="getAuthor" class="slide-image" />
       </swiper-item>
       <swiper-item>
         <image src="https://fiction.beaconway.cn/uploads/images/author2.jpg" @tap="getAuthor" class="slide-image" />
+      </swiper-item> -->
+      <swiper-item>
+        <image src="https://fiction.beaconway.cn/uploads/images/xzhdxLb.jpg" @tap="goBookDetails" data-id="50" />
       </swiper-item>
+      <swiper-item>
+        <image src="https://fiction.beaconway.cn/uploads/images/hrjjLb.jpg" @tap="goBookDetails" data-id="28" />
+      </swiper-item>
+       <!--  -->
     </swiper>
     <!-- <view class="conNav">
       <view class="sel" @tap="goBookListAndType" data-title="分类">
