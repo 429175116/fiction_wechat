@@ -621,7 +621,7 @@
 </template>
 <script>
 import wepy from 'wepy'
-import gohome from '../components/goHome' // 进入书城按钮
+import gohome from '../components/navhome' // 进入书城按钮
 export default class Details extends wepy.page {
   config = {
     navigationBarTitleText: '详情'
