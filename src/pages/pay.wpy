@@ -22,7 +22,7 @@ page{
   height: 47rpx;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   font-size: 25rpx;
   color: #999;
 }
