@@ -110,11 +110,41 @@ export default class Indexsonlist extends wepy.page {
     this.url = options.url
     this.books = JSON.parse(options.listdata)
     this.$apply()
-    this.getMoreData(this.books)
-    
+    if (this.url === 'popularity_ranking' || this.url === 'best_seller_ranking') {
+      this.sex = options.sex
+      this.rankingSonData()
+    } else {
+      this.getMoreData(this.books)
+    }
   }
   onReachBottom() {
-    this.getMoreData()
+    if (this.url === 'popularity_ranking' || this.url === 'best_seller_ranking') {
+      this.rankingSonData()
+    } else {
+      this.getMoreData(this.books)
+    }
+  }
+  rankingSonData() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/${this.url}`,
+      method: 'POST',
+      data:{
+        id: this.books.length,
+        sex: this.sex
+      },
+      success: data => {
+        if (data.data.code === 'ture') {
+          this.books = this.books.concat(data.data.data)
+          // this.books = data.data.data
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
   }
   getMoreData() {
     wx.request({

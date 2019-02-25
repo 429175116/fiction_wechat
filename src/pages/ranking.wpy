@@ -123,8 +123,11 @@
       <navTop @childFn.user="goPage" />
       <view class="listTitle">
         <view>{{thisTypeName}}人气榜</view>
-        <view @tap="selType" class="{{typeClass}}" data-typename="人气榜">
-          {{typeName}}
+        <view wx:if="{{sex == '1'}}" @tap="selType" class="male" data-typename="人气榜">
+          男生
+        </view>
+        <view wx:if="{{sex == '2'}}" @tap="selType" class="female" data-typename="人气榜">
+          女生
         </view>
       </view>
       <view class="list-sidelong">
@@ -147,16 +150,19 @@
                 <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
                 <text wx:elif>完结</text>
                   · {{item.words_count}}万字</view>
-              <view>上架时间{{item.updated_at}}</view>
+              <view>{{item.intro}}</view>
             </view>
           </view>
         </block>
       </view>
-      <view class="goList" data-id="{{thisfirstCategoryId}}" data-typename="{{thisTypeName}}人气榜" data-url="bestSeller" @tap="goList">查看人气榜</view>
+      <view class="goList" data-id="{{thisfirstCategoryId}}" data-typename="{{thisTypeName}}人气榜" data-url="popularity_ranking" @tap="goList">查看人气榜</view>
       <view class="listTitle">
         <view>{{thisTypeName}}热销榜</view>
-        <view @tap="selType" class="{{typeClass}}" data-typename="热销榜">
-          {{typeName}}
+        <view wx:if="{{sex == '1'}}" @tap="selType" class="male" data-typename="人气榜">
+          男生
+        </view>
+        <view wx:if="{{sex == '2'}}" @tap="selType" class="female" data-typename="人气榜">
+          女生
         </view>
       </view>
       <view class="list-sidelong">
@@ -179,12 +185,12 @@
                 <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
                 <text wx:elif>完结</text>
                   · {{item.words_count}}万字</view>
-              <view>上架时间{{item.updated_at}}</view>
+              <view>{{item.intro}}</view>
             </view>
           </view>
         </block>
       </view>
-      <view class="goList" data-id="{{thisfirstCategoryId}}" data-typename="{{thisTypeName}}热销榜" data-url="popularUncompelete" @tap="goList">查看热销榜</view>
+      <view class="goList" data-id="{{thisfirstCategoryId}}" data-typename="{{thisTypeName}}热销榜" data-url="best_seller_ranking" @tap="goList">查看热销榜</view>
     </view>
     <nav @childFn.user="goPage" />
   </view>
@@ -218,7 +224,8 @@ export default class User extends wepy.page {
     popularityData: [],
     popularityData1: [],
     popularityData2: [],
-    listLength: 7 // 控制列表显示的长短
+    listLength: 7, // 控制列表显示的长短
+    sex: '1'
   }
 
   computed = {}
@@ -235,19 +242,13 @@ export default class User extends wepy.page {
       this.$navigate(`/pages/details?bookid=${id}`)
     },
     selType() {
-      if (this.typeClass === 'male') {
-        this.thisTypeName = '男生'
-        this.typeName = '女生'
-        this.typeClass = 'female'
-        this.thisfirstCategoryId = this.firstCategoryData[0].id
-        this.secondCategory(this.thisfirstCategoryId)
+      if (this.sex === '1') {
+        this.sex = '2'
       } else {
-        this.thisTypeName = '女生'
-        this.typeName = '男生'
-        this.typeClass = 'male'
-        this.thisfirstCategoryId = this.firstCategoryData[1].id
-        this.secondCategory(this.thisfirstCategoryId)
+        this.sex = '1'
       }
+      this.sellSellList()
+      this.popularityList()
       this.$apply()
     },
     goList(e) {
@@ -260,7 +261,7 @@ export default class User extends wepy.page {
         data = this.popularityData
       }
       data = JSON.stringify(data)
-      this.$navigate(`/pages/indexSonList?typeidlist=${this.typeList}&typename=${typename}&url=${url}&listdata=${data}`)
+      this.$navigate(`/pages/indexSonList?typename=${typename}&url=${url}&listdata=${data}&sex=${this.sex}`)
     }
   }
 
@@ -271,134 +272,84 @@ export default class User extends wepy.page {
     this.userInfo = this.$parent.globalData.userInfo
     this.openId = this.$parent.globalData.openId
     this.$apply()
-    // 获取一级分类
-    this.firstCategory()
-  }
-  // 获取一级分类
-  async firstCategory() {
-    await wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/firstCategory`,
-      method: 'GET',
-      success: data => {
-        if (data.data.success) {
-          this.firstCategoryData = data.data.first_categories
-          this.thisfirstCategoryId = this.firstCategoryData[0].id
-          this.secondCategory(this.thisfirstCategoryId)
-          this.$apply()
-        } else {
-          wx.showModal({
-            title: '',
-            content: data.data.errmsg
-          })
-        }
-      }
-    })
-  }
-  // 获取二级分类
-  async secondCategory(id) {
-    var typeSon
-    await wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/secondCategory/${id}`,
-      method: 'GET',
-      success: data => {
-        if (data.data.success) {
-          typeSon = data.data.second_categories
-          this.typeList = []
-          let i = 0
-          for (i in typeSon) {
-            this.typeList.push(typeSon[i].id)
-          }
-          // 清空人气榜和热销榜的数据
-          this.sellSellData = []
-          this.sellSellData1 = []
-          this.sellSellData2 = []
-          this.popularityData = []
-          this.popularityData1 = []
-          this.popularityData2 = []
-          this.$apply()
-          this.sellSellList(typeSon)
-          this.popularityList(typeSon)
-          this.$apply()
-        } else {
-          wx.showModal({
-            title: '',
-            content: data.data.errmsg
-          })
-        }
-      }
-    })
+    this.sellSellList()
+    this.popularityList()
   }
   // 热销榜
-  sellSellList(typeSonNode) {
-    let i = 0
-    for (i in typeSonNode) {
-      wx.request({
-        url: `${this.$parent.globalData.requestUrl}/api/bestSeller/${typeSonNode[i].id}`,
-        method: 'GET',
-        success: data => {
-          if (data.data.success) {
-            let listData = data.data.compelete_boutique
-            for (let i in listData) {
-              this.sellSellData.push(listData[i])
-            }
-            this.sellSellData1 = []
-            this.sellSellData2 = []
-            if (this.sellSellData.length >= 3) {
-              this.sellSellData1 = [this.sellSellData[0], this.sellSellData[1], this.sellSellData[2]]
-            }
-            if (this.sellSellData.length > 3) {
-              for (let i = 3; i < this.listLength; i++) {
-                if (this.sellSellData.length > this.listLength) {
-                  this.sellSellData2.push(this.sellSellData[i])
-                }
+  sellSellList() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/best_seller_ranking`,
+      method: 'POST',
+      data:{
+        id: '0',
+        sex: this.sex
+      },
+      //1男  2女
+      success: data => {
+        if (data.data.code === 'ture') {
+          this.sellSellData = data.data.data
+          console.log(this.sellSellData)
+          this.sellSellData1 = []
+          this.sellSellData2 = []
+          if (this.sellSellData.length >= 3) {
+            this.sellSellData1 = [this.sellSellData[0], this.sellSellData[1], this.sellSellData[2]]
+          }
+          if (this.sellSellData.length > 3) {
+            for (let i = 3; i < this.sellSellData.length; i++) {
+              if (this.sellSellData.length > i) {
+                this.sellSellData2.push(this.sellSellData[i])
               }
             }
-            this.$apply()
-          } else {
-            wx.showModal({
-              title: '',
-              content: data.data.errmsg
-            })
           }
+          console.log(this.sellSellData1)
+          console.log(this.sellSellData2)
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
-      })
-    }
+      }
+    })
   }
   // 人气榜
-  popularityList(typeSonNode) {
-    let i = 0
-    for (i in typeSonNode) {
-      wx.request({
-        url: `${this.$parent.globalData.requestUrl}/api/popularUncompelete/${typeSonNode[i].id}`,
-        method: 'GET',
-        success: data => {
-          if (data.data.success) {
-            let listData = data.data.popular_books
-            for (let i in listData) {
-              this.popularityData.push(listData[i])
-            }
-            this.popularityData1 = []
-            this.popularityData2 = []
-            if (this.popularityData.length >= 3) {
-              this.popularityData1 = [this.popularityData[0], this.popularityData[1], this.popularityData[2]]
-            }
-            if (this.popularityData.length > 3) {
-              for (let i = 3; i < this.listLength; i++) {
-                if (this.popularityData.length > this.listLength) {
-                  this.popularityData2.push(this.popularityData[i])
-                }
+  popularityList() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/popularity_ranking`,
+      method: 'POST',
+      data:{
+        id: '0',
+        sex: this.sex
+      },
+      //1男  2女
+      success: data => {
+        if (data.data.code === 'ture') {
+          this.popularityData = data.data.data
+          console.log(this.popularityData)
+          this.popularityData1 = []
+          this.popularityData2 = []
+          if (this.popularityData.length >= 3) {
+            this.popularityData1 = [this.popularityData[0], this.popularityData[1], this.popularityData[2]]
+          }
+          if (this.popularityData.length > 3) {
+            for (let i = 3; i < this.popularityData.length; i++) {
+              if (this.popularityData.length > i) {
+                this.popularityData2.push(this.popularityData[i])
               }
             }
-            this.$apply()
-          } else {
-            wx.showModal({
-              title: '',
-              content: data.data.errmsg
-            })
           }
+          console.log(this.popularityData1)
+          console.log(this.popularityData2)
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
-      })
-    }
+      }
+    })
   }
 }
 </script>
