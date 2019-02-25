@@ -64,7 +64,7 @@
                 <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
                 <text wx:elif>完结</text>
                   · {{item.words_count}}万字</view>
-              <view>上架时间{{item.updated_at}}</view>
+              <view>{{item.intro}}</view>
             </view>
           </view>
         </block>
@@ -103,107 +103,36 @@ export default class Indexsonlist extends wepy.page {
   events = {}
 
   onLoad(options) {
-    // let typeidlist = options.typeidlist
-    // let typename = options.typename
-    // let url = options.url
-    this.books = JSON.parse(options.listdata)
-    this.$apply()
     // 修改页面标题
     wx.setNavigationBarTitle({
       title: options.typename
     })
-    // // 获取列表数据
-    // if (url === 'freeNewNovel') {
-    //   this.getListDataNoId(url)
-    //   return
-    // }
-    // let i = 0
-    // for (i in typeidlist) {
-    //   this.getListData(typeidlist[i], url)
-    // }
+    this.url = options.url
+    this.books = JSON.parse(options.listdata)
+    this.$apply()
+    this.getMoreData(this.books)
+    
   }
-  // getListData(typeid, url) {
-  //   wx.request({
-  //     url: `${this.$parent.globalData.requestUrl}/api/${url}/${typeid}`,
-  //     method: 'GET',
-  //     success: data => {
-  //       if (data.data.success) {
-  //         switch (url) {
-  //           case 'newBooksOfFirstCategory':
-  //             this.pushData(data.data.new_books)
-  //             // this.books = this.$parent.getImgUrlList(this.books)
-  //             break
-  //           case 'popularUncompelete':
-  //             this.pushData(data.data.popular_books)
-  //             // this.books = this.$parent.getImgUrlList(this.books)
-  //             break
-  //           case 'popularCateGory':
-  //             this.pushData(data.data.popular_category_books)
-  //             // this.books = this.$parent.getImgUrlList(this.books)
-  //             break
-  //           case 'twentyFourHourHotSale':
-  //             this.pushData(data.data.twentyfourhour_hot_sale)
-  //             // this.books = this.$parent.getImgUrlNovelList(this.books)
-  //             break
-  //           case 'clickWeekBang':
-  //             this.pushData(data.data.click_week_bang)
-  //             // this.books = this.$parent.getImgUrlNovelList(this.books)
-  //             break
-  //           case 'compeleteBoutique':
-  //             this.pushData(data.data.compelete_boutique)
-  //             // this.books = this.$parent.getImgUrlList(this.books)
-  //             break
-  //           case 'bestSeller':
-  //             this.pushData(data.data.compelete_boutique)
-  //             // this.books = this.$parent.getImgUrlList(this.books)
-  //             break
-  //           case 'editorRecommend':
-  //             this.pushData(data.data.novels)
-  //             // this.books = this.$parent.getImgUrlList(this.books)
-  //             break
-  //           default:
-  //             break
-  //         }
-  //         this.$apply()
-  //       } else {
-  //         wx.showModal({
-  //           title: '',
-  //           content: data.data.errmsg
-  //         })
-  //       }
-  //     }
-  //   })
-  // }
-  // getListDataNoId(url) {
-  //   wx.request({
-  //     url: `${this.$parent.globalData.requestUrl}/api/${url}`,
-  //     method: 'GET',
-  //     success: data => {
-  //       if (data.data.success) {
-  //         switch (url) {
-  //           case 'freeNewNovel':
-  //             this.pushData(data.data.novels)
-  //             // this.books = this.$parent.getImgUrlList(this.books)
-  //             break
-  //           default:
-  //             break
-  //         }
-  //         this.$apply()
-  //       } else {
-  //         wx.showModal({
-  //           title: '',
-  //           content: data.data.errmsg
-  //         })
-  //       }
-  //     }
-  //   })
-  // }
-  // pushData(listData) {
-  //   let i = 0
-  //   for (i in listData) {
-  //     this.books.push(listData[i])
-  //   }
-  //   this.$apply()
-  // }
+  onReachBottom() {
+    this.getMoreData()
+  }
+  getMoreData() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/${this.url}/${this.books.length}`,
+      method: 'GET',
+      success: data => {
+        if (data.data.code === 'ture') {
+          this.books = this.books.concat(data.data.data)
+          // this.books = data.data.data
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
 }
 </script>
