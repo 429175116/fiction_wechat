@@ -410,6 +410,7 @@ export default class Bookshelf extends wepy.page {
               profile: this.userInfo.avatarUrl
             },
             success: data => {
+              console.log(data)
               if (data.data.success) {
                 // 获取用户信息,及openID  并存入全局
                 this.userInfo = data.data.user
